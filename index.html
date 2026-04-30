@@ -622,6 +622,10 @@ async function checkTwitch(){
       document.getElementById('twitch-meta').textContent=s.viewer_count.toLocaleString()+' spectateurs';
       document.getElementById('hero-live').style.display='inline-flex';
     }
+    if(d.followers!=null){
+      const el=document.getElementById('twitch-subs');
+      if(el)el.textContent=fmtN(d.followers);
+    }
   }catch(e){console.error('Twitch error',e);}
 }
 
