@@ -17,6 +17,8 @@
   --twitch:#9146ff;
   --youtube:#ff2d2d;
   --discord:#5865f2;
+  --tiktok:#00f2ea;
+  --twitter:#1da1f2;
 }
 html{scroll-behavior:smooth}
 body{
@@ -26,242 +28,48 @@ body{
   overflow-x:hidden;
   cursor:none;
 }
-body::before{
-  content:'';
-  position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(ellipse 70% 40% at 50% 0%, rgba(255,45,45,0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 30% at 0% 50%, rgba(255,45,45,0.04) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 30% at 100% 50%, rgba(255,45,45,0.04) 0%, transparent 60%);
-}
 /* CURSOR */
-.cursor{
-  position:fixed;width:10px;height:10px;
-  background:var(--accent);border-radius:50%;
-  pointer-events:none;z-index:9999;
-  transition:transform 0.1s;mix-blend-mode:difference;
-}
-.cursor-follower{
-  position:fixed;width:36px;height:36px;
-  border:1px solid rgba(255,45,45,0.3);border-radius:50%;
-  pointer-events:none;z-index:9998;
-  transition:transform 0.25s ease, width 0.2s, height 0.2s;mix-blend-mode:difference;
-}
+.cursor{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transition:transform 0.1s;mix-blend-mode:difference;}
+.cursor-follower{position:fixed;width:36px;height:36px;border:1px solid rgba(255,45,45,0.3);border-radius:50%;pointer-events:none;z-index:9998;transition:transform 0.25s ease;mix-blend-mode:difference;}
 
 /* NAV */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:1.5rem 3rem;
-  background:linear-gradient(to bottom,rgba(8,8,8,0.95),transparent);
-}
-.nav-logo{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:1.6rem;letter-spacing:3px;
-  color:var(--white);text-decoration:none;
-}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 3rem;background:linear-gradient(to bottom,rgba(8,8,8,0.95),transparent);}
+.nav-logo img{height:32px;width:auto;display:block;}
 .nav-links{display:flex;gap:2.5rem;list-style:none}
-.nav-links a{
-  font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;
-  color:rgba(240,237,230,0.5);text-decoration:none;
-  transition:color 0.2s;font-weight:500;
-}
+.nav-links a{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:rgba(240,237,230,0.5);text-decoration:none;transition:color 0.2s;font-weight:500;}
 .nav-links a:hover{color:var(--accent)}
 
 /* HERO */
-.hero{
-  position:relative;min-height:100vh;
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;
-}
-.hero-bg{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 60% 50% at 50% 30%, rgba(255,45,45,0.18) 0%, transparent 65%),
-    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255,45,45,0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 30% 30% at 80% 70%, rgba(180,20,20,0.06) 0%, transparent 60%);
-}
-.hero-noise{
-  position:absolute;inset:0;opacity:0.03;
-  background-size:200px;
-}
-.hero-content{
-  position:relative;z-index:2;
-  text-align:center;padding:0 2rem;
-}
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:8px;
-  font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;
-  color:rgba(240,237,230,0.4);margin-bottom:2rem;
-  font-family:'DM Mono',monospace;
-}
-.hero-eyebrow::before,
-.hero-eyebrow::after{content:'';flex:1;height:1px;width:40px;background:rgba(240,237,230,0.15)}
-.live-pill{
-  display:inline-flex;align-items:center;gap:6px;
-  background:rgba(255,45,45,0.08);border:1px solid rgba(255,45,45,0.2);
-  padding:4px 12px;border-radius:20px;
-  font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;
-  color:var(--accent);margin-bottom:1.5rem;font-family:'DM Mono',monospace;
-}
-.live-dot{width:5px;height:5px;background:var(--accent);border-radius:50%;animation:blink 1.4s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
-@keyframes logoGlow{0%,100%{filter:drop-shadow(0 0 25px rgba(255,45,45,0.6)) drop-shadow(0 0 70px rgba(255,45,45,0.25))}50%{filter:drop-shadow(0 0 45px rgba(255,45,45,0.9)) drop-shadow(0 0 120px rgba(255,45,45,0.45))}}
-h1{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(5rem,14vw,13rem);
-  line-height:0.88;letter-spacing:-1px;
-  margin-bottom:1.5rem;
-}
-.hero-sub{
-  font-size:0.95rem;color:rgba(240,237,230,0.45);
-  max-width:400px;margin:0 auto 3rem;line-height:1.8;
-  font-weight:300;
-}
-.hero-ctas{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap}
-.btn{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:0.85rem 2rem;border-radius:50px;
-  font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;
-  font-weight:600;text-decoration:none;transition:all 0.2s;
-  font-family:'Bricolage Grotesque',sans-serif;
-}
-.btn-primary{
-  background:rgba(255,45,45,0.85);
-  color:#ffffff;
-  border:1px solid rgba(255,100,100,0.4);
-}
-.btn-ghost{
-  background:rgba(240,237,230,0.05);
-  border:1px solid rgba(240,237,230,0.12);
-  color:rgba(240,237,230,0.7);
-}
-.hero-scroll{
-  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  color:rgba(240,237,230,0.2);font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;
-  font-family:'DM Mono',monospace;
-}
-.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--accent),transparent)}
-
-/* MARQUEE */
-.marquee-wrap{
-  overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  padding:1rem 0;background:rgba(240,237,230,0.015);
-}
-.marquee-track{
-  display:flex;gap:3rem;white-space:nowrap;
-  animation:marquee 18s linear infinite;
-}
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.marquee-item{
-  font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:4px;
-  color:rgba(240,237,230,0.12);text-transform:uppercase;
-}
-.marquee-item.accent{color:var(--accent);opacity:0.5}
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;text-align:center;}
+.hero-content{position:relative;z-index:2;padding:0 2rem;display:flex;flex-direction:column;align-items:center;}
+.hero-logo{height:clamp(100px, 20vw, 180px);width:auto;margin-bottom:2rem;filter:drop-shadow(0 0 30px rgba(255,45,45,0.3));}
+.hero-sub{font-size:1.1rem;color:rgba(240,237,230,0.6);max-width:500px;margin-bottom:2.5rem;line-height:1.6;}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:1rem 2.5rem;border-radius:50px;font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;text-decoration:none;transition:all 0.3s;}
+.btn-primary{background:var(--accent);color:white;border:1px solid rgba(255,255,255,0.2);}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(255,45,45,0.4);}
 
 /* SECTIONS */
-section{padding:6rem 3rem;max-width:1100px;margin:0 auto}
-.section-label{
-  font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;
-  color:var(--accent);font-family:'DM Mono',monospace;
-  display:flex;align-items:center;gap:10px;margin-bottom:1rem;
-}
-.section-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(3rem,6vw,5.5rem);line-height:0.9;
-  letter-spacing:-1px;margin-bottom:3rem;
-}
-.section-title .dim{color:rgba(240,237,230,0.15)}
+section{padding:8rem 2rem;max-width:1200px;margin:0 auto;}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem, 8vw, 6rem);line-height:0.9;margin-bottom:4rem;text-align:center;}
+.dim{color:rgba(240,237,230,0.1);}
 
-/* LIVE STATUS */
-.live-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.live-card{
-  background:rgba(240,237,230,0.03);
-  padding:2.5rem;
-  display:flex;flex-direction:column;gap:1.5rem;
-  transition:all 0.2s;position:relative;overflow:hidden;
-  border-radius:12px;
-}
-.platform-row{display:flex;align-items:center;justify-content:space-between}
-.platform-badge{
-  display:flex;align-items:center;gap:8px;
-  font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;
-  font-family:'DM Mono',monospace;color:rgba(240,237,230,0.35);
-}
-.platform-icon{
-  width:28px;height:28px;border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:11px;font-weight:800;
-}
-.pi-twitch{background:var(--twitch)}
-.pi-youtube{background:var(--youtube)}
-.status-badge{
-  font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;
-  font-family:'DM Mono',monospace;padding:4px 10px;border-radius:20px;
-}
-.status-live{background:rgba(255,45,45,0.1);color:var(--accent);border:1px solid rgba(255,45,45,0.2)}
-.status-offline{background:rgba(240,237,230,0.04);color:rgba(240,237,230,0.2);border:1px solid var(--border)}
-.live-title{font-size:1.15rem;font-weight:500;line-height:1.4}
-.live-meta{font-size:0.75rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace}
-.live-link{
-  display:inline-flex;align-items:center;gap:6px;
-  font-size:0.68rem;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--accent);text-decoration:none;font-weight:600;
-}
+/* LIVE CARDS */
+.live-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:20px;}
+.live-card{background:rgba(240,237,230,0.03);padding:2.5rem;border-radius:20px;border:1px solid var(--border);transition:0.3s;}
+.live-card:hover{border-color:rgba(255,45,45,0.3);background:rgba(255,45,45,0.02);}
+.status-badge{font-family:'DM Mono',monospace;font-size:0.65rem;padding:5px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;}
+.status-live{background:rgba(255,45,45,0.15);color:var(--accent);border:1px solid var(--accent);}
+.status-offline{background:rgba(240,237,230,0.05);color:rgba(240,237,230,0.3);}
 
 /* NETWORKS */
-.networks-wrap{display:flex;flex-direction:column;border:1px solid rgba(240,237,230,0.08);border-radius:12px;overflow:hidden;}
-.network-item{
-  background:rgba(240,237,230,0.02);
-  padding:1.25rem 2rem;
-  display:flex;align-items:center;justify-content:space-between;
-  text-decoration:none;color:inherit;
-  border-bottom:1px solid rgba(240,237,230,0.06);
-}
-.net-left{display:flex;align-items:center;gap:16px;flex:1;}
-.net-icon{
-  width:36px;height:36px;border-radius:10px;
-  display:flex;align-items:center;justify-content:center;
-}
-.net-name{font-size:0.9rem;font-weight:500;display:block;margin-bottom:2px;}
-.net-handle{font-size:0.68rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;}
-.net-stats{font-family:'Bebas Neue',sans-serif;letter-spacing:2px;min-width:60px;text-align:right;margin-right:1.5rem;}
+.networks-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:15px;}
+.net-item{background:rgba(240,237,230,0.02);padding:1.5rem;border-radius:15px;display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:inherit;border:1px solid var(--border);transition:0.2s;}
+.net-item:hover{background:rgba(240,237,230,0.05);transform:translateY(-2px);}
+.net-info{display:flex;align-items:center;gap:15px;}
+.net-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:bold;color:white;}
+.net-stats{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:1px;color:var(--accent);}
 
-/* CALENDAR */
-.calendar-wrap{
-  border:1px solid rgba(240,237,230,0.08);
-  border-radius:12px;
-  overflow:hidden;
-  background:rgba(240,237,230,0.02);
-}
-.cal-head{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:1.5rem 2rem;border-bottom:1px solid var(--border);
-}
-.cal-body{padding:1.5rem 2rem;display:flex;flex-direction:column;gap:10px}
-.cal-row{
-  display:flex;align-items:center;gap:16px;
-  padding:1rem 1.25rem;background:rgba(240,237,230,0.02);
-  border:1px solid var(--border);
-}
-
-/* FOOTER */
-footer{
-  border-top:1px solid var(--border);
-  padding:2.5rem 3rem;
-  display:flex;align-items:center;justify-content:space-between;
-}
-
-/* ANIMATIONS */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-@media(max-width:768px){
-  nav{padding:1rem 1.5rem}
-  .nav-links{display:none}
-  section{padding:4rem 1.5rem}
-}
+@media(max-width:768px){nav{padding:1rem 1.5rem;}.nav-links{display:none;}}
 </style>
 </head>
 <body>
@@ -270,7 +78,7 @@ footer{
 <div class="cursor-follower" id="follower"></div>
 
 <nav>
-  <a href="#" class="nav-logo"><img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="height:32px;width:auto;"></a>
+  <a href="#" class="nav-logo"><img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9"></a>
   <ul class="nav-links">
     <li><a href="#live">Live</a></li>
     <li><a href="#reseaux">Réseaux</a></li>
@@ -278,168 +86,112 @@ footer{
   </ul>
 </nav>
 
-<section class="hero" style="padding:0;max-width:100%">
-  <div class="hero-bg"></div>
-  <div class="hero-noise"></div>
+<section class="hero">
   <div class="hero-content">
-    <div class="hero-eyebrow">Streamer & Créateur de contenu</div>
-    <div class="live-pill" id="hero-live" style="display:none"><span class="live-dot"></span>Live maintenant</div>
-    <img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="height:clamp(80px,18vw,200px);width:auto;margin:0 auto 1.5rem;animation:logoGlow 2.5s ease-in-out infinite;">
-    <p class="hero-sub">Streams gaming, contenu créatif, communauté. Rejoins l'aventure.</p>
-    <div class="hero-ctas">
-      <a href="#live" class="btn btn-primary">Regarder en live →</a>
-      <a href="#reseaux" class="btn btn-ghost">Tous mes réseaux</a>
-    </div>
+    <img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" class="hero-logo">
+    <p class="hero-sub">Gaming, Créativité & Chill. Rejoins la communauté pour des moments uniques en direct.</p>
+    <a href="https://www.twitch.tv/mickaz9" target="_blank" class="btn btn-primary">Voir le live maintenant</a>
   </div>
 </section>
 
 <section id="live">
-  <div class="reveal">
-    <div class="section-label">Statut</div>
-    <div class="section-title">LIVE <span class="dim">EN COURS</span></div>
-  </div>
-  <div class="live-grid reveal">
+  <h2 class="section-title">STATUT <span class="dim">EN DIRECT</span></h2>
+  <div class="live-grid">
     <div class="live-card">
-      <div class="platform-row">
-        <div class="platform-badge"><div class="platform-icon pi-twitch">T</div>Twitch</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:1.5rem;align-items:center;">
+        <span style="color:var(--twitch);font-weight:700;letter-spacing:2px;">TWITCH</span>
         <span class="status-badge status-offline" id="twitch-status-badge">Hors ligne</span>
       </div>
-      <div>
-        <div class="live-title" id="twitch-title">twitch.tv/mickaz9</div>
-        <div class="live-meta" id="twitch-meta">Chargement...</div>
-      </div>
-      <a href="https://www.twitch.tv/mickaz9" target="_blank" class="live-link">Ouvrir Twitch</a>
+      <h3 id="twitch-title" style="margin-bottom:0.5rem;font-size:1.2rem;">mickaz9</h3>
+      <p id="twitch-meta" style="color:rgba(240,237,230,0.4);font-family:'DM Mono';font-size:0.8rem;margin-bottom:1.5rem;">Aucun stream en cours</p>
+      <a href="https://www.twitch.tv/mickaz9" target="_blank" style="color:var(--accent);text-decoration:none;font-size:0.7rem;letter-spacing:2px;font-weight:700;">REJOINDRE →</a>
     </div>
+    
     <div class="live-card">
-      <div class="platform-row">
-        <div class="platform-badge"><div class="platform-icon pi-youtube">YT</div>YouTube</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:1.5rem;align-items:center;">
+        <span style="color:var(--youtube);font-weight:700;letter-spacing:2px;">YOUTUBE</span>
         <span class="status-badge status-offline" id="yt-status-badge">Hors ligne</span>
       </div>
-      <div>
-        <div class="live-title" id="yt-live-title">youtube.com/@mickaz9</div>
-        <div class="live-meta" id="yt-live-meta">Chargement...</div>
-      </div>
-      <a href="https://www.youtube.com/@mickaz9" target="_blank" class="live-link">Ouvrir YouTube</a>
+      <h3 id="yt-live-title" style="margin-bottom:0.5rem;font-size:1.2rem;">Mickaz9</h3>
+      <p id="yt-live-meta" style="color:rgba(240,237,230,0.4);font-family:'DM Mono';font-size:0.8rem;margin-bottom:1.5rem;">Dernière vidéo en ligne</p>
+      <a href="https://www.youtube.com/@mickaz9" target="_blank" style="color:var(--accent);text-decoration:none;font-size:0.7rem;letter-spacing:2px;font-weight:700;">S'ABONNER →</a>
     </div>
   </div>
 </section>
 
 <section id="reseaux">
-  <div class="reveal">
-    <div class="section-label">Réseaux</div>
-    <div class="section-title">MES <span class="dim">RÉSEAUX</span></div>
-  </div>
-  <div class="networks-wrap reveal">
-    <a class="network-item" href="https://www.twitch.tv/mickaz9" target="_blank">
-      <div class="net-left">
-        <div class="net-icon" style="background:#9146ff">T</div>
-        <div><span class="net-name">Twitch</span><span class="net-handle">@mickaz9</span></div>
+  <h2 class="section-title">MES <span class="dim">RÉSEAUX</span></h2>
+  <div class="networks-grid">
+    <a href="https://www.twitch.tv/mickaz9" target="_blank" class="net-item">
+      <div class="net-info">
+        <div class="net-icon" style="background:var(--twitch)">T</div>
+        <div><strong>Twitch</strong><div style="font-size:0.7rem;opacity:0.5">mickaz9</div></div>
       </div>
       <span class="net-stats" id="twitch-subs">—</span>
     </a>
-    <a class="network-item" href="https://www.youtube.com/@mickaz9" target="_blank">
-      <div class="net-left">
-        <div class="net-icon" style="background:#ff2d2d">Y</div>
-        <div><span class="net-name">YouTube</span><span class="net-handle">@mickaz9</span></div>
+    
+    <a href="https://www.youtube.com/@mickaz9" target="_blank" class="net-item">
+      <div class="net-info">
+        <div class="net-icon" style="background:var(--youtube)">Y</div>
+        <div><strong>YouTube</strong><div style="font-size:0.7rem;opacity:0.5">@mickaz9</div></div>
       </div>
       <span class="net-stats" id="yt-subs">—</span>
+    </a>
+
+    <a href="https://discord.gg/TON_LIEN" target="_blank" class="net-item">
+      <div class="net-info">
+        <div class="net-icon" style="background:var(--discord)">D</div>
+        <div><strong>Discord</strong><div style="font-size:0.7rem;opacity:0.5">La Communauté</div></div>
+      </div>
+      <span class="net-stats">JOIN</span>
+    </a>
+
+    <a href="https://www.tiktok.com/@mickaz9" target="_blank" class="net-item">
+      <div class="net-info">
+        <div class="net-icon" style="background:var(--black);border:1px solid var(--white)">TK</div>
+        <div><strong>TikTok</strong><div style="font-size:0.7rem;opacity:0.5">@mickaz9</div></div>
+      </div>
+      <span class="net-stats">CLIPS</span>
     </a>
   </div>
 </section>
 
-<section id="planning">
-  <div class="reveal">
-    <div class="section-label">Planning</div>
-    <div class="section-title">PLANNING <span class="dim">STREAMS</span></div>
-  </div>
-  <div class="calendar-wrap reveal">
-    <div class="cal-head">
-      <strong>Prochains événements</strong>
-      <span id="cal-month-label" style="color:var(--white)">PLANNING</span>
-    </div>
-    <div class="cal-body" id="cal-body">
-      <div class="cal-row">Chargement du calendrier...</div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="height:24px;opacity:0.2;">
-  <div class="footer-copy">© 2026 — Tous droits réservés</div>
-</footer>
-
 <script>
-// --- LOGIQUE D'INTERFACE ---
+// CURSOR LOGIC
 const cursor = document.getElementById('cursor');
 const follower = document.getElementById('follower');
-let mx=0,my=0,fx=0,fy=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cursor.style.left=(mx-5)+'px';cursor.style.top=(my-5)+'px';
-});
-(function animFollower(){
-  fx+=(mx-fx)*0.12;fy+=(my-fy)*0.12;
-  follower.style.left=(fx-18)+'px';follower.style.top=(fy-18)+'px';
-  requestAnimationFrame(animFollower);
-})();
+let mx=0, my=0, fx=0, fy=0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = (mx-5)+'px'; cursor.style.top = (my-5)+'px'; });
+function anim() { fx += (mx-fx)*0.1; fy += (my-fy)*0.1; follower.style.left = (fx-18)+'px'; follower.style.top = (fy-18)+'px'; requestAnimationFrame(anim); }
+anim();
 
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
-},{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-
-// --- APPELS AUX FUNCTIONS SÉCURISÉES ---
-
-async function checkTwitch() {
+// API FETCHING
+async function updateStats() {
+  // TWITCH
   try {
-    const r = await fetch('/api-twitch'); // Appelle ta Cloudflare Function
+    const r = await fetch('/api-twitch');
     const d = await r.json();
     if(d.data && d.data.length > 0) {
-      const s = d.data[0];
-      const badge = document.getElementById('twitch-status-badge');
-      badge.textContent = 'En stream';
-      badge.className = 'status-badge status-live';
-      document.getElementById('twitch-title').textContent = s.title;
-      document.getElementById('twitch-meta').textContent = s.viewer_count.toLocaleString() + ' spectateurs';
-      document.getElementById('hero-live').style.display = 'inline-flex';
-    } else {
-        document.getElementById('twitch-meta').textContent = 'Hors ligne';
+      document.getElementById('twitch-status-badge').textContent = "LIVE";
+      document.getElementById('twitch-status-badge').className = "status-badge status-live";
+      document.getElementById('twitch-title').textContent = d.data[0].title;
+      document.getElementById('twitch-meta').textContent = d.data[0].viewer_count + " spectateurs";
     }
-  } catch(e) { console.error('Twitch offline'); }
-}
+  } catch(e) {}
 
-async function loadYT() {
+  // YOUTUBE
   try {
-    const r = await fetch('/api-youtube'); // Appelle ta Cloudflare Function
+    const r = await fetch('/api-youtube');
     const d = await r.json();
     if(d.items && d.items[0]) {
-      const n = parseInt(d.items[0].statistics.subscriberCount || 0);
-      const fmtN = n => { if(n>=1000000) return (n/1000000).toFixed(1)+'M'; if(n>=1000) return Math.round(n/1000)+'K'; return n; };
-      document.getElementById('yt-subs').textContent = fmtN(n);
+      const subs = parseInt(d.items[0].statistics.subscriberCount);
+      document.getElementById('yt-subs').textContent = subs >= 1000 ? (subs/1000).toFixed(1) + 'K' : subs;
     }
-  } catch(e) { console.error('YouTube error'); }
+  } catch(e) {}
 }
 
-async function loadCalendar() {
-  try {
-    const r = await fetch('/api-calendar'); // Appelle ta Cloudflare Function
-    const d = await r.json();
-    const body = document.getElementById('cal-body');
-    if(d.items && d.items.length > 0) {
-      body.innerHTML = '';
-      d.items.forEach(ev => {
-        const start = new Date(ev.start.dateTime || ev.start.date);
-        body.innerHTML += `<div class="cal-row"><strong>${start.toLocaleDateString('fr-FR', {day:'numeric', month:'short'})}</strong> — ${ev.summary}</div>`;
-      });
-    } else {
-      body.innerHTML = '<div class="cal-row">Aucun stream prévu.</div>';
-    }
-  } catch(e) { console.error('Calendar error'); }
-}
-
-// Initialisation
-checkTwitch(); loadYT(); loadCalendar();
-setInterval(checkTwitch, 60000);
+updateStats();
+setInterval(updateStats, 60000);
 </script>
 </body>
 </html>
