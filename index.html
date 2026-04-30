@@ -678,25 +678,35 @@ async function loadCalendar(){
     const now=new Date().toISOString();
     const r=await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CONFIG.GOOGLE_CALENDAR_ID)}/events?key=${CONFIG.GOOGLE_API_KEY}&timeMin=${now}&maxResults=6&singleEvents=true&orderBy=startTime`);
     const d=await r.json();
+    const body=document.getElementById('cal-body');
+    body.innerHTML='';
     if(d.items&&d.items.length>0){
-      const body=document.getElementById('cal-body');
-      body.innerHTML='';
-      const days=['dim','lun','mar','mer','jeu','ven','sam'];
+      const days=['DIM','LUN','MAR','MER','JEU','VEN','SAM'];
+      const months=['jan','fév','mar','avr','mai','juin','juil','août','sep','oct','nov','déc'];
+      const monthsFull=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+      const firstDate=new Date(d.items[0].start.dateTime||d.items[0].start.date);
+      document.getElementById('cal-month-label').textContent=monthsFull[firstDate.getMonth()]+' '+firstDate.getFullYear();
       d.items.forEach(ev=>{
         const start=new Date(ev.start.dateTime||ev.start.date);
-        const isTwitch=ev.summary.toLowerCase().includes('twitch');
-        const color=isTwitch?'var(--twitch)':'var(--youtube)';
-        const abbr=isTwitch?'T':'YT';
         const h=start.getHours().toString().padStart(2,'0');
         const m=start.getMinutes().toString().padStart(2,'0');
-        body.innerHTML+=`<div class="cal-row">
-          <div><div class="cal-date">${start.getDate()}</div><div class="cal-day">${days[start.getDay()]}</div></div>
-          <div class="cal-sep"></div>
-          <div class="cal-title">${ev.summary}</div>
-          <span class="cal-time">${h}:${m}</span>
-          <div class="cal-platform" style="background:${color}">${abbr}</div>
+        const hasTime=!!ev.start.dateTime;
+        body.innerHTML+=`<div style="display:flex;align-items:center;gap:16px;padding:1rem 1.25rem;background:rgba(240,237,230,0.02);border:1px solid rgba(240,237,230,0.06);margin-bottom:8px">
+          <div style="text-align:center;min-width:36px;flex-shrink:0">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;line-height:1;color:var(--accent)">${start.getDate()}</div>
+            <div style="font-size:0.58rem;color:rgba(240,237,230,0.3);letter-spacing:1px;text-transform:uppercase;font-family:'DM Mono',monospace">${months[start.getMonth()]}</div>
+          </div>
+          <div style="width:1px;height:36px;background:rgba(240,237,230,0.08);flex-shrink:0"></div>
+          <div style="flex:1">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase">${ev.summary}</div>
+            <div style="font-size:0.62rem;color:rgba(240,237,230,0.25);font-family:'DM Mono',monospace;margin-top:3px;text-transform:uppercase;letter-spacing:1px">${days[start.getDay()]}</div>
+          </div>
+          ${hasTime?`<span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--white)">${h}:${m}</span>`:''}
         </div>`;
       });
+    } else {
+      document.getElementById('cal-month-label').textContent=new Date().toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+      body.innerHTML='<div style="font-size:0.75rem;color:rgba(240,237,230,0.25);font-family:DM Mono,monospace;padding:0.5rem 0">Aucun événement à venir.</div>';
     }
   }catch(e){}
 }
