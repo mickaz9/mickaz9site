@@ -24,13 +24,28 @@ body{
   background:var(--black);
   color:var(--white);
   overflow-x:hidden;
+  cursor:none;
 }
 body::before{
   content:'';
   position:fixed;inset:0;pointer-events:none;z-index:0;
   background:
     radial-gradient(ellipse 70% 40% at 50% 0%, rgba(255,45,45,0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 30% at 0% 50%, rgba(255,45,45,0.04) 0%, transparent 60%);
+    radial-gradient(ellipse 50% 30% at 0% 50%, rgba(255,45,45,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 30% at 100% 50%, rgba(255,45,45,0.04) 0%, transparent 60%);
+}
+/* CURSOR */
+.cursor{
+  position:fixed;width:10px;height:10px;
+  background:var(--accent);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transition:transform 0.1s;mix-blend-mode:difference;
+}
+.cursor-follower{
+  position:fixed;width:36px;height:36px;
+  border:1px solid rgba(255,45,45,0.3);border-radius:50%;
+  pointer-events:none;z-index:9998;
+  transition:transform 0.25s ease, width 0.2s, height 0.2s;mix-blend-mode:difference;
 }
 
 /* NAV */
@@ -40,8 +55,12 @@ nav{
   padding:1.5rem 3rem;
   background:linear-gradient(to bottom,rgba(8,8,8,0.95),transparent);
 }
-.nav-logo img{height:32px;width:auto;display:block;transition:transform 0.3s ease;}
-.nav-logo:hover img{transform: scale(1.05);}
+.nav-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.6rem;letter-spacing:3px;
+  color:var(--white);text-decoration:none;
+}
+.nav-logo span{color:var(--accent)}
 .nav-links{display:flex;gap:2.5rem;list-style:none}
 .nav-links a{
   font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;
@@ -54,214 +73,678 @@ nav{
 .hero{
   position:relative;min-height:100vh;
   display:flex;align-items:center;justify-content:center;
-  overflow:hidden;padding:0;max-width:100%;
+  overflow:hidden;
 }
-.hero-content{position:relative;z-index:2;text-align:center;padding:0 2rem;}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 30%, rgba(255,45,45,0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255,45,45,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 30% at 80% 70%, rgba(180,20,20,0.06) 0%, transparent 60%);
+}
+.hero-noise{
+  position:absolute;inset:0;opacity:0.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size:200px;
+}
+.hero-content{
+  position:relative;z-index:2;
+  text-align:center;padding:0 2rem;
+}
 .hero-eyebrow{
   display:inline-flex;align-items:center;gap:8px;
   font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;
   color:rgba(240,237,230,0.4);margin-bottom:2rem;
   font-family:'DM Mono',monospace;
 }
+.hero-eyebrow::before,
+.hero-eyebrow::after{content:'';flex:1;height:1px;width:40px;background:rgba(240,237,230,0.15)}
 .live-pill{
   display:inline-flex;align-items:center;gap:6px;
-  background:rgba(255,45,45,0.1);border:1px solid rgba(255,45,45,0.3);
-  padding:6px 14px;border-radius:20px;
+  background:rgba(255,45,45,0.08);border:1px solid rgba(255,45,45,0.2);
+  padding:4px 12px;border-radius:20px;
   font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;
   color:var(--accent);margin-bottom:1.5rem;font-family:'DM Mono',monospace;
 }
-.live-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 1.4s infinite}
+.live-dot{width:5px;height:5px;background:var(--accent);border-radius:50%;animation:blink 1.4s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
-@keyframes logoGlow{0%,100%{filter:drop-shadow(0 0 25px rgba(255,45,45,0.4))}50%{filter:drop-shadow(0 0 45px rgba(255,45,45,0.7))}}
-
-.hero-logo{
-    height:clamp(100px, 20vw, 180px);
-    width:auto;
-    margin:0 auto 2rem;
-    animation:logoGlow 3s ease-in-out infinite;
+@keyframes logoGlow{0%,100%{filter:drop-shadow(0 0 25px rgba(255,45,45,0.6)) drop-shadow(0 0 70px rgba(255,45,45,0.25))}50%{filter:drop-shadow(0 0 45px rgba(255,45,45,0.9)) drop-shadow(0 0 120px rgba(255,45,45,0.45))}}
+h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(5rem,14vw,13rem);
+  line-height:0.88;letter-spacing:-1px;
+  margin-bottom:1.5rem;
 }
-
+h1 .outline{
+  -webkit-text-stroke:1px rgba(240,237,230,0.25);
+  color:transparent;
+}
+h1 .accent{color:var(--accent)}
 .hero-sub{
-  font-size:1.1rem;color:rgba(240,237,230,0.6);
-  max-width:500px;margin:0 auto 3rem;line-height:1.6;
+  font-size:0.95rem;color:rgba(240,237,230,0.45);
+  max-width:400px;margin:0 auto 3rem;line-height:1.8;
+  font-weight:300;
 }
+.hero-ctas{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap}
 .btn{
-  display:inline-flex;align-items:center;gap:12px;
-  padding:1rem 2.5rem;border-radius:50px;
-  font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;
-  font-weight:700;text-decoration:none;transition:all 0.3s;
+  display:inline-flex;align-items:center;gap:8px;
+  padding:0.85rem 2rem;border-radius:50px;
+  font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;
+  font-weight:600;text-decoration:none;transition:all 0.2s;
+  font-family:'Bricolage Grotesque',sans-serif;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
 }
-.btn-primary{background:var(--accent);color:#fff;}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(255,45,45,0.3);}
-.btn-ghost{border:1px solid var(--border);color:var(--white);}
-.btn-ghost:hover{background:rgba(240,237,230,0.05);}
+.btn-primary{
+  background:rgba(255,45,45,0.85);
+  color:#ffffff;
+  border:1px solid rgba(255,100,100,0.4);
+  box-shadow:0 4px 24px rgba(255,45,45,0.25),inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.btn-primary:hover{background:rgba(255,45,45,1);transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,45,45,0.4);}
+.btn-ghost{
+  background:rgba(240,237,230,0.05);
+  border:1px solid rgba(240,237,230,0.12);
+  color:rgba(240,237,230,0.7);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.btn-ghost:hover{background:rgba(240,237,230,0.1);border-color:rgba(240,237,230,0.25);color:var(--white);}
+.hero-scroll{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:rgba(240,237,230,0.2);font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;
+  font-family:'DM Mono',monospace;
+  animation:float 2s infinite ease-in-out;
+}
+@keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-6px)}}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--accent),transparent)}
+
+/* MARQUEE */
+.marquee-wrap{
+  overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:1rem 0;background:rgba(240,237,230,0.015);
+}
+.marquee-track{
+  display:flex;gap:3rem;white-space:nowrap;
+  animation:marquee 18s linear infinite;
+}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-item{
+  font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:4px;
+  color:rgba(240,237,230,0.12);text-transform:uppercase;
+}
+.marquee-item.accent{color:var(--accent);opacity:0.5}
 
 /* SECTIONS */
-section{padding:8rem 3rem;max-width:1200px;margin:0 auto}
-.section-label{font-family:'DM Mono',monospace;color:var(--accent);font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:1rem;display:block;}
-.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,8vw,6rem);line-height:0.9;margin-bottom:4rem;}
-.dim{color:rgba(240,237,230,0.1)}
+section{padding:6rem 3rem;max-width:1100px;margin:0 auto}
+.section-label{
+  font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--accent);font-family:'DM Mono',monospace;
+  display:flex;align-items:center;gap:10px;margin-bottom:1rem;
+}
+.section-label::after{content:'';flex:1;max-width:40px;height:1px;background:var(--accent);opacity:0.4}
+.section-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3rem,6vw,5.5rem);line-height:0.9;
+  letter-spacing:-1px;margin-bottom:3rem;
+}
+.section-title .dim{color:rgba(240,237,230,0.15)}
+
+/* LIVE STATUS */
+.live-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.live-card{
+  background:rgba(240,237,230,0.03);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  padding:2.5rem;
+  display:flex;flex-direction:column;gap:1.5rem;
+  transition:all 0.2s;position:relative;overflow:hidden;
+  border-radius:12px;
+}
+.live-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(to right,transparent,var(--accent),transparent);
+  opacity:0;transition:opacity 0.3s;
+}
+.live-card:hover{background:rgba(240,237,230,0.02)}
+.live-card:hover::before{opacity:1}
+.platform-row{display:flex;align-items:center;justify-content:space-between}
+.platform-badge{
+  display:flex;align-items:center;gap:8px;
+  font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;
+  font-family:'DM Mono',monospace;color:rgba(240,237,230,0.35);
+}
+.platform-icon{
+  width:28px;height:28px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;
+}
+.pi-twitch{background:var(--twitch)}
+.pi-youtube{background:var(--youtube)}
+.status-badge{
+  font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;
+  font-family:'DM Mono',monospace;padding:4px 10px;border-radius:20px;
+  backdrop-filter:blur(8px);
+}
+.status-live{background:rgba(255,45,45,0.1);color:var(--accent);border:1px solid rgba(255,45,45,0.2)}
+.status-offline{background:rgba(240,237,230,0.04);color:rgba(240,237,230,0.2);border:1px solid var(--border)}
+.live-title{font-size:1.15rem;font-weight:500;line-height:1.4}
+.live-meta{font-size:0.75rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace}
+.live-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:0.68rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--accent);text-decoration:none;font-weight:600;
+  transition:gap 0.2s;
+}
+.live-link:hover{gap:10px}
+.arrow{display:inline-block}
+
+/* VIDEOS */
+.videos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.video-card{
+  background:var(--black);
+  display:flex;flex-direction:column;
+  transition:background 0.2s;cursor:pointer;text-decoration:none;color:inherit;
+}
+.video-card:hover{background:rgba(240,237,230,0.02)}
+.video-thumb{
+  aspect-ratio:16/9;
+  background:#111;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.thumb-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,#0d0d1a 0%,#1a0d0d 100%);
+}
+.play-ring{
+  width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(240,237,230,0.15);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:1;
+  transition:border-color 0.2s,transform 0.2s;
+}
+.video-card:hover .play-ring{border-color:var(--accent);transform:scale(1.1)}
+.play-tri{
+  width:0;height:0;
+  border-top:7px solid transparent;border-bottom:7px solid transparent;
+  border-left:12px solid rgba(240,237,230,0.6);
+  margin-left:3px;
+}
+.video-card:hover .play-tri{border-left-color:var(--accent)}
+.vid-type{
+  position:absolute;bottom:8px;left:8px;z-index:1;
+  font-size:0.55rem;letter-spacing:1.5px;text-transform:uppercase;
+  font-family:'DM Mono',monospace;padding:2px 6px;border-radius:2px;font-weight:500;
+}
+.vt-long{background:rgba(255,45,45,0.15);color:#ff7070;border:1px solid rgba(255,45,45,0.2)}
+.vt-short{background:rgba(255,45,45,0.1);color:var(--accent);border:1px solid rgba(255,45,45,0.15)}
+.video-info{padding:1.25rem 1.5rem}
+.video-info strong{font-size:0.9rem;font-weight:500;display:block;margin-bottom:6px;line-height:1.4}
+.video-info span{font-size:0.7rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace}
 
 /* NETWORKS */
-.networks-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:1.5rem;}
-.network-card{
-    background:rgba(240,237,230,0.03);
-    border:1px solid var(--border);
-    padding:2rem;
-    border-radius:16px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    text-decoration:none;
-    color:inherit;
-    transition:all 0.3s;
+.networks-wrap{display:flex;flex-direction:column;border:1px solid rgba(240,237,230,0.08);border-radius:12px;overflow:hidden;}
+.network-item{
+  background:rgba(240,237,230,0.02);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  padding:1.25rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  text-decoration:none;color:inherit;
+  transition:all 0.15s;
+  position:relative;overflow:hidden;
+  border-bottom:1px solid rgba(240,237,230,0.06);
 }
-.network-card:hover{background:rgba(240,237,230,0.06);transform:scale(1.02);border-color:var(--accent);}
-.net-info{display:flex;align-items:center;gap:1.5rem;}
-.net-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;}
-.net-name{display:block;font-weight:700;font-size:1.1rem;}
-.net-handle{font-family:'DM Mono',monospace;font-size:0.75rem;color:rgba(240,237,230,0.4);}
-.net-stats{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:1px;}
+.network-item:last-child{border-bottom:none;}
+.network-item::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--accent);opacity:0;transition:opacity 0.2s;
+}
+.network-item:hover::before{opacity:1;}
+.network-item:hover{background:rgba(240,237,230,0.05);}
+.net-left{display:flex;align-items:center;gap:16px;flex:1;}
+.net-icon{
+  width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.net-name{font-size:0.9rem;font-weight:500;display:block;margin-bottom:2px;}
+.net-handle{font-size:0.68rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;}
+.net-stats{font-size:1.2rem;color:var(--white);font-family:'Bebas Neue',sans-serif;letter-spacing:2px;min-width:60px;text-align:right;margin-right:1.5rem;}
+.net-arrow{font-size:1rem;color:rgba(240,237,230,0.15);transition:color 0.2s,transform 0.2s;flex-shrink:0;}
+.network-item:hover .net-arrow{color:var(--accent);transform:translate(2px,-2px);}
 
 /* CALENDAR */
-.cal-container{background:rgba(240,237,230,0.02);border:1px solid var(--border);border-radius:20px;overflow:hidden;}
-.cal-row{display:flex;align-items:center;padding:1.5rem 2rem;border-bottom:1px solid var(--border);transition:background 0.2s;}
-.cal-row:hover{background:rgba(255,45,45,0.02);}
-.cal-date{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--accent);min-width:50px;}
-.cal-details{flex:1;margin-left:2rem;}
-.cal-event-title{font-size:1.1rem;font-weight:600;margin-bottom:4px;}
-.cal-time{font-family:'DM Mono',monospace;font-size:0.8rem;color:rgba(240,237,230,0.4);}
+.calendar-wrap{
+  border:1px solid rgba(240,237,230,0.08);
+  border-radius:12px;
+  overflow:hidden;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  background:rgba(240,237,230,0.02);
+}
+.cal-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.5rem 2rem;border-bottom:1px solid var(--border);
+}
+.cal-head strong{font-size:0.85rem;font-weight:500}
+.cal-head span{font-size:0.7rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace}
+.cal-body{padding:1.5rem 2rem;display:flex;flex-direction:column;gap:10px}
+.cal-row{
+  display:flex;align-items:center;gap:16px;
+  padding:1rem 1.25rem;background:rgba(240,237,230,0.02);
+  border:1px solid var(--border);
+}
+.cal-date{
+  font-family:'Bebas Neue',sans-serif;font-size:1.8rem;line-height:1;
+  color:var(--accent);width:32px;text-align:center;flex-shrink:0;
+}
+.cal-day{font-size:0.58rem;color:rgba(240,237,230,0.3);letter-spacing:1px;text-transform:uppercase;font-family:'DM Mono',monospace;text-align:center}
+.cal-sep{width:1px;height:36px;background:var(--border);flex-shrink:0}
+.cal-title{font-size:0.88rem;font-weight:500;flex:1}
+.cal-time{font-size:0.68rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;white-space:nowrap}
+.cal-platform{
+  width:22px;height:22px;border-radius:3px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:800;color:white;flex-shrink:0;
+}
+.cal-api-note{
+  padding:1rem 2rem;border-top:1px solid var(--border);
+  font-size:0.68rem;color:rgba(240,237,230,0.2);
+  font-family:'DM Mono',monospace;display:flex;align-items:center;gap:8px;
+}
 
-footer{padding:4rem 3rem;text-align:center;border-top:1px solid var(--border);margin-top:4rem;}
-.footer-copy{font-family:'DM Mono',monospace;font-size:0.7rem;color:rgba(240,237,230,0.2);margin-top:1.5rem;}
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:2.5rem 3rem;
+  display:flex;align-items:center;justify-content:space-between;
+  max-width:100%;
+}
+.footer-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:3px;
+  color:rgba(240,237,230,0.15);
+}
+.footer-logo span{color:rgba(255,45,45,0.3)}
+.footer-copy{font-size:0.62rem;color:rgba(240,237,230,0.15);font-family:'DM Mono',monospace;letter-spacing:1px}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+
+/* API CONFIG NOTE */
+.config-banner{
+  background:rgba(255,45,45,0.04);border:1px solid rgba(255,45,45,0.1);
+  padding:0.8rem 1.5rem;
+  font-size:0.68rem;color:rgba(255,45,45,0.5);font-family:'DM Mono',monospace;
+  display:flex;align-items:center;gap:8px;
+}
+.config-banner code{background:rgba(255,45,45,0.08);padding:1px 5px;border-radius:2px}
 
 @media(max-width:768px){
-  nav{padding:1rem 1.5rem;}
-  .nav-links{display:none;}
-  section{padding:5rem 1.5rem;}
-  .networks-grid{grid-template-columns:1fr;}
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  section{padding:4rem 1.5rem}
+  h1{font-size:clamp(4rem,18vw,6rem)}
+  .live-grid,.videos-grid,.networks-wrap{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="follower"></div>
+
 <nav>
-  <a href="#" class="nav-logo">
-    <img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9">
-  </a>
+  <a href="#" class="nav-logo"><img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="height:32px;width:auto;display:block;"></a>
   <ul class="nav-links">
+    <li><a href="#live">Live</a></li>
     <li><a href="#reseaux">Réseaux</a></li>
     <li><a href="#planning">Planning</a></li>
   </ul>
 </nav>
 
-<section class="hero">
+<section class="hero" style="padding:0;max-width:100%">
+  <div class="hero-bg"></div>
+  <div class="hero-noise"></div>
   <div class="hero-content">
-    <div class="live-pill" id="hero-live" style="display:none"><span class="live-dot"></span>En Live Maintenant</div>
-    <img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" class="hero-logo" alt="Mickaz9">
-    <p class="hero-sub">Streamer Gaming & Créateur de contenu. Rejoins la communauté pour des moments uniques en direct.</p>
+    <div class="hero-eyebrow">Streamer & Créateur de contenu</div>
+    <div class="live-pill" id="hero-live" style="display:none"><span class="live-dot"></span>Live maintenant</div>
+    <img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="height:clamp(80px,18vw,200px);width:auto;display:block;margin:0 auto 1.5rem;filter:drop-shadow(0 0 30px rgba(255,45,45,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.35));animation:logoGlow 2.5s ease-in-out infinite;">
+    <p class="hero-sub">Streams gaming, contenu créatif, communauté. Rejoins l'aventure.</p>
     <div class="hero-ctas">
-      <a href="https://www.twitch.tv/mickaz9" target="_blank" class="btn btn-primary">Regarder sur Twitch</a>
-      <a href="#reseaux" class="btn btn-ghost">Mes Réseaux</a>
+      <a href="#live" class="btn btn-primary">Regarder en live →</a>
+      <a href="#reseaux" class="btn btn-ghost">Tous mes réseaux</a>
     </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Descendre</span>
   </div>
 </section>
 
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marquee">
+    <span class="marquee-item">MICKAZ9</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">CRÉATEUR DE CONTENU</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">MICKAZ9</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">CRÉATEUR DE CONTENU</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">MICKAZ9</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">CRÉATEUR DE CONTENU</span>
+    <span class="marquee-item accent">✦</span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item">MICKAZ9</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">CRÉATEUR DE CONTENU</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">MICKAZ9</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">CRÉATEUR DE CONTENU</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">MICKAZ9</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">CRÉATEUR DE CONTENU</span>
+    <span class="marquee-item accent">✦</span>
+  </div>
+</div>
+
+<section id="live">
+  <div class="reveal">
+    <div class="section-label">Statut</div>
+    <div class="section-title">LIVE <span class="dim">EN COURS</span></div>
+  </div>
+  <div style="margin-top:1px">
+  <div class="live-grid reveal reveal-delay-2">
+    <div class="live-card">
+      <div class="platform-row">
+        <div class="platform-badge"><div class="platform-icon pi-twitch">T</div>Twitch</div>
+        <span class="status-badge status-offline" id="twitch-status-badge">Hors ligne</span>
+      </div>
+      <div>
+        <div class="live-title" id="twitch-title">twitch.tv/mickaz9</div>
+        <div class="live-meta" id="twitch-meta">Hors ligne pour l'instant</div>
+      </div>
+      <a href="https://www.twitch.tv/mickaz9" target="_blank" class="live-link">Ouvrir Twitch <span class="arrow">→</span></a>
+    </div>
+    <div class="live-card">
+      <div class="platform-row">
+        <div class="platform-badge"><div class="platform-icon pi-youtube">YT</div>YouTube</div>
+        <span class="status-badge status-offline" id="yt-status-badge">Hors ligne</span>
+      </div>
+      <div>
+        <div class="live-title" id="yt-live-title">youtube.com/@mickaz9</div>
+        <div class="live-meta" id="yt-live-meta">Hors ligne pour l'instant</div>
+      </div>
+      <a href="https://www.youtube.com/@mickaz9" target="_blank" class="live-link">Ouvrir YouTube <span class="arrow">→</span></a>
+    </div>
+  </div>
+  </div>
+</section>
+
+
 <section id="reseaux">
-  <span class="section-label">// Social</span>
-  <h2 class="section-title">MES <span class="dim">PLATEFORMES</span></h2>
-  
-  <div class="networks-grid">
-    <a href="https://www.twitch.tv/mickaz9" target="_blank" class="network-card">
-        <div class="net-info">
-            <div class="net-icon" style="background:var(--twitch)">T</div>
-            <div><span class="net-name">Twitch</span><span class="net-handle">@mickaz9</span></div>
-        </div>
-        <span class="net-stats" id="twitch-subs">—</span>
+  <div class="reveal">
+    <div class="section-label">Réseaux</div>
+    <div class="section-title">MES <span class="dim">RÉSEAUX</span></div>
+  </div>
+  <div class="networks-wrap reveal reveal-delay-1">
+    <a class="network-item" href="https://www.twitch.tv/mickaz9" target="_blank">
+      <div class="net-left">
+        <div class="net-icon" style="background:#9146ff"><svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg></div>
+        <div><span class="net-name">Twitch</span><span class="net-handle">@mickaz9</span></div>
+      </div>
+      <span class="net-stats" id="twitch-subs">—</span>
+      <span class="net-arrow">↗</span>
     </a>
-
-    <a href="https://www.youtube.com/@mickaz9" target="_blank" class="network-card">
-        <div class="net-info">
-            <div class="net-icon" style="background:var(--youtube)">Y</div>
-            <div><span class="net-name">YouTube</span><span class="net-handle">@mickaz9</span></div>
-        </div>
-        <span class="net-stats" id="yt-subs">—</span>
+    <a class="network-item" href="https://www.youtube.com/@mickaz9" target="_blank">
+      <div class="net-left">
+        <div class="net-icon" style="background:#ff2d2d"><svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></div>
+        <div><span class="net-name">YouTube</span><span class="net-handle">@mickaz9</span></div>
+      </div>
+      <span class="net-stats" id="yt-subs">—</span>
+      <span class="net-arrow">↗</span>
     </a>
-
-    <a href="https://discord.gg/gBYX2dufjw" target="_blank" class="network-card">
-        <div class="net-info">
-            <div class="net-icon" style="background:var(--discord)">D</div>
-            <div><span class="net-name">Discord</span><span class="net-handle">La Communauté</span></div>
-        </div>
-        <span class="net-stats">900</span>
+    <a class="network-item" href="https://discord.gg/gBYX2dufjw" target="_blank">
+      <div class="net-left">
+        <div class="net-icon" style="background:#5865f2"><svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.1 18.08.114 18.1.132 18.11a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg></div>
+        <div><span class="net-name">Discord</span><span class="net-handle">Rejoindre le serveur</span></div>
+      </div>
+      <span class="net-stats" id="discord-stats">900 membres</span>
+      <span class="net-arrow">↗</span>
+    </a>
+    <a class="network-item" href="https://x.com/micka23mar" target="_blank">
+      <div class="net-left">
+        <div class="net-icon" style="background:#111"><svg viewBox="0 0 24 24" fill="white" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.629zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>
+        <div><span class="net-name">Twitter / X</span><span class="net-handle">@micka23mar</span></div>
+      </div>
+      <span class="net-stats" id="twitter-stats">100 followers</span>
+      <span class="net-arrow">↗</span>
+    </a>
+    <a class="network-item" href="https://www.tiktok.com/@mickaaz9" target="_blank">
+      <div class="net-left">
+        <div class="net-icon" style="background:#010101;border:1px solid #333"><svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg></div>
+        <div><span class="net-name">TikTok</span><span class="net-handle">@mickaaz9</span></div>
+      </div>
+      <span class="net-stats" id="tiktok-stats">2K followers</span>
+      <span class="net-arrow">↗</span>
+    </a>
+    <a class="network-item" href="https://www.instagram.com/mickaz9/" target="_blank">
+      <div class="net-left">
+        <div class="net-icon" style="background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)"><svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></div>
+        <div><span class="net-name">Instagram</span><span class="net-handle">@mickaz9</span></div>
+      </div>
+      <span class="net-stats" id="instagram-stats">500 abonnés</span>
+      <span class="net-arrow">↗</span>
     </a>
   </div>
 </section>
 
 <section id="planning">
-  <span class="section-label">// Agenda</span>
-  <h2 class="section-title">PROCHAINS <span class="dim">STREAMS</span></h2>
-  <div class="cal-container" id="cal-body">
-      <div style="padding:2rem; color:rgba(240,237,230,0.3); font-family:'DM Mono',monospace;">Chargement du planning...</div>
+  <div class="reveal">
+    <div class="section-label">Planning</div>
+    <div class="section-title">PLANNING <span class="dim">STREAMS</span></div>
+  </div>
+  <div class="calendar-wrap reveal reveal-delay-1">
+    <div class="cal-head">
+      <strong>Prochains événements</strong>
+      <span id="cal-month-label" style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;color:var(--white);text-transform:uppercase">—</span>
+    </div>
+    <div class="cal-body" id="cal-body">
+      <div class="cal-row">
+        <div><div class="cal-date">?</div><div class="cal-day">lun</div></div>
+        <div class="cal-sep"></div>
+        <div class="cal-title">Configure Google Calendar pour afficher tes streams</div>
+        <span class="cal-time">20:00</span>
+        <div class="cal-platform" style="background:var(--twitch)">T</div>
+      </div>
+      <div class="cal-row">
+        <div><div class="cal-date">?</div><div class="cal-day">ven</div></div>
+        <div class="cal-sep"></div>
+        <div class="cal-title">Live YouTube — Renseigne ton CALENDAR_ID</div>
+        <span class="cal-time">18:00</span>
+        <div class="cal-platform" style="background:var(--youtube)">YT</div>
+      </div>
+    </div>
+    
   </div>
 </section>
 
 <footer>
-  <img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" style="height:20px; opacity:0.2;">
-  <div class="footer-copy">© 2026 MICKAZ9 — TOUS DROITS RÉSERVÉS</div>
+  <img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="height:24px;width:auto;opacity:0.2;">
+  <div class="footer-copy">© 2026 — Tous droits réservés</div>
 </footer>
 
 <script>
-const CONFIG = {
-  YOUTUBE_API_KEY: 'AIzaSyAJEawoFVglEQifOr-CNF9LxCPDGjSS-DI',
-  YOUTUBE_CHANNEL_ID: 'UCdPjxTsJmR96YFtUand3N4w',
-  TWITCH_CLIENT_ID: 'gp762nuuoqcoxypju8c569th9wz7q5',
-  TWITCH_TOKEN: '1yufl6mbsd70a4xjk6j4oj4uxy5ce6',
-  GOOGLE_CALENDAR_ID: 'dbd9d2c221012ad75c3200dfc7d25cc685383fefdfd876dcefdfc7438bbd6ceb@group.calendar.google.com',
-  GOOGLE_API_KEY: 'AIzaSyBikMOeXXHr-HvJwfbZOw-mMiRlvPfccww'
-};
 
+// Cursor
+const cursor = document.getElementById('cursor');
+const follower = document.getElementById('follower');
+let mx=0,my=0,fx=0,fy=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=(mx-5)+'px';cursor.style.top=(my-5)+'px';
+});
+(function animFollower(){
+  fx+=(mx-fx)*0.12;fy+=(my-fy)*0.12;
+  follower.style.left=(fx-18)+'px';follower.style.top=(fy-18)+'px';
+  requestAnimationFrame(animFollower);
+})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{follower.style.width='52px';follower.style.height='52px';});
+  el.addEventListener('mouseleave',()=>{follower.style.width='36px';follower.style.height='36px';});
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// Calendar month label
+// cal-month-label updated after calendar loads
+
+// Twitch live check
 async function checkTwitch(){
   try{
-    const r=await fetch('https://api.twitch.tv/helix/streams?user_login=mickaz9',{
-      headers:{'Client-ID':CONFIG.TWITCH_CLIENT_ID,'Authorization':'Bearer '+CONFIG.TWITCH_TOKEN}
-    });
+    const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'K';return n;};
+    const r=await fetch('/functions/api-twitch');
     const d=await r.json();
-    if(d.data && d.data.length > 0) {
-        document.getElementById('hero-live').style.display = 'inline-flex';
+    if(d.data&&d.data.length>0){
+      const s=d.data[0];
+      const badge=document.getElementById('twitch-status-badge');
+      badge.textContent='En stream';badge.className='status-badge status-live';
+      document.getElementById('twitch-title').textContent=s.title;
+      document.getElementById('twitch-meta').textContent=s.viewer_count.toLocaleString()+' spectateurs';
+      document.getElementById('hero-live').style.display='inline-flex';
     }
-  }catch(e){console.error('Twitch Error',e);}
+  }catch(e){console.error('Twitch error',e);}
 }
 
+async function loadYT(){
+  const CACHE_KEY='mickaz9_yt_cache';
+  const CACHE_TTL=3600000;
+  try{
+    const cached=localStorage.getItem(CACHE_KEY);
+    if(cached){
+      const {data,timestamp}=JSON.parse(cached);
+      if(Date.now()-timestamp<CACHE_TTL){applyYTData(data);return;}
+    }
+    const fmtViews=n=>{n=parseInt(n||0);if(n>=1000000)return(n/1000000).toFixed(1)+'M vues';if(n>=1000)return Math.round(n/1000)+'K vues';return n+' vues';};
+    const fmt=dt=>new Date(dt).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+    const fixTitle=t=>t.replace(/&#39;/g,"'").replace(/&amp;/g,'&').replace(/&quot;/g,'"');
+    const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'K';return n;};
+    const data={subs:null,live:null,videos:[]};
+
+    // Abonnés via endpoint Cloudflare
+    const chanR=await fetch('/functions/api-youtube');
+    const chanD=await chanR.json();
+    if(chanD.items&&chanD.items[0]){
+      const n=parseInt(chanD.items[0].statistics.subscriberCount||0);
+      data.subs=fmtN(n);
+    }
+
+    // Live + vidéos via API YouTube directe (clé côté client pas nécessaire ici car on a le cache)
+    // On utilise l'endpoint api-youtube pour les stats, et des appels directs pour live+vidéos
+    // Pour live et vidéos, on passe par un param query
+    const liveR=await fetch('/functions/api-youtube?type=live');
+    if(liveR.ok){
+      const liveD=await liveR.json();
+      if(liveD.items&&liveD.items.length>0)data.live=liveD.items[0].snippet?.title||null;
+    }
+
+    const vR=await fetch('/functions/api-youtube?type=videos');
+    if(vR.ok){
+      const vD=await vR.json();
+      if(vD.items&&vD.items.length>0){
+        const ids=vD.items.slice(0,3).map(i=>i.id?.videoId).filter(Boolean).join(',');
+        let statsMap={};
+        if(ids){
+          const sR=await fetch('/functions/api-youtube?type=stats&ids='+ids);
+          if(sR.ok){const sD=await sR.json();if(sD.items)sD.items.forEach(s=>statsMap[s.id]=s.statistics);}
+        }
+        vD.items.slice(0,3).forEach((item,i)=>{
+          if(!item.id?.videoId)return;
+          const vid=item.id.videoId;
+          const stats=statsMap[vid]||{};
+          const n=parseInt(stats.viewCount||0);
+          const views=n>=1000000?(n/1000000).toFixed(1)+'M vues':n>=1000?Math.round(n/1000)+'K vues':n+' vues';
+          data.videos.push({id:vid,title:fixTitle(item.snippet.title),meta:views+' · '+fmt(item.snippet.publishedAt)});
+        });
+      }
+    }
+
+    localStorage.setItem(CACHE_KEY,JSON.stringify({data,timestamp:Date.now()}));
+    applyYTData(data);
+  }catch(e){console.error('YT error',e);}
+}
+
+function applyYTData(data){
+  if(data.subs){const el=document.getElementById('yt-subs');if(el)el.textContent=data.subs;}
+  if(data.live){
+    const badge=document.getElementById('yt-status-badge');
+    if(badge){badge.textContent='En stream';badge.className='status-badge status-live';}
+    const title=document.getElementById('yt-live-title');
+    if(title)title.textContent=data.live;
+    document.getElementById('hero-live').style.display='inline-flex';
+  }
+  data.videos.forEach((v,i)=>{
+    const n=i+1;
+    const card=document.getElementById('vid'+n);
+    if(card)card.href='https://www.youtube.com/watch?v='+v.id;
+    const bg=document.getElementById('vid'+n+'-thumb-bg');
+    if(bg){bg.style.backgroundImage='url(https://img.youtube.com/vi/'+v.id+'/hqdefault.jpg)';bg.style.backgroundSize='cover';bg.style.backgroundPosition='center';}
+    const title=document.getElementById('vid'+n+'-title');
+    if(title)title.textContent=v.title;
+    const meta=document.getElementById('vid'+n+'-meta');
+    if(meta)meta.textContent=v.meta;
+  });
+}
+
+// Google Calendar
 async function loadCalendar(){
   try{
-    const now=new Date().toISOString();
-    const r=await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CONFIG.GOOGLE_CALENDAR_ID)}/events?key=${CONFIG.GOOGLE_API_KEY}&timeMin=${now}&maxResults=5&singleEvents=true&orderBy=startTime`);
+    const r=await fetch('/functions/api-calendar');
     const d=await r.json();
     const body=document.getElementById('cal-body');
-    if(d.items && d.items.length > 0){
-      body.innerHTML = d.items.map(ev => {
-        const date = new Date(ev.start.dateTime || ev.start.date);
-        return `
-          <div class="cal-row">
-            <div class="cal-date">${date.getDate()}</div>
-            <div class="cal-details">
-                <div class="cal-event-title">${ev.summary}</div>
-                <div class="cal-time">${date.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'})} — ${date.toLocaleDateString('fr-FR', {weekday:'long', month:'long'})}</div>
-            </div>
+    body.innerHTML='';
+    if(d.items&&d.items.length>0){
+      const days=['DIM','LUN','MAR','MER','JEU','VEN','SAM'];
+      const months=['jan','fév','mar','avr','mai','juin','juil','août','sep','oct','nov','déc'];
+      const monthsFull=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+      const firstDate=new Date(d.items[0].start.dateTime||d.items[0].start.date);
+      document.getElementById('cal-month-label').textContent=monthsFull[firstDate.getMonth()]+' '+firstDate.getFullYear();
+      d.items.forEach(ev=>{
+        const start=new Date(ev.start.dateTime||ev.start.date);
+        const h=start.getHours().toString().padStart(2,'0');
+        const m=start.getMinutes().toString().padStart(2,'0');
+        const hasTime=!!ev.start.dateTime;
+        body.innerHTML+=`<div style="display:flex;align-items:center;gap:16px;padding:1rem 1.25rem;background:rgba(240,237,230,0.02);border:1px solid rgba(240,237,230,0.06);margin-bottom:8px">
+          <div style="text-align:center;min-width:36px;flex-shrink:0">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;line-height:1;color:var(--accent)">${start.getDate()}</div>
+            <div style="font-size:0.58rem;color:rgba(240,237,230,0.3);letter-spacing:1px;text-transform:uppercase;font-family:'DM Mono',monospace">${months[start.getMonth()]}</div>
           </div>
-        `;
-      }).join('');
+          <div style="width:1px;height:36px;background:rgba(240,237,230,0.08);flex-shrink:0"></div>
+          <div style="flex:1">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase">${ev.summary}</div>
+            <div style="font-size:0.62rem;color:rgba(240,237,230,0.25);font-family:'DM Mono',monospace;margin-top:3px;text-transform:uppercase;letter-spacing:1px">${days[start.getDay()]}</div>
+          </div>
+          ${hasTime?`<span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--white)">${h}:${m}</span>`:''}
+        </div>`;
+      });
     } else {
-      body.innerHTML = '<div style="padding:2rem;">Pas de stream prévu pour le moment.</div>';
+      document.getElementById('cal-month-label').textContent=new Date().toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+      body.innerHTML='<div style="font-size:0.75rem;color:rgba(240,237,230,0.25);font-family:DM Mono,monospace;padding:0.5rem 0">Aucun événement à venir.</div>';
     }
-  }catch(e){ console.error('Calendar Error',e); }
+  }catch(e){console.error('Calendar error',e);}
 }
 
-// Lancement des fonctions
-checkTwitch();
-loadCalendar();
+checkTwitch();loadYT();loadCalendar();
+setInterval(checkTwitch,60000);
 </script>
-
 </body>
 </html>
