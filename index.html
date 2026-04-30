@@ -17,8 +17,6 @@
   --twitch:#9146ff;
   --youtube:#ff2d2d;
   --discord:#5865f2;
-  --tiktok:#00f2ea;
-  --twitter:#1da1f2;
 }
 html{scroll-behavior:smooth}
 body{
@@ -26,61 +24,132 @@ body{
   background:var(--black);
   color:var(--white);
   overflow-x:hidden;
-  cursor:none;
 }
-/* CURSOR */
-.cursor{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transition:transform 0.1s;mix-blend-mode:difference;}
-.cursor-follower{position:fixed;width:36px;height:36px;border:1px solid rgba(255,45,45,0.3);border-radius:50%;pointer-events:none;z-index:9998;transition:transform 0.25s ease;mix-blend-mode:difference;}
+body::before{
+  content:'';
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 0%, rgba(255,45,45,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 30% at 0% 50%, rgba(255,45,45,0.04) 0%, transparent 60%);
+}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 3rem;background:linear-gradient(to bottom,rgba(8,8,8,0.95),transparent);}
-.nav-logo img{height:32px;width:auto;display:block;}
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.5rem 3rem;
+  background:linear-gradient(to bottom,rgba(8,8,8,0.95),transparent);
+}
+.nav-logo img{height:32px;width:auto;display:block;transition:transform 0.3s ease;}
+.nav-logo:hover img{transform: scale(1.05);}
 .nav-links{display:flex;gap:2.5rem;list-style:none}
-.nav-links a{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:rgba(240,237,230,0.5);text-decoration:none;transition:color 0.2s;font-weight:500;}
+.nav-links a{
+  font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(240,237,230,0.5);text-decoration:none;
+  transition:color 0.2s;font-weight:500;
+}
 .nav-links a:hover{color:var(--accent)}
 
 /* HERO */
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;text-align:center;}
-.hero-content{position:relative;z-index:2;padding:0 2rem;display:flex;flex-direction:column;align-items:center;}
-.hero-logo{height:clamp(100px, 20vw, 180px);width:auto;margin-bottom:2rem;filter:drop-shadow(0 0 30px rgba(255,45,45,0.3));}
-.hero-sub{font-size:1.1rem;color:rgba(240,237,230,0.6);max-width:500px;margin-bottom:2.5rem;line-height:1.6;}
-.btn{display:inline-flex;align-items:center;gap:10px;padding:1rem 2.5rem;border-radius:50px;font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;text-decoration:none;transition:all 0.3s;}
-.btn-primary{background:var(--accent);color:white;border:1px solid rgba(255,255,255,0.2);}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(255,45,45,0.4);}
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;padding:0;max-width:100%;
+}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 2rem;}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(240,237,230,0.4);margin-bottom:2rem;
+  font-family:'DM Mono',monospace;
+}
+.live-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,45,45,0.1);border:1px solid rgba(255,45,45,0.3);
+  padding:6px 14px;border-radius:20px;
+  font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1.5rem;font-family:'DM Mono',monospace;
+}
+.live-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 1.4s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+@keyframes logoGlow{0%,100%{filter:drop-shadow(0 0 25px rgba(255,45,45,0.4))}50%{filter:drop-shadow(0 0 45px rgba(255,45,45,0.7))}}
+
+.hero-logo{
+    height:clamp(100px, 20vw, 180px);
+    width:auto;
+    margin:0 auto 2rem;
+    animation:logoGlow 3s ease-in-out infinite;
+}
+
+.hero-sub{
+  font-size:1.1rem;color:rgba(240,237,230,0.6);
+  max-width:500px;margin:0 auto 3rem;line-height:1.6;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:12px;
+  padding:1rem 2.5rem;border-radius:50px;
+  font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;
+  font-weight:700;text-decoration:none;transition:all 0.3s;
+}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(255,45,45,0.3);}
+.btn-ghost{border:1px solid var(--border);color:var(--white);}
+.btn-ghost:hover{background:rgba(240,237,230,0.05);}
 
 /* SECTIONS */
-section{padding:8rem 2rem;max-width:1200px;margin:0 auto;}
-.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem, 8vw, 6rem);line-height:0.9;margin-bottom:4rem;text-align:center;}
-.dim{color:rgba(240,237,230,0.1);}
-
-/* LIVE CARDS */
-.live-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:20px;}
-.live-card{background:rgba(240,237,230,0.03);padding:2.5rem;border-radius:20px;border:1px solid var(--border);transition:0.3s;}
-.live-card:hover{border-color:rgba(255,45,45,0.3);background:rgba(255,45,45,0.02);}
-.status-badge{font-family:'DM Mono',monospace;font-size:0.65rem;padding:5px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;}
-.status-live{background:rgba(255,45,45,0.15);color:var(--accent);border:1px solid var(--accent);}
-.status-offline{background:rgba(240,237,230,0.05);color:rgba(240,237,230,0.3);}
+section{padding:8rem 3rem;max-width:1200px;margin:0 auto}
+.section-label{font-family:'DM Mono',monospace;color:var(--accent);font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:1rem;display:block;}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,8vw,6rem);line-height:0.9;margin-bottom:4rem;}
+.dim{color:rgba(240,237,230,0.1)}
 
 /* NETWORKS */
-.networks-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:15px;}
-.net-item{background:rgba(240,237,230,0.02);padding:1.5rem;border-radius:15px;display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:inherit;border:1px solid var(--border);transition:0.2s;}
-.net-item:hover{background:rgba(240,237,230,0.05);transform:translateY(-2px);}
-.net-info{display:flex;align-items:center;gap:15px;}
-.net-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:bold;color:white;}
-.net-stats{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:1px;color:var(--accent);}
+.networks-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:1.5rem;}
+.network-card{
+    background:rgba(240,237,230,0.03);
+    border:1px solid var(--border);
+    padding:2rem;
+    border-radius:16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    text-decoration:none;
+    color:inherit;
+    transition:all 0.3s;
+}
+.network-card:hover{background:rgba(240,237,230,0.06);transform:scale(1.02);border-color:var(--accent);}
+.net-info{display:flex;align-items:center;gap:1.5rem;}
+.net-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;}
+.net-name{display:block;font-weight:700;font-size:1.1rem;}
+.net-handle{font-family:'DM Mono',monospace;font-size:0.75rem;color:rgba(240,237,230,0.4);}
+.net-stats{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:1px;}
 
-@media(max-width:768px){nav{padding:1rem 1.5rem;}.nav-links{display:none;}}
+/* CALENDAR */
+.cal-container{background:rgba(240,237,230,0.02);border:1px solid var(--border);border-radius:20px;overflow:hidden;}
+.cal-row{display:flex;align-items:center;padding:1.5rem 2rem;border-bottom:1px solid var(--border);transition:background 0.2s;}
+.cal-row:hover{background:rgba(255,45,45,0.02);}
+.cal-date{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--accent);min-width:50px;}
+.cal-details{flex:1;margin-left:2rem;}
+.cal-event-title{font-size:1.1rem;font-weight:600;margin-bottom:4px;}
+.cal-time{font-family:'DM Mono',monospace;font-size:0.8rem;color:rgba(240,237,230,0.4);}
+
+footer{padding:4rem 3rem;text-align:center;border-top:1px solid var(--border);margin-top:4rem;}
+.footer-copy{font-family:'DM Mono',monospace;font-size:0.7rem;color:rgba(240,237,230,0.2);margin-top:1.5rem;}
+
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{display:none;}
+  section{padding:5rem 1.5rem;}
+  .networks-grid{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-follower" id="follower"></div>
-
 <nav>
-  <a href="#" class="nav-logo"><img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9"></a>
+  <a href="#" class="nav-logo">
+    <img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9">
+  </a>
   <ul class="nav-links">
-    <li><a href="#live">Live</a></li>
     <li><a href="#reseaux">Réseaux</a></li>
     <li><a href="#planning">Planning</a></li>
   </ul>
@@ -88,110 +157,111 @@ section{padding:8rem 2rem;max-width:1200px;margin:0 auto;}
 
 <section class="hero">
   <div class="hero-content">
-    <img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" class="hero-logo">
-    <p class="hero-sub">Gaming, Créativité & Chill. Rejoins la communauté pour des moments uniques en direct.</p>
-    <a href="https://www.twitch.tv/mickaz9" target="_blank" class="btn btn-primary">Voir le live maintenant</a>
-  </div>
-</section>
-
-<section id="live">
-  <h2 class="section-title">STATUT <span class="dim">EN DIRECT</span></h2>
-  <div class="live-grid">
-    <div class="live-card">
-      <div style="display:flex;justify-content:space-between;margin-bottom:1.5rem;align-items:center;">
-        <span style="color:var(--twitch);font-weight:700;letter-spacing:2px;">TWITCH</span>
-        <span class="status-badge status-offline" id="twitch-status-badge">Hors ligne</span>
-      </div>
-      <h3 id="twitch-title" style="margin-bottom:0.5rem;font-size:1.2rem;">mickaz9</h3>
-      <p id="twitch-meta" style="color:rgba(240,237,230,0.4);font-family:'DM Mono';font-size:0.8rem;margin-bottom:1.5rem;">Aucun stream en cours</p>
-      <a href="https://www.twitch.tv/mickaz9" target="_blank" style="color:var(--accent);text-decoration:none;font-size:0.7rem;letter-spacing:2px;font-weight:700;">REJOINDRE →</a>
-    </div>
-    
-    <div class="live-card">
-      <div style="display:flex;justify-content:space-between;margin-bottom:1.5rem;align-items:center;">
-        <span style="color:var(--youtube);font-weight:700;letter-spacing:2px;">YOUTUBE</span>
-        <span class="status-badge status-offline" id="yt-status-badge">Hors ligne</span>
-      </div>
-      <h3 id="yt-live-title" style="margin-bottom:0.5rem;font-size:1.2rem;">Mickaz9</h3>
-      <p id="yt-live-meta" style="color:rgba(240,237,230,0.4);font-family:'DM Mono';font-size:0.8rem;margin-bottom:1.5rem;">Dernière vidéo en ligne</p>
-      <a href="https://www.youtube.com/@mickaz9" target="_blank" style="color:var(--accent);text-decoration:none;font-size:0.7rem;letter-spacing:2px;font-weight:700;">S'ABONNER →</a>
+    <div class="live-pill" id="hero-live" style="display:none"><span class="live-dot"></span>En Live Maintenant</div>
+    <img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" class="hero-logo" alt="Mickaz9">
+    <p class="hero-sub">Streamer Gaming & Créateur de contenu. Rejoins la communauté pour des moments uniques en direct.</p>
+    <div class="hero-ctas">
+      <a href="https://www.twitch.tv/mickaz9" target="_blank" class="btn btn-primary">Regarder sur Twitch</a>
+      <a href="#reseaux" class="btn btn-ghost">Mes Réseaux</a>
     </div>
   </div>
 </section>
 
 <section id="reseaux">
-  <h2 class="section-title">MES <span class="dim">RÉSEAUX</span></h2>
+  <span class="section-label">// Social</span>
+  <h2 class="section-title">MES <span class="dim">PLATEFORMES</span></h2>
+  
   <div class="networks-grid">
-    <a href="https://www.twitch.tv/mickaz9" target="_blank" class="net-item">
-      <div class="net-info">
-        <div class="net-icon" style="background:var(--twitch)">T</div>
-        <div><strong>Twitch</strong><div style="font-size:0.7rem;opacity:0.5">mickaz9</div></div>
-      </div>
-      <span class="net-stats" id="twitch-subs">—</span>
-    </a>
-    
-    <a href="https://www.youtube.com/@mickaz9" target="_blank" class="net-item">
-      <div class="net-info">
-        <div class="net-icon" style="background:var(--youtube)">Y</div>
-        <div><strong>YouTube</strong><div style="font-size:0.7rem;opacity:0.5">@mickaz9</div></div>
-      </div>
-      <span class="net-stats" id="yt-subs">—</span>
+    <a href="https://www.twitch.tv/mickaz9" target="_blank" class="network-card">
+        <div class="net-info">
+            <div class="net-icon" style="background:var(--twitch)">T</div>
+            <div><span class="net-name">Twitch</span><span class="net-handle">@mickaz9</span></div>
+        </div>
+        <span class="net-stats" id="twitch-subs">—</span>
     </a>
 
-    <a href="https://discord.gg/TON_LIEN" target="_blank" class="net-item">
-      <div class="net-info">
-        <div class="net-icon" style="background:var(--discord)">D</div>
-        <div><strong>Discord</strong><div style="font-size:0.7rem;opacity:0.5">La Communauté</div></div>
-      </div>
-      <span class="net-stats">JOIN</span>
+    <a href="https://www.youtube.com/@mickaz9" target="_blank" class="network-card">
+        <div class="net-info">
+            <div class="net-icon" style="background:var(--youtube)">Y</div>
+            <div><span class="net-name">YouTube</span><span class="net-handle">@mickaz9</span></div>
+        </div>
+        <span class="net-stats" id="yt-subs">—</span>
     </a>
 
-    <a href="https://www.tiktok.com/@mickaz9" target="_blank" class="net-item">
-      <div class="net-info">
-        <div class="net-icon" style="background:var(--black);border:1px solid var(--white)">TK</div>
-        <div><strong>TikTok</strong><div style="font-size:0.7rem;opacity:0.5">@mickaz9</div></div>
-      </div>
-      <span class="net-stats">CLIPS</span>
+    <a href="https://discord.gg/gBYX2dufjw" target="_blank" class="network-card">
+        <div class="net-info">
+            <div class="net-icon" style="background:var(--discord)">D</div>
+            <div><span class="net-name">Discord</span><span class="net-handle">La Communauté</span></div>
+        </div>
+        <span class="net-stats">900</span>
     </a>
   </div>
 </section>
 
+<section id="planning">
+  <span class="section-label">// Agenda</span>
+  <h2 class="section-title">PROCHAINS <span class="dim">STREAMS</span></h2>
+  <div class="cal-container" id="cal-body">
+      <div style="padding:2rem; color:rgba(240,237,230,0.3); font-family:'DM Mono',monospace;">Chargement du planning...</div>
+  </div>
+</section>
+
+<footer>
+  <img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" style="height:20px; opacity:0.2;">
+  <div class="footer-copy">© 2026 MICKAZ9 — TOUS DROITS RÉSERVÉS</div>
+</footer>
+
 <script>
-// CURSOR LOGIC
-const cursor = document.getElementById('cursor');
-const follower = document.getElementById('follower');
-let mx=0, my=0, fx=0, fy=0;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = (mx-5)+'px'; cursor.style.top = (my-5)+'px'; });
-function anim() { fx += (mx-fx)*0.1; fy += (my-fy)*0.1; follower.style.left = (fx-18)+'px'; follower.style.top = (fy-18)+'px'; requestAnimationFrame(anim); }
-anim();
+const CONFIG = {
+  YOUTUBE_API_KEY: 'AIzaSyAJEawoFVglEQifOr-CNF9LxCPDGjSS-DI',
+  YOUTUBE_CHANNEL_ID: 'UCdPjxTsJmR96YFtUand3N4w',
+  TWITCH_CLIENT_ID: 'gp762nuuoqcoxypju8c569th9wz7q5',
+  TWITCH_TOKEN: '1yufl6mbsd70a4xjk6j4oj4uxy5ce6',
+  GOOGLE_CALENDAR_ID: 'dbd9d2c221012ad75c3200dfc7d25cc685383fefdfd876dcefdfc7438bbd6ceb@group.calendar.google.com',
+  GOOGLE_API_KEY: 'AIzaSyBikMOeXXHr-HvJwfbZOw-mMiRlvPfccww'
+};
 
-// API FETCHING
-async function updateStats() {
-  // TWITCH
-  try {
-    const r = await fetch('/api-twitch');
-    const d = await r.json();
+async function checkTwitch(){
+  try{
+    const r=await fetch('https://api.twitch.tv/helix/streams?user_login=mickaz9',{
+      headers:{'Client-ID':CONFIG.TWITCH_CLIENT_ID,'Authorization':'Bearer '+CONFIG.TWITCH_TOKEN}
+    });
+    const d=await r.json();
     if(d.data && d.data.length > 0) {
-      document.getElementById('twitch-status-badge').textContent = "LIVE";
-      document.getElementById('twitch-status-badge').className = "status-badge status-live";
-      document.getElementById('twitch-title').textContent = d.data[0].title;
-      document.getElementById('twitch-meta').textContent = d.data[0].viewer_count + " spectateurs";
+        document.getElementById('hero-live').style.display = 'inline-flex';
     }
-  } catch(e) {}
-
-  // YOUTUBE
-  try {
-    const r = await fetch('/api-youtube');
-    const d = await r.json();
-    if(d.items && d.items[0]) {
-      const subs = parseInt(d.items[0].statistics.subscriberCount);
-      document.getElementById('yt-subs').textContent = subs >= 1000 ? (subs/1000).toFixed(1) + 'K' : subs;
-    }
-  } catch(e) {}
+  }catch(e){console.error('Twitch Error',e);}
 }
 
-updateStats();
-setInterval(updateStats, 60000);
+async function loadCalendar(){
+  try{
+    const now=new Date().toISOString();
+    const r=await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CONFIG.GOOGLE_CALENDAR_ID)}/events?key=${CONFIG.GOOGLE_API_KEY}&timeMin=${now}&maxResults=5&singleEvents=true&orderBy=startTime`);
+    const d=await r.json();
+    const body=document.getElementById('cal-body');
+    if(d.items && d.items.length > 0){
+      body.innerHTML = d.items.map(ev => {
+        const date = new Date(ev.start.dateTime || ev.start.date);
+        return `
+          <div class="cal-row">
+            <div class="cal-date">${date.getDate()}</div>
+            <div class="cal-details">
+                <div class="cal-event-title">${ev.summary}</div>
+                <div class="cal-time">${date.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'})} — ${date.toLocaleDateString('fr-FR', {weekday:'long', month:'long'})}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    } else {
+      body.innerHTML = '<div style="padding:2rem;">Pas de stream prévu pour le moment.</div>';
+    }
+  }catch(e){ console.error('Calendar Error',e); }
+}
+
+// Lancement des fonctions
+checkTwitch();
+loadCalendar();
 </script>
+
 </body>
 </html>
