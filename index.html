@@ -260,31 +260,33 @@ section{padding:6rem 3rem;max-width:1100px;margin:0 auto}
 .video-info span{font-size:0.7rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace}
 
 /* NETWORKS */
-.networks-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.networks-wrap{display:flex;flex-direction:column;border:1px solid var(--border);}
 .network-item{
-  background:var(--black);padding:2rem 2rem;
+  background:var(--black);padding:1.25rem 2rem;
   display:flex;align-items:center;justify-content:space-between;
   text-decoration:none;color:inherit;
   transition:background 0.15s;
-  position:relative;overflow:hidden;group:true;
+  position:relative;overflow:hidden;
+  border-bottom:1px solid var(--border);
 }
-.network-item::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
-  background:linear-gradient(to right,transparent,currentColor,transparent);
-  opacity:0;transition:opacity 0.3s;
+.network-item:last-child{border-bottom:none;}
+.network-item::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--accent);opacity:0;transition:opacity 0.2s;
 }
-.network-item:hover::after{opacity:0.1}
-.network-item:hover{background:rgba(240,237,230,0.02)}
-.net-left{display:flex;align-items:center;gap:14px}
+.network-item:hover::before{opacity:1;}
+.network-item:hover{background:rgba(240,237,230,0.02);}
+.net-left{display:flex;align-items:center;gap:16px;flex:1;}
 .net-icon{
-  width:36px;height:36px;border-radius:6px;
+  width:32px;height:32px;border-radius:6px;
   display:flex;align-items:center;justify-content:center;
-  font-size:12px;font-weight:800;color:white;flex-shrink:0;
+  font-size:11px;font-weight:800;color:white;flex-shrink:0;
 }
-.net-name{font-size:0.9rem;font-weight:500;display:block;margin-bottom:2px}
-.net-handle{font-size:0.7rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace}
-.net-arrow{font-size:1.1rem;color:rgba(240,237,230,0.15);transition:color 0.2s,transform 0.2s}
-.network-item:hover .net-arrow{color:var(--accent);transform:translate(2px,-2px)}
+.net-name{font-size:0.9rem;font-weight:500;display:block;margin-bottom:2px;}
+.net-handle{font-size:0.68rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;}
+.net-stats{font-size:0.72rem;color:rgba(240,237,230,0.4);font-family:'DM Mono',monospace;min-width:100px;text-align:right;margin-right:1.5rem;}
+.net-arrow{font-size:1rem;color:rgba(240,237,230,0.15);transition:color 0.2s,transform 0.2s;flex-shrink:0;}
+.network-item:hover .net-arrow{color:var(--accent);transform:translate(2px,-2px);}
 
 /* CALENDAR */
 .calendar-wrap{
@@ -514,6 +516,7 @@ footer{
         <div class="net-icon" style="background:#9146ff">T</div>
         <div><span class="net-name">Twitch</span><span class="net-handle">@mickaz9</span></div>
       </div>
+      <span class="net-stats" id="twitch-subs">—</span>
       <span class="net-arrow">↗</span>
     </a>
     <a class="network-item" href="https://www.youtube.com/@mickaz9" target="_blank">
@@ -521,6 +524,7 @@ footer{
         <div class="net-icon" style="background:#ff2d2d">▶</div>
         <div><span class="net-name">YouTube</span><span class="net-handle">@mickaz9</span></div>
       </div>
+      <span class="net-stats" id="yt-subs">—</span>
       <span class="net-arrow">↗</span>
     </a>
     <a class="network-item" href="https://discord.gg/gBYX2dufjw" target="_blank">
@@ -632,6 +636,8 @@ document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 async function checkTwitch(){
   if(!CONFIG.TWITCH_CLIENT_ID||!CONFIG.TWITCH_TOKEN)return;
   try{
+    const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'K';return n;};
+    // Live check
     const r=await fetch('https://api.twitch.tv/helix/streams?user_login=mickaz9',{
       headers:{'Client-ID':CONFIG.TWITCH_CLIENT_ID,'Authorization':'Bearer '+CONFIG.TWITCH_TOKEN}
     });
@@ -644,13 +650,32 @@ async function checkTwitch(){
       document.getElementById('twitch-meta').textContent=s.viewer_count.toLocaleString()+' spectateurs';
       document.getElementById('hero-live').style.display='inline-flex';
     }
-  }catch(e){}
+    // Followers Twitch
+    const uR=await fetch('https://api.twitch.tv/helix/users?login=mickaz9',{headers:{'Client-ID':CONFIG.TWITCH_CLIENT_ID,'Authorization':'Bearer '+CONFIG.TWITCH_TOKEN}});
+    const uD=await uR.json();
+    if(uD.data&&uD.data[0]){
+      const uid=uD.data[0].id;
+      const fR=await fetch('https://api.twitch.tv/helix/channels/followers?broadcaster_id='+uid,{headers:{'Client-ID':CONFIG.TWITCH_CLIENT_ID,'Authorization':'Bearer '+CONFIG.TWITCH_TOKEN}});
+      const fD=await fR.json();
+      const el=document.getElementById('twitch-subs');
+      if(el&&fD.total!=null)el.textContent=fmtN(fD.total)+' followers';
+    }
+  }catch(e){console.error('Twitch error',e);}
 }
 
-// YouTube data
 async function loadYT(){
   if(!CONFIG.YOUTUBE_API_KEY||!CONFIG.YOUTUBE_CHANNEL_ID)return;
   try{
+    // Abonnés YouTube
+    const chanR=await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CONFIG.YOUTUBE_CHANNEL_ID}&key=${CONFIG.YOUTUBE_API_KEY}`);
+    const chanD=await chanR.json();
+    if(chanD.items&&chanD.items[0]){
+      const subs=parseInt(chanD.items[0].statistics.subscriberCount||0);
+      const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'K';return n;};
+      const el=document.getElementById('yt-subs');
+      if(el)el.textContent=fmtN(subs)+' abonnés';
+    }
+    // Live YouTube
     const liveR=await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CONFIG.YOUTUBE_CHANNEL_ID}&eventType=live&type=video&key=${CONFIG.YOUTUBE_API_KEY}`);
     const liveD=await liveR.json();
     if(liveD.items&&liveD.items.length>0){
@@ -659,29 +684,40 @@ async function loadYT(){
       document.getElementById('yt-live-title').textContent=liveD.items[0].snippet.title;
       document.getElementById('hero-live').style.display='inline-flex';
     }
+    // Vidéos récentes
     const vR=await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CONFIG.YOUTUBE_CHANNEL_ID}&order=date&type=video&maxResults=10&key=${CONFIG.YOUTUBE_API_KEY}`);
     const vD=await vR.json();
-    if(vD.items){
-      const fmt=dt=>new Date(dt).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+    if(vD.items&&vD.items.length>0){
       const fixTitle=t=>t.replace(/&#39;/g,"'").replace(/&amp;/g,'&').replace(/&quot;/g,'"');
-      const setVid=(idx,item)=>{
-        if(!item)return;
-        const videoId=item.id.videoId;
-        const thumb=item.snippet.thumbnails.high?.url||item.snippet.thumbnails.medium?.url||item.snippet.thumbnails.default?.url;
-        const el=document.getElementById('vid'+(idx+1));
-        if(el)el.href='https://www.youtube.com/watch?v='+videoId;
-        const thumbEl=document.getElementById('vid'+(idx+1)+'-thumb-bg');
-        if(thumbEl&&thumb){thumbEl.style.backgroundImage='url('+thumb+')';thumbEl.style.backgroundSize='cover';thumbEl.style.backgroundPosition='center';}
-        const titleEl=document.getElementById('vid'+(idx+1)+'-title');
+      const fmtViews=n=>{n=parseInt(n||0);if(n>=1000000)return(n/1000000).toFixed(1)+'M vues';if(n>=1000)return Math.round(n/1000)+'K vues';return n+' vues';};
+      const fmt=dt=>new Date(dt).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+      // Récupérer les stats (vues) en 2ème appel
+      const ids=vD.items.slice(0,3).map(i=>i.id.videoId).filter(Boolean).join(',');
+      let statsMap={};
+      if(ids){
+        const sR=await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${ids}&key=${CONFIG.YOUTUBE_API_KEY}`);
+        const sD=await sR.json();
+        if(sD.items)sD.items.forEach(s=>statsMap[s.id]=s.statistics);
+      }
+      const setVid=(n,item)=>{
+        if(!item||!item.id.videoId)return;
+        const vid=item.id.videoId;
+        const thumb='https://img.youtube.com/vi/'+vid+'/hqdefault.jpg';
+        const cardEl=document.getElementById('vid'+n);
+        if(cardEl)cardEl.href='https://www.youtube.com/watch?v='+vid;
+        const bgEl=document.getElementById('vid'+n+'-thumb-bg');
+        if(bgEl){bgEl.style.backgroundImage='url('+thumb+')';bgEl.style.backgroundSize='cover';bgEl.style.backgroundPosition='center';}
+        const titleEl=document.getElementById('vid'+n+'-title');
         if(titleEl)titleEl.textContent=fixTitle(item.snippet.title);
-        const metaEl=document.getElementById('vid'+(idx+1)+'-meta');
-        if(metaEl)metaEl.textContent=fmt(item.snippet.publishedAt);
+        const stats=statsMap[vid]||{};
+        const metaEl=document.getElementById('vid'+n+'-meta');
+        if(metaEl)metaEl.textContent=fmtViews(stats.viewCount)+' · '+fmt(item.snippet.publishedAt);
       };
-      setVid(0,vD.items[0]);
-      setVid(1,vD.items[1]);
-      setVid(2,vD.items[2]);
+      setVid(1,vD.items[0]);
+      setVid(2,vD.items[1]);
+      setVid(3,vD.items[2]);
     }
-  }catch(e){}
+  }catch(e){console.error('YT error',e);}
 }
 
 // Google Calendar
