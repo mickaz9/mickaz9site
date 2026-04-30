@@ -47,7 +47,7 @@ body::before{
   pointer-events:none;z-index:9998;
   transition:transform 0.25s ease, width 0.2s, height 0.2s;mix-blend-mode:difference;
 }
-
+ 
 /* NAV */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
@@ -68,7 +68,7 @@ nav{
   transition:color 0.2s;font-weight:500;
 }
 .nav-links a:hover{color:var(--accent)}
-
+ 
 /* HERO */
 .hero{
   position:relative;min-height:100vh;
@@ -157,7 +157,7 @@ h1 .accent{color:var(--accent)}
 }
 @keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-6px)}}
 .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--accent),transparent)}
-
+ 
 /* MARQUEE */
 .marquee-wrap{
   overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
@@ -173,7 +173,7 @@ h1 .accent{color:var(--accent)}
   color:rgba(240,237,230,0.12);text-transform:uppercase;
 }
 .marquee-item.accent{color:var(--accent);opacity:0.5}
-
+ 
 /* SECTIONS */
 section{padding:6rem 3rem;max-width:1100px;margin:0 auto}
 .section-label{
@@ -188,7 +188,7 @@ section{padding:6rem 3rem;max-width:1100px;margin:0 auto}
   letter-spacing:-1px;margin-bottom:3rem;
 }
 .section-title .dim{color:rgba(240,237,230,0.15)}
-
+ 
 /* LIVE STATUS */
 .live-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .live-card{
@@ -236,7 +236,7 @@ section{padding:6rem 3rem;max-width:1100px;margin:0 auto}
 }
 .live-link:hover{gap:10px}
 .arrow{display:inline-block}
-
+ 
 /* VIDEOS */
 .videos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
 .video-card{
@@ -280,7 +280,7 @@ section{padding:6rem 3rem;max-width:1100px;margin:0 auto}
 .video-info{padding:1.25rem 1.5rem}
 .video-info strong{font-size:0.9rem;font-weight:500;display:block;margin-bottom:6px;line-height:1.4}
 .video-info span{font-size:0.7rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace}
-
+ 
 /* NETWORKS */
 .networks-wrap{display:flex;flex-direction:column;border:1px solid rgba(240,237,230,0.08);border-radius:12px;overflow:hidden;}
 .network-item{
@@ -311,7 +311,7 @@ section{padding:6rem 3rem;max-width:1100px;margin:0 auto}
 .net-stats{font-size:1.2rem;color:var(--white);font-family:'Bebas Neue',sans-serif;letter-spacing:2px;min-width:60px;text-align:right;margin-right:1.5rem;}
 .net-arrow{font-size:1rem;color:rgba(240,237,230,0.15);transition:color 0.2s,transform 0.2s;flex-shrink:0;}
 .network-item:hover .net-arrow{color:var(--accent);transform:translate(2px,-2px);}
-
+ 
 /* CALENDAR */
 .calendar-wrap{
   border:1px solid rgba(240,237,230,0.08);
@@ -350,7 +350,7 @@ section{padding:6rem 3rem;max-width:1100px;margin:0 auto}
   font-size:0.68rem;color:rgba(240,237,230,0.2);
   font-family:'DM Mono',monospace;display:flex;align-items:center;gap:8px;
 }
-
+ 
 /* FOOTER */
 footer{
   border-top:1px solid var(--border);
@@ -364,14 +364,14 @@ footer{
 }
 .footer-logo span{color:rgba(255,45,45,0.3)}
 .footer-copy{font-size:0.62rem;color:rgba(240,237,230,0.15);font-family:'DM Mono',monospace;letter-spacing:1px}
-
+ 
 /* ANIMATIONS */
 .reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
 .reveal-delay-1{transition-delay:0.1s}
 .reveal-delay-2{transition-delay:0.2s}
 .reveal-delay-3{transition-delay:0.3s}
-
+ 
 /* API CONFIG NOTE */
 .config-banner{
   background:rgba(255,45,45,0.04);border:1px solid rgba(255,45,45,0.1);
@@ -380,7 +380,7 @@ footer{
   display:flex;align-items:center;gap:8px;
 }
 .config-banner code{background:rgba(255,45,45,0.08);padding:1px 5px;border-radius:2px}
-
+ 
 @media(max-width:768px){
   nav{padding:1rem 1.5rem}
   .nav-links{display:none}
@@ -391,10 +391,10 @@ footer{
 </style>
 </head>
 <body>
-
+ 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-follower" id="follower"></div>
-
+ 
 <nav>
   <a href="#" class="nav-logo"><img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="height:32px;width:auto;display:block;"></a>
   <ul class="nav-links">
@@ -403,7 +403,7 @@ footer{
     <li><a href="#planning">Planning</a></li>
   </ul>
 </nav>
-
+ 
 <section class="hero" style="padding:0;max-width:100%">
   <div class="hero-bg"></div>
   <div class="hero-noise"></div>
@@ -411,7 +411,7 @@ footer{
     <div class="hero-eyebrow">Streamer & Créateur de contenu</div>
     <div class="live-pill" id="hero-live" style="display:none"><span class="live-dot"></span>Live maintenant</div>
     <img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="height:clamp(80px,18vw,200px);width:auto;display:block;margin:0 auto 1.5rem;filter:drop-shadow(0 0 30px rgba(255,45,45,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.35));animation:logoGlow 2.5s ease-in-out infinite;">
-    <p class="hero-sub">Streams gaming, contenu créatif, communauté. Rejoins l'aventure.</p>
+    <p class="hero-sub">Streams gaming, contenu créatif, communauté.<br>Rejoins l'aventure.</p>
     <div class="hero-ctas">
       <a href="#live" class="btn btn-primary">Regarder en live →</a>
       <a href="#reseaux" class="btn btn-ghost">Tous mes réseaux</a>
@@ -422,7 +422,7 @@ footer{
     <span>Descendre</span>
   </div>
 </section>
-
+ 
 <div class="marquee-wrap">
   <div class="marquee-track" id="marquee">
     <span class="marquee-item">MICKAZ9</span>
@@ -452,7 +452,7 @@ footer{
     <span class="marquee-item accent">✦</span>
   </div>
 </div>
-
+ 
 <section id="live">
   <div class="reveal">
     <div class="section-label">Statut</div>
@@ -462,31 +462,31 @@ footer{
   <div class="live-grid reveal reveal-delay-2">
     <div class="live-card">
       <div class="platform-row">
-        <div class="platform-badge"><div class="platform-icon pi-twitch">T</div>Twitch</div>
+        <div class="platform-badge"><div class="platform-icon pi-twitch"><svg viewBox="0 0 24 24" fill="white" width="14" height="14"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg></div>Twitch</div>
         <span class="status-badge status-offline" id="twitch-status-badge">Hors ligne</span>
       </div>
       <div>
         <div class="live-title" id="twitch-title">twitch.tv/mickaz9</div>
-        <div class="live-meta" id="twitch-meta">Hors ligne pour l'instant</div>
+        <div class="live-meta" id="twitch-meta">Hors ligne<br>pour l'instant</div>
       </div>
       <a href="https://www.twitch.tv/mickaz9" target="_blank" class="live-link">Ouvrir Twitch <span class="arrow">→</span></a>
     </div>
     <div class="live-card">
       <div class="platform-row">
-        <div class="platform-badge"><div class="platform-icon pi-youtube">YT</div>YouTube</div>
+        <div class="platform-badge"><div class="platform-icon pi-youtube"><svg viewBox="0 0 24 24" fill="white" width="14" height="14"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></div>YouTube</div>
         <span class="status-badge status-offline" id="yt-status-badge">Hors ligne</span>
       </div>
       <div>
         <div class="live-title" id="yt-live-title">youtube.com/@mickaz9</div>
-        <div class="live-meta" id="yt-live-meta">Hors ligne pour l'instant</div>
+        <div class="live-meta" id="yt-live-meta">Hors ligne<br>pour l'instant</div>
       </div>
       <a href="https://www.youtube.com/@mickaz9" target="_blank" class="live-link">Ouvrir YouTube <span class="arrow">→</span></a>
     </div>
   </div>
   </div>
 </section>
-
-
+ 
+ 
 <section id="reseaux">
   <div class="reveal">
     <div class="section-label">Réseaux</div>
@@ -514,7 +514,7 @@ footer{
         <div class="net-icon" style="background:#5865f2"><svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.1 18.08.114 18.1.132 18.11a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg></div>
         <div><span class="net-name">Discord</span><span class="net-handle">Rejoindre le serveur</span></div>
       </div>
-      <span class="net-stats" id="discord-stats">900 membres</span>
+      <span class="net-stats" id="discord-stats">900</span>
       <span class="net-arrow">↗</span>
     </a>
     <a class="network-item" href="https://x.com/micka23mar" target="_blank">
@@ -522,7 +522,7 @@ footer{
         <div class="net-icon" style="background:#111"><svg viewBox="0 0 24 24" fill="white" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.629zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>
         <div><span class="net-name">Twitter / X</span><span class="net-handle">@micka23mar</span></div>
       </div>
-      <span class="net-stats" id="twitter-stats">100 followers</span>
+      <span class="net-stats" id="twitter-stats">100</span>
       <span class="net-arrow">↗</span>
     </a>
     <a class="network-item" href="https://www.tiktok.com/@mickaaz9" target="_blank">
@@ -530,7 +530,7 @@ footer{
         <div class="net-icon" style="background:#010101;border:1px solid #333"><svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg></div>
         <div><span class="net-name">TikTok</span><span class="net-handle">@mickaaz9</span></div>
       </div>
-      <span class="net-stats" id="tiktok-stats">2K followers</span>
+      <span class="net-stats" id="tiktok-stats">2K</span>
       <span class="net-arrow">↗</span>
     </a>
     <a class="network-item" href="https://www.instagram.com/mickaz9/" target="_blank">
@@ -538,12 +538,12 @@ footer{
         <div class="net-icon" style="background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)"><svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></div>
         <div><span class="net-name">Instagram</span><span class="net-handle">@mickaz9</span></div>
       </div>
-      <span class="net-stats" id="instagram-stats">500 abonnés</span>
+      <span class="net-stats" id="instagram-stats">500</span>
       <span class="net-arrow">↗</span>
     </a>
   </div>
 </section>
-
+ 
 <section id="planning">
   <div class="reveal">
     <div class="section-label">Planning</div>
@@ -573,14 +573,14 @@ footer{
     
   </div>
 </section>
-
+ 
 <footer>
   <img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="height:24px;width:auto;opacity:0.2;">
   <div class="footer-copy">© 2026 — Tous droits réservés</div>
 </footer>
-
+ 
 <script>
-
+ 
 // Cursor
 const cursor = document.getElementById('cursor');
 const follower = document.getElementById('follower');
@@ -598,16 +598,16 @@ document.querySelectorAll('a,button').forEach(el=>{
   el.addEventListener('mouseenter',()=>{follower.style.width='52px';follower.style.height='52px';});
   el.addEventListener('mouseleave',()=>{follower.style.width='36px';follower.style.height='36px';});
 });
-
+ 
 // Scroll reveal
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
 },{threshold:0.1});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-
+ 
 // Calendar month label
 // cal-month-label updated after calendar loads
-
+ 
 // Twitch live check
 async function checkTwitch(){
   try{
@@ -628,7 +628,7 @@ async function checkTwitch(){
     }
   }catch(e){console.error('Twitch error',e);}
 }
-
+ 
 async function loadYT(){
   const CACHE_KEY='mickaz9_yt_cache';
   const CACHE_TTL=3600000;
@@ -643,7 +643,7 @@ async function loadYT(){
     const fixTitle=t=>t.replace(/&#39;/g,"'").replace(/&amp;/g,'&').replace(/&quot;/g,'"');
     const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'K';return n;};
     const data={subs:null,live:null,videos:[]};
-
+ 
     // Abonnés via endpoint Cloudflare
     const chanR=await fetch('/youtube');
     const chanD=await chanR.json();
@@ -651,7 +651,7 @@ async function loadYT(){
       const n=parseInt(chanD.items[0].statistics.subscriberCount||0);
       data.subs=fmtN(n);
     }
-
+ 
     // Live + vidéos via API YouTube directe (clé côté client pas nécessaire ici car on a le cache)
     // On utilise l'endpoint api-youtube pour les stats, et des appels directs pour live+vidéos
     // Pour live et vidéos, on passe par un param query
@@ -660,7 +660,7 @@ async function loadYT(){
       const liveD=await liveR.json();
       if(liveD.items&&liveD.items.length>0)data.live=liveD.items[0].snippet?.title||null;
     }
-
+ 
     const vR=await fetch('/youtube?type=videos');
     if(vR.ok){
       const vD=await vR.json();
@@ -681,12 +681,12 @@ async function loadYT(){
         });
       }
     }
-
+ 
     localStorage.setItem(CACHE_KEY,JSON.stringify({data,timestamp:Date.now()}));
     applyYTData(data);
   }catch(e){console.error('YT error',e);}
 }
-
+ 
 function applyYTData(data){
   if(data.subs){const el=document.getElementById('yt-subs');if(el)el.textContent=data.subs;}
   if(data.live){
@@ -708,7 +708,7 @@ function applyYTData(data){
     if(meta)meta.textContent=v.meta;
   });
 }
-
+ 
 // Google Calendar
 async function loadCalendar(){
   try{
@@ -746,7 +746,7 @@ async function loadCalendar(){
     }
   }catch(e){console.error('Calendar error',e);}
 }
-
+ 
 checkTwitch();loadYT();loadCalendar();
 setInterval(checkTwitch,60000);
 </script>
