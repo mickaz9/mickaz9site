@@ -612,7 +612,7 @@ document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 async function checkTwitch(){
   try{
     const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'K';return n;};
-    const r=await fetch('/functions/twitch');
+    const r=await fetch('/twitch');
     const d=await r.json();
     if(d.data&&d.data.length>0){
       const s=d.data[0];
@@ -641,7 +641,7 @@ async function loadYT(){
     const data={subs:null,live:null,videos:[]};
 
     // Abonnés via endpoint Cloudflare
-    const chanR=await fetch('/functions/youtube');
+    const chanR=await fetch('/youtube');
     const chanD=await chanR.json();
     if(chanD.items&&chanD.items[0]){
       const n=parseInt(chanD.items[0].statistics.subscriberCount||0);
@@ -651,20 +651,20 @@ async function loadYT(){
     // Live + vidéos via API YouTube directe (clé côté client pas nécessaire ici car on a le cache)
     // On utilise l'endpoint api-youtube pour les stats, et des appels directs pour live+vidéos
     // Pour live et vidéos, on passe par un param query
-    const liveR=await fetch('/functions/youtube?type=live');
+    const liveR=await fetch('/youtube?type=live');
     if(liveR.ok){
       const liveD=await liveR.json();
       if(liveD.items&&liveD.items.length>0)data.live=liveD.items[0].snippet?.title||null;
     }
 
-    const vR=await fetch('/functions/youtube?type=videos');
+    const vR=await fetch('/youtube?type=videos');
     if(vR.ok){
       const vD=await vR.json();
       if(vD.items&&vD.items.length>0){
         const ids=vD.items.slice(0,3).map(i=>i.id?.videoId).filter(Boolean).join(',');
         let statsMap={};
         if(ids){
-          const sR=await fetch('/functions/youtube?type=stats&ids='+ids);
+          const sR=await fetch('/youtube?type=stats&ids='+ids);
           if(sR.ok){const sD=await sR.json();if(sD.items)sD.items.forEach(s=>statsMap[s.id]=s.statistics);}
         }
         vD.items.slice(0,3).forEach((item,i)=>{
@@ -708,7 +708,7 @@ function applyYTData(data){
 // Google Calendar
 async function loadCalendar(){
   try{
-    const r=await fetch('/functions/calendar');
+    const r=await fetch('/calendar');
     const d=await r.json();
     const body=document.getElementById('cal-body');
     body.innerHTML='';
