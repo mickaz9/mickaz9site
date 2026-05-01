@@ -321,7 +321,7 @@ section{padding:6rem 3rem;max-width:1100px;margin:0 auto}
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
 }
-.net-name{font-size:0.9rem;font-weight:500;display:block;margin-bottom:2px;}
+.net-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;display:block;margin-bottom:2px;}
 .net-handle{font-size:0.68rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;}
 .net-stats{font-size:1.2rem;color:var(--white);font-family:'Bebas Neue',sans-serif;letter-spacing:2px;min-width:60px;text-align:right;margin-right:1.5rem;}
 .net-arrow{font-size:1rem;color:rgba(240,237,230,0.15);transition:color 0.2s,transform 0.2s;flex-shrink:0;}
@@ -414,8 +414,8 @@ footer{
   <a href="#" class="nav-logo"><img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="height:32px;width:auto;display:block;"></a>
   <ul class="nav-links">
     <li><a href="#live">Live</a></li>
-    <li><a href="#reseaux">Réseaux</a></li>
     <li><a href="#planning">Planning</a></li>
+    <li><a href="#reseaux">Réseaux</a></li>
   </ul>
 </nav>
 
@@ -502,6 +502,36 @@ footer{
 </section>
 
 
+<section id="planning">
+  <div class="reveal">
+    <div class="section-label">Planning</div>
+    <div class="section-title">PLANNING <span class="dim">STREAMS</span></div>
+  </div>
+  <div class="calendar-wrap reveal reveal-delay-1">
+    <div class="cal-head">
+      <strong>Prochains événements</strong>
+      <span id="cal-month-label" style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;color:var(--white);text-transform:uppercase">—</span>
+    </div>
+    <div class="cal-body" id="cal-body">
+      <div class="cal-row">
+        <div><div class="cal-date">?</div><div class="cal-day">lun</div></div>
+        <div class="cal-sep"></div>
+        <div class="cal-title">Configure Google Calendar pour afficher tes streams</div>
+        <span class="cal-time">20:00</span>
+        <div class="cal-platform" style="background:var(--twitch)">T</div>
+      </div>
+      <div class="cal-row">
+        <div><div class="cal-date">?</div><div class="cal-day">ven</div></div>
+        <div class="cal-sep"></div>
+        <div class="cal-title">Live YouTube — Renseigne ton CALENDAR_ID</div>
+        <span class="cal-time">18:00</span>
+        <div class="cal-platform" style="background:var(--youtube)">YT</div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
 <section id="reseaux">
   <div class="reveal">
     <div class="section-label">Réseaux</div>
@@ -570,36 +600,6 @@ footer{
       </div>
       <span class="net-arrow">↗</span>
     </a>
-  </div>
-</section>
-
-<section id="planning">
-  <div class="reveal">
-    <div class="section-label">Planning</div>
-    <div class="section-title">PLANNING <span class="dim">STREAMS</span></div>
-  </div>
-  <div class="calendar-wrap reveal reveal-delay-1">
-    <div class="cal-head">
-      <strong>Prochains événements</strong>
-      <span id="cal-month-label" style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;color:var(--white);text-transform:uppercase">—</span>
-    </div>
-    <div class="cal-body" id="cal-body">
-      <div class="cal-row">
-        <div><div class="cal-date">?</div><div class="cal-day">lun</div></div>
-        <div class="cal-sep"></div>
-        <div class="cal-title">Configure Google Calendar pour afficher tes streams</div>
-        <span class="cal-time">20:00</span>
-        <div class="cal-platform" style="background:var(--twitch)">T</div>
-      </div>
-      <div class="cal-row">
-        <div><div class="cal-date">?</div><div class="cal-day">ven</div></div>
-        <div class="cal-sep"></div>
-        <div class="cal-title">Live YouTube — Renseigne ton CALENDAR_ID</div>
-        <span class="cal-time">18:00</span>
-        <div class="cal-platform" style="background:var(--youtube)">YT</div>
-      </div>
-    </div>
-    
   </div>
 </section>
 
