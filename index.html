@@ -402,23 +402,32 @@ footer{
   section{padding:3rem 1.2rem}
   h1{font-size:clamp(4rem,18vw,6rem)}
   .live-grid,.videos-grid,.networks-wrap{grid-template-columns:1fr}
-  /* Section titre */
   .section-title{font-size:clamp(2.2rem,10vw,4rem);margin-bottom:1.5rem;}
-  /* Live cards */
   .live-card{padding:1.5rem;}
-  /* Réseaux */
   .network-item{padding:1rem 1.2rem;}
   .net-stats{min-width:50px;margin-right:0.8rem;font-size:1rem;}
-  /* Calendrier */
   .cal-head{padding:1rem 1.2rem;}
   .cal-body{padding:1rem 1.2rem;}
-  /* Dernière vidéo - layout vertical bien centré */
-  #last-video-container, #last-clip-container{border-radius:10px;}
-  #last-video-container > a, #last-clip-container > a{width:100%;}
-  #last-video-container > div, #last-clip-container > div{padding:1.2rem 1.2rem;}
-  /* Boutons */
+  #last-video-container,#last-clip-container{
+    border-radius:10px;
+    flex-direction:column;
+  }
+  #last-video-container>a,#last-clip-container>a{
+    width:100%;
+    aspect-ratio:16/9;
+  }
+  #last-video-container>div,#last-clip-container>div{
+    padding:1.2rem;
+    display:flex;
+    flex-direction:column;
+    gap:0.6rem;
+    align-items:flex-start;
+  }
+  #last-video-btn,#last-clip-btn{
+    align-self:flex-start !important;
+    width:auto;
+  }
   .btn{padding:0.75rem 1.5rem;font-size:0.65rem;}
-  /* Hero */
   .hero-sub{font-size:0.85rem;max-width:90%;}
   .hero-ctas{flex-direction:column;align-items:center;gap:0.75rem;}
   .hero-ctas .btn{width:100%;max-width:280px;justify-content:center;}
@@ -613,16 +622,29 @@ footer{
     display:none;
   ">
     <a id="last-clip-link" href="https://www.twitch.tv/mickaz9" target="_blank" style="
-      display:block;width:100%;position:relative;aspect-ratio:16/9;
-      background:#111;overflow:hidden;text-decoration:none;
+      display:block;
+      width:100%;
+      position:relative;
+      aspect-ratio:16/9;
+      background:#111;
+      overflow:hidden;
+      text-decoration:none;
     ">
-      <div id="last-clip-thumb" style="position:absolute;inset:0;background-size:cover;background-position:center;background-color:#0d0d1a;"></div>
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+      <div id="last-clip-thumb" style="
+        position:absolute;inset:0;
+        background-size:cover;background-position:center;
+        background-color:#0d0d1a;
+      "></div>
+      <div style="
+        position:absolute;inset:0;
+        display:flex;align-items:center;justify-content:center;
+      ">
         <div style="
           width:56px;height:56px;border-radius:50%;
           border:1px solid rgba(240,237,230,0.2);
           display:flex;align-items:center;justify-content:center;
-          backdrop-filter:blur(8px);background:rgba(0,0,0,0.4);
+          backdrop-filter:blur(8px);
+          background:rgba(0,0,0,0.4);
           transition:all 0.2s;
         ">
           <div style="width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:16px solid rgba(240,237,230,0.8);margin-left:4px;"></div>
