@@ -543,12 +543,11 @@ footer{
     border-radius:12px;
     overflow:hidden;
     display:flex;
-    gap:0;
+    flex-direction:column;
   ">
     <a id="last-video-link" href="https://www.youtube.com/@mickaz9" target="_blank" style="
       display:block;
-      width:55%;
-      flex-shrink:0;
+      width:100%;
       position:relative;
       aspect-ratio:16/9;
       background:#111;
@@ -576,11 +575,11 @@ footer{
         </div>
       </div>
     </a>
-    <div style="padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1rem;flex:1;">
+    <div style="padding:1.5rem 2rem;display:flex;flex-direction:column;gap:0.75rem;">
       <div style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;">Dernière vidéo</div>
-      <div id="last-video-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:1px;line-height:1.1;">Chargement...</div>
+      <div id="last-video-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,5vw,2rem);letter-spacing:1px;line-height:1.1;">Chargement...</div>
       <div id="last-video-meta" style="font-size:0.72rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;">—</div>
-      <a id="last-video-btn" href="https://www.youtube.com/@mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Regarder →</a>
+      <a id="last-video-btn" href="https://www.youtube.com/@mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.25rem;">Regarder →</a>
     </div>
   </div>
 </section>
