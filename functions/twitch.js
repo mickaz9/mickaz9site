@@ -7,16 +7,13 @@ export async function onRequest(context) {
   const token = authData.access_token;
   const headers = { 'Client-ID': CLIENT_ID, 'Authorization': `Bearer ${token}` };
 
-  // Live stream
   const streamRes = await fetch('https://api.twitch.tv/helix/streams?user_login=mickaz9', { headers });
   const streamData = await streamRes.json();
 
-  // User ID
   const userRes = await fetch('https://api.twitch.tv/helix/users?login=mickaz9', { headers });
   const userData = await userRes.json();
   const userId = userData.data?.[0]?.id;
 
-  // Followers
   let followers = null;
   if (userId) {
     const folRes = await fetch(`https://api.twitch.tv/helix/channels/followers?broadcaster_id=${userId}`, { headers });
@@ -24,13 +21,16 @@ export async function onRequest(context) {
     followers = folData.total ?? null;
   }
 
-  // Dernier clip en date (started_at desc = du plus récent au plus ancien)
+  // Dernier clip par date de création (started_at le plus récent)
   let lastClip = null;
   if (userId) {
-    const clipRes = await fetch(`https://api.twitch.tv/helix/clips?broadcaster_id=${userId}&first=1&sort=newest`, { headers });
+    // Récupérer 20 clips et trier par created_at desc pour avoir le plus récent
+    const clipRes = await fetch(`https://api.twitch.tv/helix/clips?broadcaster_id=${userId}&first=20`, { headers });
     const clipData = await clipRes.json();
     if (clipData.data && clipData.data.length > 0) {
-      const c = clipData.data[0];
+      // Trier par date de création décroissante
+      const sorted = clipData.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      const c = sorted[0];
       lastClip = {
         id: c.id,
         title: c.title,
