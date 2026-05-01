@@ -415,6 +415,7 @@ footer{
   <ul class="nav-links">
     <li><a href="#live">Live</a></li>
     <li><a href="#planning">Planning</a></li>
+    <li><a href="#derniere-video">Vidéo</a></li>
     <li><a href="#reseaux">Réseaux</a></li>
   </ul>
 </nav>
@@ -529,6 +530,58 @@ footer{
       </div>
     </div>
     
+  </div>
+</section>
+<section id="derniere-video">
+  <div class="reveal">
+    <div class="section-label">Youtube</div>
+    <div class="section-title">DERNIÈRE <span class="dim">VIDÉO</span></div>
+  </div>
+  <div class="reveal reveal-delay-1" id="last-video-container" style="
+    background:rgba(240,237,230,0.02);
+    border:1px solid rgba(240,237,230,0.08);
+    border-radius:12px;
+    overflow:hidden;
+    display:flex;
+    gap:0;
+  ">
+    <a id="last-video-link" href="https://www.youtube.com/@mickaz9" target="_blank" style="
+      display:block;
+      width:55%;
+      flex-shrink:0;
+      position:relative;
+      aspect-ratio:16/9;
+      background:#111;
+      overflow:hidden;
+      text-decoration:none;
+    ">
+      <div id="last-video-thumb" style="
+        position:absolute;inset:0;
+        background-size:cover;background-position:center;
+        background-color:#1a0d0d;
+      "></div>
+      <div style="
+        position:absolute;inset:0;
+        display:flex;align-items:center;justify-content:center;
+      ">
+        <div id="last-video-play" style="
+          width:56px;height:56px;border-radius:50%;
+          border:1px solid rgba(240,237,230,0.2);
+          display:flex;align-items:center;justify-content:center;
+          backdrop-filter:blur(8px);
+          background:rgba(0,0,0,0.4);
+          transition:all 0.2s;
+        ">
+          <div style="width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:16px solid rgba(240,237,230,0.8);margin-left:4px;"></div>
+        </div>
+      </div>
+    </a>
+    <div style="padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1rem;flex:1;">
+      <div style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;">Dernière vidéo</div>
+      <div id="last-video-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:1px;line-height:1.1;">Chargement...</div>
+      <div id="last-video-meta" style="font-size:0.72rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;">—</div>
+      <a id="last-video-btn" href="https://www.youtube.com/@mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Regarder →</a>
+    </div>
   </div>
 </section>
 
@@ -711,6 +764,21 @@ async function loadYT(){
 }
 
 function applyYTData(data){
+  // Dernière vidéo longue
+  if(data.videos&&data.videos.length>0){
+    const v=data.videos[0];
+    const link=document.getElementById('last-video-link');
+    const btn=document.getElementById('last-video-btn');
+    const thumb=document.getElementById('last-video-thumb');
+    const title=document.getElementById('last-video-title');
+    const meta=document.getElementById('last-video-meta');
+    const url='https://www.youtube.com/watch?v='+v.id;
+    if(link)link.href=url;
+    if(btn)btn.href=url;
+    if(thumb)thumb.style.backgroundImage='url(https://img.youtube.com/vi/'+v.id+'/maxresdefault.jpg)';
+    if(title)title.textContent=v.title;
+    if(meta)meta.textContent=v.meta;
+  }
   if(data.subs){const el=document.getElementById('yt-subs');if(el)el.textContent=data.subs;}
   if(data.live){
     const badge=document.getElementById('yt-status-badge');
