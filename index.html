@@ -543,11 +543,12 @@ footer{
     border-radius:12px;
     overflow:hidden;
     display:flex;
-    flex-direction:column;
+    gap:0;
   ">
     <a id="last-video-link" href="https://www.youtube.com/@mickaz9" target="_blank" style="
       display:block;
-      width:100%;
+      width:55%;
+      flex-shrink:0;
       position:relative;
       aspect-ratio:16/9;
       background:#111;
@@ -575,11 +576,11 @@ footer{
         </div>
       </div>
     </a>
-    <div style="padding:1.5rem 2rem;display:flex;flex-direction:column;gap:0.75rem;">
+    <div style="padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1rem;flex:1;">
       <div style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;">Dernière vidéo</div>
-      <div id="last-video-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,5vw,2rem);letter-spacing:1px;line-height:1.1;">Chargement...</div>
+      <div id="last-video-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:1px;line-height:1.1;">Chargement...</div>
       <div id="last-video-meta" style="font-size:0.72rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;">—</div>
-      <a id="last-video-btn" href="https://www.youtube.com/@mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.25rem;">Regarder →</a>
+      <a id="last-video-btn" href="https://www.youtube.com/@mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Regarder →</a>
     </div>
   </div>
 </section>
@@ -706,6 +707,23 @@ async function checkTwitch(){
     if(d.followers!=null){
       const el=document.getElementById('twitch-subs');
       if(el)el.textContent=fmtN(d.followers);
+    }
+    if(d.lastClip){
+      const c=d.lastClip;
+      const container=document.getElementById('last-clip-container');
+      if(container) container.style.display='block';
+      const link=document.getElementById('last-clip-link');
+      const btn=document.getElementById('last-clip-btn');
+      const thumb=document.getElementById('last-clip-thumb');
+      const title=document.getElementById('last-clip-title');
+      const meta=document.getElementById('last-clip-meta');
+      if(link) link.href=c.url;
+      if(btn) btn.href=c.url;
+      if(thumb) thumb.style.backgroundImage='url('+c.thumbnail+')';
+      if(title) title.textContent=c.title;
+      const views=c.views>=1000?Math.round(c.views/1000)+'K vues':c.views+' vues';
+      const date=new Date(c.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+      if(meta) meta.textContent=views+' · '+date;
     }
   }catch(e){console.error('Twitch error',e);}
 }
