@@ -24,10 +24,10 @@ export async function onRequest(context) {
     followers = folData.total ?? null;
   }
 
-  // Dernier clip
+  // Dernier clip en date (started_at desc = du plus récent au plus ancien)
   let lastClip = null;
   if (userId) {
-    const clipRes = await fetch(`https://api.twitch.tv/helix/clips?broadcaster_id=${userId}&first=1`, { headers });
+    const clipRes = await fetch(`https://api.twitch.tv/helix/clips?broadcaster_id=${userId}&first=1&sort=newest`, { headers });
     const clipData = await clipRes.json();
     if (clipData.data && clipData.data.length > 0) {
       const c = clipData.data[0];
