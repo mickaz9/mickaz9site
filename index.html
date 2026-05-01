@@ -402,32 +402,23 @@ footer{
   section{padding:3rem 1.2rem}
   h1{font-size:clamp(4rem,18vw,6rem)}
   .live-grid,.videos-grid,.networks-wrap{grid-template-columns:1fr}
+  /* Section titre */
   .section-title{font-size:clamp(2.2rem,10vw,4rem);margin-bottom:1.5rem;}
+  /* Live cards */
   .live-card{padding:1.5rem;}
+  /* Réseaux */
   .network-item{padding:1rem 1.2rem;}
   .net-stats{min-width:50px;margin-right:0.8rem;font-size:1rem;}
+  /* Calendrier */
   .cal-head{padding:1rem 1.2rem;}
   .cal-body{padding:1rem 1.2rem;}
-  #last-video-container,#last-clip-container{
-    border-radius:10px;
-    flex-direction:column;
-  }
-  #last-video-container>a,#last-clip-container>a{
-    width:100%;
-    aspect-ratio:16/9;
-  }
-  #last-video-container>div,#last-clip-container>div{
-    padding:1.2rem;
-    display:flex;
-    flex-direction:column;
-    gap:0.6rem;
-    align-items:flex-start;
-  }
-  #last-video-btn,#last-clip-btn{
-    align-self:flex-start !important;
-    width:auto;
-  }
+  /* Dernière vidéo - layout vertical bien centré */
+  #last-video-container, #last-clip-container{border-radius:10px;}
+  #last-video-container > a, #last-clip-container > a{width:100%;}
+  #last-video-container > div, #last-clip-container > div{padding:1.2rem 1.2rem;}
+  /* Boutons */
   .btn{padding:0.75rem 1.5rem;font-size:0.65rem;}
+  /* Hero */
   .hero-sub{font-size:0.85rem;max-width:90%;}
   .hero-ctas{flex-direction:column;align-items:center;gap:0.75rem;}
   .hero-ctas .btn{width:100%;max-width:280px;justify-content:center;}
@@ -620,31 +611,26 @@ footer{
     overflow:hidden;
     margin-top:12px;
     display:none;
+    flex-direction:row;
+    gap:0;
   ">
     <a id="last-clip-link" href="https://www.twitch.tv/mickaz9" target="_blank" style="
       display:block;
-      width:100%;
+      width:55%;
+      flex-shrink:0;
       position:relative;
       aspect-ratio:16/9;
       background:#111;
       overflow:hidden;
       text-decoration:none;
     ">
-      <div id="last-clip-thumb" style="
-        position:absolute;inset:0;
-        background-size:cover;background-position:center;
-        background-color:#0d0d1a;
-      "></div>
-      <div style="
-        position:absolute;inset:0;
-        display:flex;align-items:center;justify-content:center;
-      ">
+      <div id="last-clip-thumb" style="position:absolute;inset:0;background-size:cover;background-position:center;background-color:#0d0d1a;"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
         <div style="
           width:56px;height:56px;border-radius:50%;
           border:1px solid rgba(240,237,230,0.2);
           display:flex;align-items:center;justify-content:center;
-          backdrop-filter:blur(8px);
-          background:rgba(0,0,0,0.4);
+          backdrop-filter:blur(8px);background:rgba(0,0,0,0.4);
           transition:all 0.2s;
         ">
           <div style="width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:16px solid rgba(240,237,230,0.8);margin-left:4px;"></div>
@@ -655,11 +641,11 @@ footer{
         <span style="font-size:9px;font-family:DM Mono,monospace;letter-spacing:1px;color:white;font-weight:600;">CLIP</span>
       </div>
     </a>
-    <div style="padding:1.5rem 2rem;display:flex;flex-direction:column;gap:0.75rem;">
+    <div style="padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1rem;flex:1;">
       <div style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;">Dernier clip Twitch</div>
-      <div id="last-clip-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,5vw,2rem);letter-spacing:1px;line-height:1.1;">Chargement...</div>
+      <div id="last-clip-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:1px;line-height:1.1;">Chargement...</div>
       <div id="last-clip-meta" style="font-size:0.72rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;">—</div>
-      <a id="last-clip-btn" href="https://www.twitch.tv/mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.25rem;">Voir le clip →</a>
+      <a id="last-clip-btn" href="https://www.twitch.tv/mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Voir le clip →</a>
     </div>
   </div>
 </section>
@@ -790,7 +776,7 @@ async function checkTwitch(){
     if(d.lastClip){
       const c=d.lastClip;
       const container=document.getElementById('last-clip-container');
-      if(container) container.style.display='block';
+      if(container) container.style.display='flex';
       const link=document.getElementById('last-clip-link');
       const btn=document.getElementById('last-clip-btn');
       const thumb=document.getElementById('last-clip-thumb');
