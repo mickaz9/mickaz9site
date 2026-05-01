@@ -21,24 +21,40 @@ export async function onRequest(context) {
     followers = folData.total ?? null;
   }
 
-  // Dernier clip par date de création (started_at le plus récent)
+  // Dernier clip par date — on pagine pour trouver le plus récent
   let lastClip = null;
   if (userId) {
-    // Récupérer 20 clips et trier par created_at desc pour avoir le plus récent
-    const clipRes = await fetch(`https://api.twitch.tv/helix/clips?broadcaster_id=${userId}&first=20`, { headers });
-    const clipData = await clipRes.json();
-    if (clipData.data && clipData.data.length > 0) {
-      // Trier par date de création décroissante
-      const sorted = clipData.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-      const c = sorted[0];
+    // On cherche sur les 2 dernières années en plusieurs fenêtres de temps
+    const now = new Date();
+    let found = null;
+    
+    // Chercher par tranche de 30 jours en remontant, jusqu'à 6 mois
+    for (let i = 0; i < 6 && !found; i++) {
+      const endDate = new Date(now);
+      endDate.setMonth(endDate.getMonth() - i);
+      const startDate = new Date(endDate);
+      startDate.setMonth(startDate.getMonth() - 1);
+      
+      const url = `https://api.twitch.tv/helix/clips?broadcaster_id=${userId}&first=20&started_at=${startDate.toISOString()}&ended_at=${endDate.toISOString()}`;
+      const clipRes = await fetch(url, { headers });
+      const clipData = await clipRes.json();
+      
+      if (clipData.data && clipData.data.length > 0) {
+        // Trier par date décroissante et prendre le plus récent
+        const sorted = clipData.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        found = sorted[0];
+      }
+    }
+    
+    if (found) {
       lastClip = {
-        id: c.id,
-        title: c.title,
-        url: c.url,
-        thumbnail: c.thumbnail_url,
-        views: c.view_count,
-        duration: c.duration,
-        created_at: c.created_at
+        id: found.id,
+        title: found.title,
+        url: found.url,
+        thumbnail: found.thumbnail_url,
+        views: found.view_count,
+        duration: found.duration,
+        created_at: found.created_at
       };
     }
   }
