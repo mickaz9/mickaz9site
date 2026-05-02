@@ -948,14 +948,41 @@ async function loadCalendar(){
       document.getElementById('cal-month-label').textContent=monthsFull[firstDate.getMonth()]+' '+firstDate.getFullYear();
       d.items.forEach(ev=>{
         const start=new Date(ev.start.dateTime||ev.start.date);
+        const hasTime=!!ev.start.dateTime;
         const h=start.getHours().toString().padStart(2,'0');
         const m=start.getMinutes().toString().padStart(2,'0');
-        const hasTime=!!ev.start.dateTime;
+
+        // Détecter si l'événement dure plusieurs jours
+        let dateDisplay='';
+        let isMultiDay=false;
+        if(ev.end){
+          const end=new Date(ev.end.dateTime||ev.end.date);
+          // Pour les événements all-day, end est le lendemain — on soustrait 1 jour
+          if(!ev.end.dateTime){
+            end.setDate(end.getDate()-1);
+          }
+          if(end.getDate()!==start.getDate()||end.getMonth()!==start.getMonth()){
+            isMultiDay=true;
+            // Si même mois → "1 au 3 jan" sinon "28 jan au 2 fév"
+            if(end.getMonth()===start.getMonth()){
+              dateDisplay=start.getDate()+' au '+end.getDate()+' '+months[end.getMonth()];
+            } else {
+              dateDisplay=start.getDate()+' '+months[start.getMonth()]+' au '+end.getDate()+' '+months[end.getMonth()];
+            }
+          }
+        }
+
+        const dateBlock = isMultiDay
+          ? `<div style="text-align:center;min-width:60px;flex-shrink:0">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;line-height:1.2;color:var(--accent);letter-spacing:1px">${dateDisplay}</div>
+            </div>`
+          : `<div style="text-align:center;min-width:36px;flex-shrink:0">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;line-height:1;color:var(--accent)">${start.getDate()}</div>
+              <div style="font-size:0.58rem;color:rgba(240,237,230,0.3);letter-spacing:1px;text-transform:uppercase;font-family:'DM Mono',monospace">${months[start.getMonth()]}</div>
+            </div>`;
+
         body.innerHTML+=`<div style="display:flex;align-items:center;gap:16px;padding:1rem 1.25rem;background:rgba(240,237,230,0.02);border:1px solid rgba(240,237,230,0.06);margin-bottom:8px">
-          <div style="text-align:center;min-width:36px;flex-shrink:0">
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;line-height:1;color:var(--accent)">${start.getDate()}</div>
-            <div style="font-size:0.58rem;color:rgba(240,237,230,0.3);letter-spacing:1px;text-transform:uppercase;font-family:'DM Mono',monospace">${months[start.getMonth()]}</div>
-          </div>
+          ${dateBlock}
           <div style="width:1px;height:36px;background:rgba(240,237,230,0.08);flex-shrink:0"></div>
           <div style="flex:1">
             <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase">${ev.summary}</div>
