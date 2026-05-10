@@ -13,7 +13,6 @@ export async function onRequest(context) {
     });
 
   } else if(type === 'videos'){
-    // Récupérer 25 vidéos uploadées (pas de lives)
     const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&order=date&type=video&maxResults=25&key=${API_KEY}`;
     const searchRes = await fetch(searchUrl);
     const searchData = await searchRes.json();
@@ -24,13 +23,13 @@ export async function onRequest(context) {
       });
     }
 
-    // Récupérer contentDetails pour filtrer Shorts et rediffs live
     const ids = searchData.items.map(i => i.id.videoId).filter(Boolean).join(',');
-    const detailsUrl = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails,snippet&id=${ids}&key=${API_KEY}`;
+
+    // Utiliser contentDetails + liveStreamingDetails pour détecter les rediffs
+    const detailsUrl = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails,liveStreamingDetails&id=${ids}&key=${API_KEY}`;
     const detailsRes = await fetch(detailsUrl);
     const detailsData = await detailsRes.json();
 
-    // Parser durée ISO 8601 → secondes
     const parseDuration = (iso) => {
       if(!iso) return 0;
       const match = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
@@ -43,18 +42,18 @@ export async function onRequest(context) {
       detailsData.items.forEach(v => {
         detailsMap[v.id] = {
           duration: parseDuration(v.contentDetails?.duration),
-          // liveBroadcastContent = 'none' = vidéo normale, 'completed' = rediff live
-          liveContent: v.snippet?.liveBroadcastContent || 'none'
+          // liveStreamingDetails existe seulement sur les lives/rediffs
+          isLive: !!v.liveStreamingDetails
         };
       });
     }
 
-    // Garder uniquement les vidéos longues uploadées (pas Shorts, pas rediffs live)
+    // Garder uniquement les vraies vidéos longues uploadées
     const longVideos = searchData.items.filter(item => {
       const detail = detailsMap[item.id.videoId];
       if(!detail) return false;
       const isShort = detail.duration <= 60;
-      const isLiveReplay = detail.liveContent === 'completed' || detail.liveContent === 'live';
+      const isLiveReplay = detail.isLive;
       return !isShort && !isLiveReplay;
     });
 
