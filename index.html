@@ -943,7 +943,7 @@ function applyYTData(data){
     if(meta&&videoMeta)meta.textContent=videoMeta;
     // Si titre ou meta manquants, les récupérer via l'API (snippet + statistics)
     if(!videoTitle||!videoMeta){
-      fetch('/youtube?type=videoinfo&ids='+videoId).then(r=>r.json()).then(d=>{
+      fetch('/youtube?type=videostats&ids='+videoId).then(r=>r.json()).then(d=>{
         if(d.items&&d.items[0]){
           const item=d.items[0];
           const snippet=item.snippet||{};
@@ -954,16 +954,6 @@ function applyYTData(data){
           const date=snippet.publishedAt?new Date(snippet.publishedAt).toLocaleDateString('fr-FR',{day:'numeric',month:'short'}):'';
           if(meta) meta.textContent=views+(date?' · '+date:'');
         }
-      }).catch(()=>{
-        // Fallback sur videostats si videoinfo non dispo
-        fetch('/youtube?type=videostats&ids='+videoId).then(r=>r.json()).then(d=>{
-          if(d.items&&d.items[0]){
-            const stats=d.items[0].statistics||{};
-            const n=parseInt(stats.viewCount||0);
-            const views=n>=1000000?(n/1000000).toFixed(1)+'M vues':n>=1000?Math.round(n/1000)+'K vues':n+' vues';
-            if(meta) meta.textContent=views;
-          }
-        });
       });
     }
   }
