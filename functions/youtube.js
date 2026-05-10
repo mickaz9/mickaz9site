@@ -24,9 +24,7 @@ export async function onRequest(context) {
     }
 
     const ids = searchData.items.map(i => i.id.videoId).filter(Boolean).join(',');
-
-    // Utiliser contentDetails + liveStreamingDetails pour détecter les rediffs
-    const detailsUrl = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails,liveStreamingDetails&id=${ids}&key=${API_KEY}`;
+    const detailsUrl = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${ids}&key=${API_KEY}`;
     const detailsRes = await fetch(detailsUrl);
     const detailsData = await detailsRes.json();
 
@@ -37,24 +35,17 @@ export async function onRequest(context) {
       return (parseInt(match[1]||0)*3600) + (parseInt(match[2]||0)*60) + parseInt(match[3]||0);
     };
 
-    const detailsMap = {};
+    const durationMap = {};
     if(detailsData.items){
       detailsData.items.forEach(v => {
-        detailsMap[v.id] = {
-          duration: parseDuration(v.contentDetails?.duration),
-          // liveStreamingDetails existe seulement sur les lives/rediffs
-          isLive: !!v.liveStreamingDetails
-        };
+        durationMap[v.id] = parseDuration(v.contentDetails?.duration);
       });
     }
 
-    // Garder uniquement les vraies vidéos longues uploadées
+    // Shorts < 60s, rediffs live > 3600s (1h) → garder entre 60s et 3600s
     const longVideos = searchData.items.filter(item => {
-      const detail = detailsMap[item.id.videoId];
-      if(!detail) return false;
-      const isShort = detail.duration <= 60;
-      const isLiveReplay = detail.isLive;
-      return !isShort && !isLiveReplay;
+      const dur = durationMap[item.id.videoId] || 0;
+      return dur > 60 && dur <= 3600;
     });
 
     return new Response(JSON.stringify({ ...searchData, items: longVideos }), {
