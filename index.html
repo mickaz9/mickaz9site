@@ -912,20 +912,46 @@ async function loadYT(){
 }
 
 function applyYTData(data){
-  // Dernière vidéo longue
-  if(data.videos&&data.videos.length>0){
-    const v=data.videos[0];
+  // Utiliser LATEST_VIDEO_ID si défini, sinon prendre le premier de l'API
+  const manualId = CONFIG.LATEST_VIDEO_ID;
+  let videoId = null;
+  let videoTitle = null;
+  let videoMeta = null;
+
+  if(manualId){
+    videoId = manualId;
+    // Chercher le titre dans les données API si disponible
+    const found = data.videos?.find(v => v.id === manualId);
+    if(found){ videoTitle = found.title; videoMeta = found.meta; }
+  } else if(data.videos&&data.videos.length>0){
+    videoId = data.videos[0].id;
+    videoTitle = data.videos[0].title;
+    videoMeta = data.videos[0].meta;
+  }
+
+  if(videoId){
     const link=document.getElementById('last-video-link');
     const btn=document.getElementById('last-video-btn');
     const thumb=document.getElementById('last-video-thumb');
     const title=document.getElementById('last-video-title');
     const meta=document.getElementById('last-video-meta');
-    const url='https://www.youtube.com/watch?v='+v.id;
+    const url='https://www.youtube.com/watch?v='+videoId;
     if(link)link.href=url;
     if(btn)btn.href=url;
-    if(thumb)thumb.style.backgroundImage='url(https://img.youtube.com/vi/'+v.id+'/maxresdefault.jpg)';
-    if(title)title.textContent=v.title;
-    if(meta)meta.textContent=v.meta;
+    if(thumb)thumb.style.backgroundImage='url(https://img.youtube.com/vi/'+videoId+'/maxresdefault.jpg)';
+    if(title&&videoTitle)title.textContent=videoTitle;
+    if(meta&&videoMeta)meta.textContent=videoMeta;
+    // Si le titre n'est pas dispo depuis le cache API, le récupérer directement
+    if(title&&!videoTitle){
+      fetch('/youtube?type=videostats&ids='+videoId).then(r=>r.json()).then(d=>{
+        if(d.items&&d.items[0]){
+          const stats=d.items[0].statistics||{};
+          const n=parseInt(stats.viewCount||0);
+          const views=n>=1000000?(n/1000000).toFixed(1)+'M vues':n>=1000?Math.round(n/1000)+'K vues':n+' vues';
+          if(meta)meta.textContent=views;
+        }
+      });
+    }
   }
   if(data.subs){const el=document.getElementById('yt-subs');if(el)el.textContent=data.subs;}
   if(data.live){
@@ -1012,7 +1038,7 @@ async function loadCalendar(){
     }
   }catch(e){console.error('Calendar error',e);}
 }
-
+const CONFIG = { LATEST_VIDEO_ID: '5WRXxOYbYGI' };
 checkTwitch();loadYT();loadCalendar();
 setInterval(checkTwitch,60000);
 </script>
