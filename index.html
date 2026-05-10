@@ -941,15 +941,29 @@ function applyYTData(data){
     if(thumb)thumb.style.backgroundImage='url(https://img.youtube.com/vi/'+videoId+'/maxresdefault.jpg)';
     if(title&&videoTitle)title.textContent=videoTitle;
     if(meta&&videoMeta)meta.textContent=videoMeta;
-    // Si le titre n'est pas dispo depuis le cache API, le récupérer directement
-    if(title&&!videoTitle){
-      fetch('/youtube?type=videostats&ids='+videoId).then(r=>r.json()).then(d=>{
+    // Si titre ou meta manquants, les récupérer via l'API (snippet + statistics)
+    if(!videoTitle||!videoMeta){
+      fetch('/youtube?type=videoinfo&ids='+videoId).then(r=>r.json()).then(d=>{
         if(d.items&&d.items[0]){
-          const stats=d.items[0].statistics||{};
+          const item=d.items[0];
+          const snippet=item.snippet||{};
+          const stats=item.statistics||{};
+          if(title&&snippet.title) title.textContent=snippet.title;
           const n=parseInt(stats.viewCount||0);
           const views=n>=1000000?(n/1000000).toFixed(1)+'M vues':n>=1000?Math.round(n/1000)+'K vues':n+' vues';
-          if(meta)meta.textContent=views;
+          const date=snippet.publishedAt?new Date(snippet.publishedAt).toLocaleDateString('fr-FR',{day:'numeric',month:'short'}):'';
+          if(meta) meta.textContent=views+(date?' · '+date:'');
         }
+      }).catch(()=>{
+        // Fallback sur videostats si videoinfo non dispo
+        fetch('/youtube?type=videostats&ids='+videoId).then(r=>r.json()).then(d=>{
+          if(d.items&&d.items[0]){
+            const stats=d.items[0].statistics||{};
+            const n=parseInt(stats.viewCount||0);
+            const views=n>=1000000?(n/1000000).toFixed(1)+'M vues':n>=1000?Math.round(n/1000)+'K vues':n+' vues';
+            if(meta) meta.textContent=views;
+          }
+        });
       });
     }
   }
