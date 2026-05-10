@@ -4,19 +4,73 @@ export async function onRequest(context) {
   const url = new URL(context.request.url);
   const type = url.searchParams.get('type') || 'stats';
   let apiUrl;
+
   if(type === 'live'){
     apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`;
+    const res = await fetch(apiUrl);
+    const data = await res.json();
+    return new Response(JSON.stringify(data), {
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+
   } else if(type === 'videos'){
-    apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&order=date&type=video&maxResults=10&key=${API_KEY}`;
+    // Récupérer plus de vidéos pour filtrer les Shorts
+    apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&order=date&type=video&maxResults=20&key=${API_KEY}`;
+    const res = await fetch(apiUrl);
+    const data = await res.json();
+
+    if(!data.items || data.items.length === 0){
+      return new Response(JSON.stringify(data), {
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+      });
+    }
+
+    // Récupérer les durées pour filtrer les Shorts (< 60 secondes)
+    const ids = data.items.map(i => i.id.videoId).filter(Boolean).join(',');
+    const detailsUrl = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${ids}&key=${API_KEY}`;
+    const detailsRes = await fetch(detailsUrl);
+    const detailsData = await detailsRes.json();
+
+    // Parser la durée ISO 8601 en secondes
+    const parseDuration = (iso) => {
+      const match = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+      if(!match) return 0;
+      return (parseInt(match[1]||0)*3600) + (parseInt(match[2]||0)*60) + parseInt(match[3]||0);
+    };
+
+    const durationMap = {};
+    if(detailsData.items){
+      detailsData.items.forEach(v => {
+        durationMap[v.id] = parseDuration(v.contentDetails.duration);
+      });
+    }
+
+    // Garder uniquement les vidéos > 60 secondes (pas des Shorts)
+    const longVideos = data.items.filter(item => {
+      const dur = durationMap[item.id.videoId] || 999;
+      return dur > 60;
+    });
+
+    return new Response(JSON.stringify({ ...data, items: longVideos }), {
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'public, max-age=60' }
+    });
+
   } else if(type === 'videostats'){
     const ids = url.searchParams.get('ids');
     apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${ids}&key=${API_KEY}`;
+    const res = await fetch(apiUrl);
+    const data = await res.json();
+    return new Response(JSON.stringify(data), {
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+
   } else {
+    // Stats channel (abonnés + détection live)
     apiUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet,status&id=${CHANNEL_ID}&key=${API_KEY}`;
+    const res = await fetch(apiUrl);
+    const data = await res.json();
+    return new Response(JSON.stringify(data), {
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'public, max-age=60' }
+    });
   }
-  const res = await fetch(apiUrl);
-  const data = await res.json();
-  return new Response(JSON.stringify(data), {
-    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'public, max-age=60' }
-  });
 }
