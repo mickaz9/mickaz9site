@@ -919,13 +919,16 @@ async function checkTwitch(){
 }
 
 async function loadYT(){
-  const CACHE_KEY='mickaz9_yt_cache';
+  const CACHE_KEY='mickaz9_yt_cache_v2';
   const CACHE_TTL=3600000; // 1 heure
   try{
+    // Supprimer l'ancien cache si présent
+    localStorage.removeItem('mickaz9_yt_cache');
     const cached=localStorage.getItem(CACHE_KEY);
     if(cached){
-      const {data,timestamp}=JSON.parse(cached);
-      if(Date.now()-timestamp<CACHE_TTL){applyYTData(data);return;}
+      const {data,timestamp,videoId}=JSON.parse(cached);
+      // Invalider le cache si la vidéo a changé dans le CONFIG
+      if(videoId===CONFIG.LATEST_VIDEO_ID && Date.now()-timestamp<CACHE_TTL){applyYTData(data);return;}
     }
     const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'K';return n;};
     const data={subs:null,live:null,videos:[]};
@@ -965,7 +968,7 @@ async function loadYT(){
       }
     }
 
-    localStorage.setItem(CACHE_KEY,JSON.stringify({data,timestamp:Date.now()}));
+    localStorage.setItem(CACHE_KEY,JSON.stringify({data,timestamp:Date.now(),videoId:CONFIG.LATEST_VIDEO_ID}));
     applyYTData(data);
   }catch(e){console.error('YT error',e);}
 }
@@ -1000,14 +1003,18 @@ function applyYTData(data){
     if(thumb)thumb.style.backgroundImage='url(https://img.youtube.com/vi/'+videoId+'/maxresdefault.jpg)';
     if(title&&videoTitle)title.textContent=videoTitle;
     if(meta&&videoMeta)meta.textContent=videoMeta;
-    // Si le titre n'est pas dispo depuis le cache API, le récupérer directement
-    if(title&&!videoTitle){
+    // Si titre ou meta manquants, les récupérer via l'API (snippet + statistics)
+    if(!videoTitle||!videoMeta){
       fetch('/youtube?type=videostats&ids='+videoId).then(r=>r.json()).then(d=>{
         if(d.items&&d.items[0]){
-          const stats=d.items[0].statistics||{};
+          const item=d.items[0];
+          const snippet=item.snippet||{};
+          const stats=item.statistics||{};
+          if(title&&snippet.title) title.textContent=snippet.title;
           const n=parseInt(stats.viewCount||0);
           const views=n>=1000000?(n/1000000).toFixed(1)+'M vues':n>=1000?Math.round(n/1000)+'K vues':n+' vues';
-          if(meta)meta.textContent=views;
+          const date=snippet.publishedAt?new Date(snippet.publishedAt).toLocaleDateString('fr-FR',{day:'numeric',month:'short'}):'';
+          if(meta) meta.textContent=views+(date?' · '+date:'');
         }
       });
     }
@@ -1112,7 +1119,7 @@ const CONFIG = {
   // Colle l'ID de ton dernier Short YouTube (après ?v= ou /shorts/)
   // Ex: https://www.youtube.com/shorts/abc123 → 'abc123'
   // → Le player YouTube s'affiche automatiquement en format portrait
-  LATEST_SHORT_ID:    '',
+  LATEST_SHORT_ID:    'fuEOFP28YYk',
   // Titre affiché à droite
   LATEST_SHORT_TITLE: 'Mon dernier Short',
   // Infos optionnelles (ex: '5K vues · 3 mai')
