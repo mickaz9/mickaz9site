@@ -714,6 +714,7 @@ footer{
   </div>
 
   <!-- Dernier TikTok -->
+  <!-- Dernier TikTok — embed natif -->
   <div id="last-tiktok-container" style="
     background:rgba(240,237,230,0.02);
     border:1px solid rgba(240,237,230,0.08);
@@ -723,39 +724,32 @@ footer{
     display:flex;
     flex-direction:row;
     gap:0;
+    align-items:stretch;
   ">
-    <a id="last-tiktok-link" href="https://www.tiktok.com/@mickaaz9" target="_blank" style="
-      display:block;
-      width:55%;
+    <!-- Colonne gauche : player TikTok embed -->
+    <div style="
+      width:340px;
       flex-shrink:0;
-      position:relative;
-      aspect-ratio:16/9;
-      background:#111;
+      background:#000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       overflow:hidden;
-      text-decoration:none;
+      min-height:580px;
     ">
-      <div id="last-tiktok-thumb" style="position:absolute;inset:0;background-size:cover;background-position:center;background-color:#0d0d0d;"></div>
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-        <div style="
-          width:56px;height:56px;border-radius:50%;
-          border:1px solid rgba(240,237,230,0.2);
-          display:flex;align-items:center;justify-content:center;
-          backdrop-filter:blur(8px);background:rgba(0,0,0,0.4);
-          transition:all 0.2s;
-        ">
-          <div style="width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:16px solid rgba(240,237,230,0.8);margin-left:4px;"></div>
-        </div>
+      <div id="last-tiktok-embed" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+        <!-- Injecté par JS -->
       </div>
-      <div style="position:absolute;top:10px;left:10px;background:#010101;border:1px solid #333;border-radius:6px;padding:3px 8px;display:flex;align-items:center;gap:5px;">
-        <svg viewBox="0 0 24 24" fill="white" width="10" height="10"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
-        <span style="font-size:9px;font-family:DM Mono,monospace;letter-spacing:1px;color:white;font-weight:600;">TIKTOK</span>
-      </div>
-    </a>
+    </div>
+    <!-- Colonne droite : infos -->
     <div style="padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1rem;flex:1;">
-      <div style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;">Dernier TikTok</div>
+      <div style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;display:flex;align-items:center;gap:8px;">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+        Dernier TikTok
+      </div>
       <div id="last-tiktok-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:1px;line-height:1.1;">—</div>
       <div id="last-tiktok-meta" style="font-size:0.72rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;">—</div>
-      <a id="last-tiktok-btn" href="https://www.tiktok.com/@mickaaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Voir le TikTok →</a>
+      <a id="last-tiktok-btn" href="https://www.tiktok.com/@mickaaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Voir sur TikTok →</a>
     </div>
   </div>
 </section>
@@ -1096,14 +1090,13 @@ const CONFIG = {
   LATEST_VIDEO_ID: '5WRXxOYbYGI',
 
   // ── DERNIER TIKTOK ───────────────────────────────────────────
-  // Colle l'URL complète de ton dernier TikTok
+  // Colle l'URL complète de ton dernier TikTok — DOIT contenir /video/XXXXX
+  // Ex: 'https://www.tiktok.com/@mickaaz9/video/7380123456789012345'
+  // → L'aperçu vidéo s'affiche automatiquement via l'embed TikTok officiel
   LATEST_TIKTOK_URL:   'https://www.tiktok.com/@mickaaz9/video/7637956956766014722',
-  // Titre affiché (ex: 'Mon meilleur clutch Warzone 💀')
+  // Titre affiché à droite (ex: 'Mon meilleur clutch Warzone 💀')
   LATEST_TIKTOK_TITLE: 'Mon dernier TikTok',
-  // Miniature : fais une capture ou upload une image et colle l'URL ici
-  // Laisse vide ('') pour afficher un fond noir par défaut
-  LATEST_TIKTOK_THUMB: '',
-  // Infos optionnelles (ex: '12K vues · 3 mai')
+  // Infos optionnelles affichées sous le titre (ex: '12K vues · 3 mai')
   LATEST_TIKTOK_META:  '',
 
   // ── STATS RÉSEAUX SOCIAUX (mis à jour manuellement) ─────────
@@ -1122,18 +1115,39 @@ document.getElementById('twitter-stats').textContent   = CONFIG.TWITTER_FOLLOWER
 document.getElementById('tiktok-stats').textContent    = CONFIG.TIKTOK_FOLLOWERS;
 document.getElementById('instagram-stats').textContent = CONFIG.INSTAGRAM_FOLLOWERS;
 
-// Injection du dernier TikTok
+// Injection du dernier TikTok (embed natif)
 (function(){
-  const link  = document.getElementById('last-tiktok-link');
   const btn   = document.getElementById('last-tiktok-btn');
-  const thumb = document.getElementById('last-tiktok-thumb');
   const title = document.getElementById('last-tiktok-title');
   const meta  = document.getElementById('last-tiktok-meta');
-  if(link)  link.href  = CONFIG.LATEST_TIKTOK_URL;
-  if(btn)   btn.href   = CONFIG.LATEST_TIKTOK_URL;
+  const embed = document.getElementById('last-tiktok-embed');
+
+  if(btn)   btn.href = CONFIG.LATEST_TIKTOK_URL;
   if(title) title.textContent = CONFIG.LATEST_TIKTOK_TITLE || '—';
-  if(meta && CONFIG.LATEST_TIKTOK_META)  meta.textContent = CONFIG.LATEST_TIKTOK_META;
-  if(thumb && CONFIG.LATEST_TIKTOK_THUMB) thumb.style.backgroundImage = 'url(' + CONFIG.LATEST_TIKTOK_THUMB + ')';
+  if(meta && CONFIG.LATEST_TIKTOK_META) meta.textContent = CONFIG.LATEST_TIKTOK_META;
+
+  // Extraire l'ID TikTok depuis l'URL (format: /video/1234567890)
+  if(embed && CONFIG.LATEST_TIKTOK_URL){
+    const match = CONFIG.LATEST_TIKTOK_URL.match(/\/video\/(\d+)/);
+    if(match){
+      const videoId = match[1];
+      // Embed officiel TikTok
+      embed.innerHTML = '<blockquote class="tiktok-embed" cite="' + CONFIG.LATEST_TIKTOK_URL + '" data-video-id="' + videoId + '" style="max-width:100%;min-width:100%;border:none;margin:0;padding:0;"> <section></section></blockquote>';
+      // Charger le script TikTok embed si pas déjà chargé
+      if(!document.getElementById('tiktok-embed-script')){
+        const s = document.createElement('script');
+        s.id = 'tiktok-embed-script';
+        s.src = 'https://www.tiktok.com/embed.js';
+        s.async = true;
+        document.body.appendChild(s);
+      } else if(window.tiktokEmbed){
+        window.tiktokEmbed.lib.render();
+      }
+    } else {
+      // URL sans /video/ID : afficher un lien simple
+      embed.innerHTML = '<a href="' + CONFIG.LATEST_TIKTOK_URL + '" target="_blank" style="color:rgba(240,237,230,0.3);font-family:DM Mono,monospace;font-size:0.7rem;padding:2rem;text-align:center;display:block;">Colle une URL TikTok avec /video/ID pour l\'aperçu</a>';
+    }
+  }
 })();
 
 checkTwitch();loadYT();loadCalendar();
