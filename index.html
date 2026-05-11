@@ -112,13 +112,71 @@ nav{
   color:var(--white);text-decoration:none;
 }
 .nav-logo span{color:var(--accent)}
-.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
 .nav-links a{
   font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;
   color:rgba(240,237,230,0.5);text-decoration:none;
   transition:color 0.2s;font-weight:500;
 }
 .nav-links a:hover{color:var(--accent)}
+
+/* NAV DROPDOWN */
+.nav-dropdown{position:relative;}
+.nav-dropdown-btn{
+  font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(240,237,230,0.5);background:none;border:none;cursor:pointer;
+  font-weight:500;font-family:'Bricolage Grotesque',sans-serif;
+  display:flex;align-items:center;gap:6px;padding:0;
+  transition:color 0.2s;
+}
+.nav-dropdown-btn:hover{color:var(--accent)}
+.nav-dropdown-btn svg{transition:transform 0.2s;}
+.nav-dropdown.open .nav-dropdown-btn{color:var(--white)}
+.nav-dropdown.open .nav-dropdown-btn svg{transform:rotate(180deg)}
+.nav-dropdown-menu{
+  position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%);
+  background:rgba(8,8,8,0.92);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(240,237,230,0.08);
+  border-radius:10px;
+  padding:6px;
+  min-width:160px;
+  display:flex;flex-direction:column;gap:2px;
+  opacity:0;pointer-events:none;
+  transform:translateX(-50%) translateY(-6px);
+  transition:opacity 0.18s ease,transform 0.18s ease;
+  z-index:200;
+}
+.nav-dropdown-menu::before{
+  content:'';position:absolute;top:-5px;left:50%;transform:translateX(-50%);
+  width:8px;height:8px;
+  background:rgba(8,8,8,0.92);
+  border-left:1px solid rgba(240,237,230,0.08);
+  border-top:1px solid rgba(240,237,230,0.08);
+  transform:translateX(-50%) rotate(45deg);
+}
+.nav-dropdown.open .nav-dropdown-menu{
+  opacity:1;pointer-events:auto;
+  transform:translateX(-50%) translateY(0);
+}
+.nav-dropdown-menu a{
+  font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(240,237,230,0.45);text-decoration:none;font-weight:500;
+  padding:0.55rem 1rem;border-radius:6px;
+  transition:background 0.15s,color 0.15s;
+  display:flex;align-items:center;gap:8px;
+  white-space:nowrap;
+}
+.nav-dropdown-menu a::before{
+  content:'';width:3px;height:3px;border-radius:50%;
+  background:var(--accent);opacity:0;flex-shrink:0;
+  transition:opacity 0.15s;
+}
+.nav-dropdown-menu a:hover{
+  background:rgba(255,45,45,0.06);
+  color:var(--white);
+}
+.nav-dropdown-menu a:hover::before{opacity:1;}
 
 /* HERO */
 .hero{
@@ -227,6 +285,33 @@ h1 .accent{color:var(--accent)}
 
 /* SECTIONS */
 section{padding:6rem 3rem;max-width:1100px;margin:0 auto}
+/* Sections accordéon : padding réduit quand fermé */
+
+/* ── Skeleton loading ── */
+@keyframes shimmer{
+  0%{background-position:-400px 0}
+  100%{background-position:400px 0}
+}
+.skeleton{
+  background:linear-gradient(90deg,rgba(240,237,230,0.04) 25%,rgba(240,237,230,0.08) 50%,rgba(240,237,230,0.04) 75%);
+  background-size:800px 100%;
+  animation:shimmer 1.4s infinite;
+  border-radius:8px;
+}
+.setup-skeleton-card{
+  background:rgba(240,237,230,0.02);
+  border:1px solid rgba(240,237,230,0.06);
+  border-radius:12px;
+  overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.setup-skeleton-img{aspect-ratio:1/1;margin:1.2rem;}
+.setup-skeleton-title{height:14px;margin:0 1.2rem 0.6rem;border-radius:4px;}
+.setup-skeleton-btn{height:10px;width:60%;margin:0 1.2rem 1.2rem;border-radius:4px;}
+#derniere-video, #setup, #reseaux{
+  padding-top:2.5rem;padding-bottom:2.5rem;
+  transition:padding 0.3s ease;
+}
 .section-label{
   font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;
   color:var(--accent);font-family:'DM Mono',monospace;
@@ -486,9 +571,26 @@ footer{
   <ul class="nav-links">
     <li><a href="#live">Live</a></li>
     <li><a href="#planning">Planning</a></li>
-    <li><a href="#derniere-video">Vidéo</a></li>
-    <li><a href="#setup">Setup</a></li>
-    <li><a href="#reseaux">Réseaux</a></li>
+    <li class="nav-dropdown" id="nav-dropdown">
+      <button class="nav-dropdown-btn" id="nav-dropdown-btn">
+        Contenu
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="10" height="10"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="nav-dropdown-menu" id="nav-dropdown-menu">
+        <a href="#derniere-video">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="11" height="11"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          Vidéo
+        </a>
+        <a href="#setup">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="11" height="11"><path d="M22 9V7h-2V5c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-2h2v-2h-2v-2h2v-2h-2V9h2zm-4 10H4V5h14v14z"/></svg>
+          Setup
+        </a>
+        <a href="#reseaux">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="11" height="11"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          Réseaux
+        </a>
+      </div>
+    </li>
   </ul>
 </nav>
 
@@ -618,9 +720,13 @@ footer{
   </div>
 </section>
 <section id="derniere-video">
-  <div class="reveal">
-    <div class="section-title">DERNIÈRE <span class="dim">VIDÉO</span></div>
+  <div class="accordion-header reveal" data-target="accordion-video" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding-bottom:1rem;border-bottom:1px solid rgba(240,237,230,0.06);margin-bottom:2rem;user-select:none;">
+    <div class="section-title" style="margin-bottom:0">DERNIÈRE <span class="dim">VIDÉO</span></div>
+    <div class="accordion-chevron" style="color:rgba(240,237,230,0.3);transition:transform 0.3s,color 0.2s;flex-shrink:0;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
   </div>
+  <div id="accordion-video" class="accordion-body" style="overflow:hidden;max-height:0;transition:max-height 0.45s ease;">
   <div class="reveal reveal-delay-1" id="last-video-container" style="
     background:rgba(240,237,230,0.02);
     border:1px solid rgba(240,237,230,0.08);
@@ -759,13 +865,20 @@ footer{
       <a id="last-short-btn" href="https://www.youtube.com/@mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Voir sur YouTube →</a>
     </div>
   </div>
+  </div><!-- /accordion-video -->
 </section>
 
 <section id="setup">
-  <div class="reveal">
-    <div class="section-label">Équipement</div>
-    <div class="section-title">MON <span class="dim">SETUP</span></div>
+  <div class="accordion-header reveal" data-target="accordion-setup" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding-bottom:1rem;border-bottom:1px solid rgba(240,237,230,0.06);margin-bottom:2rem;user-select:none;">
+    <div>
+      <div class="section-label" style="margin-bottom:0.5rem">Équipement</div>
+      <div class="section-title" style="margin-bottom:0">MON <span class="dim">SETUP</span></div>
+    </div>
+    <div class="accordion-chevron" style="color:rgba(240,237,230,0.3);transition:transform 0.3s,color 0.2s;flex-shrink:0;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
   </div>
+  <div id="accordion-setup" class="accordion-body" style="overflow:hidden;max-height:0;transition:max-height 0.45s ease;">
   <div id="setup-grid" class="reveal reveal-delay-1" style="
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
@@ -774,10 +887,16 @@ footer{
 </section>
 
 <section id="reseaux">
-  <div class="reveal">
-    <div class="section-label">Réseaux</div>
-    <div class="section-title">MES <span class="dim">RÉSEAUX</span></div>
+  <div class="accordion-header reveal" data-target="accordion-reseaux" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding-bottom:1rem;border-bottom:1px solid rgba(240,237,230,0.06);margin-bottom:2rem;user-select:none;">
+    <div>
+      <div class="section-label" style="margin-bottom:0.5rem">Réseaux</div>
+      <div class="section-title" style="margin-bottom:0">MES <span class="dim">RÉSEAUX</span></div>
+    </div>
+    <div class="accordion-chevron" style="color:rgba(240,237,230,0.3);transition:transform 0.3s,color 0.2s;flex-shrink:0;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
   </div>
+  <div id="accordion-reseaux" class="accordion-body" style="overflow:hidden;max-height:0;transition:max-height 0.45s ease;">
   <div class="networks-wrap reveal reveal-delay-1">
     <a class="network-item" href="https://www.twitch.tv/mickaz9" target="_blank">
       <div class="net-left">
@@ -842,6 +961,7 @@ footer{
       <span class="net-arrow">↗</span>
     </a>
   </div>
+  </div><!-- /accordion-reseaux -->
 </section>
 
 <footer>
@@ -1119,7 +1239,7 @@ const CONFIG = {
   // Colle l'ID de ton dernier Short YouTube (après ?v= ou /shorts/)
   // Ex: https://www.youtube.com/shorts/abc123 → 'abc123'
   // → Le player YouTube s'affiche automatiquement en format portrait
-  LATEST_SHORT_ID:    'fuEOFP28YYk',
+  LATEST_SHORT_ID:    '',
   // Titre affiché à droite
   LATEST_SHORT_TITLE: 'Mon dernier Short',
   // Infos optionnelles (ex: '5K vues · 3 mai')
@@ -1290,7 +1410,7 @@ document.getElementById('instagram-stats').textContent = CONFIG.INSTAGRAM_FOLLOW
   }
 })();
 
-// ── Rendu du Setup ──────────────────────────────────────────
+// ── Rendu du Setup (lazy + skeleton) ────────────────────────
 (function(){
   const grid = document.getElementById('setup-grid');
   if(!grid || !CONFIG.SETUP || !CONFIG.SETUP.length) return;
@@ -1303,56 +1423,155 @@ document.getElementById('instagram-stats').textContent = CONFIG.INSTAGRAM_FOLLOW
     categories[cat].push(item);
   });
 
-  let html = '';
-  Object.entries(categories).forEach(([cat, items]) => {
-    // Label catégorie sur toute la largeur
-    html += `<div style="grid-column:1/-1;font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;display:flex;align-items:center;gap:10px;margin-top:1rem;">
-      ${cat}<span style="flex:1;height:1px;background:var(--accent);opacity:0.2;max-width:60px;"></span>
+  // Générer les skeletons immédiatement (1 par produit)
+  const total = CONFIG.SETUP.length;
+  let skeletonHtml = '';
+  for(let i = 0; i < total; i++){
+    skeletonHtml += `<div class="setup-skeleton-card">
+      <div class="setup-skeleton-img skeleton"></div>
+      <div class="setup-skeleton-title skeleton"></div>
+      <div class="setup-skeleton-btn skeleton"></div>
     </div>`;
-    items.forEach(item => {
-      html += `<a href="${item.url}" target="_blank" rel="noopener noreferrer" style="
-        background:rgba(240,237,230,0.02);
-        border:1px solid rgba(240,237,230,0.08);
-        border-radius:12px;
-        overflow:hidden;
-        text-decoration:none;
-        color:inherit;
-        display:flex;
-        flex-direction:column;
-        transition:all 0.2s;
-        position:relative;
-      " onmouseenter="this.style.background='rgba(240,237,230,0.05)';this.style.borderColor='rgba(255,45,45,0.25)';this.style.transform='translateY(-3px)'"
-         onmouseleave="this.style.background='rgba(240,237,230,0.02)';this.style.borderColor='rgba(240,237,230,0.08)';this.style.transform='translateY(0)'">
-        <div style="
-          aspect-ratio:1/1;
-          background:#111;
-          display:flex;align-items:center;justify-content:center;
-          overflow:hidden;padding:1.2rem;
-        ">
-          <img src="${item.image}" alt="${item.name}" style="
-            max-width:100%;max-height:100%;
-            object-fit:contain;
-            filter:brightness(0.95);
-            transition:transform 0.3s;
-          " onerror="this.style.display='none'" loading="lazy">
-        </div>
-        <div style="padding:1rem 1.2rem;flex:1;display:flex;flex-direction:column;gap:8px;">
-          <div style="font-size:0.82rem;font-weight:500;line-height:1.3;">${item.name}</div>
-          <div style="
-            margin-top:auto;
-            display:inline-flex;align-items:center;gap:5px;
-            font-size:0.62rem;letter-spacing:1.5px;text-transform:uppercase;
-            color:var(--accent);font-family:'DM Mono',monospace;font-weight:600;
-          ">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="10" height="10"><path d="M20.47 2H3.53a1.45 1.45 0 0 0-1.45 1.45v17.1A1.45 1.45 0 0 0 3.53 22h16.94a1.45 1.45 0 0 0 1.45-1.45V3.45A1.45 1.45 0 0 0 20.47 2zm-8.5 16.5H7.72v-1.5h4.25v1.5zm4.25-3H7.72V14h8.5v1.5zm0-3H7.72V11h8.5v1.5zm0-3H7.72V8h8.5v1.5z"/></svg>
-            Voir sur Amazon →
+  }
+  grid.innerHTML = skeletonHtml;
+
+  // Fonction qui génère le vrai contenu
+  function renderSetup(){
+    if(grid.dataset.loaded) return;
+    grid.dataset.loaded = '1';
+
+    let html = '';
+    Object.entries(categories).forEach(([cat, items]) => {
+      html += `<div style="grid-column:1/-1;font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;display:flex;align-items:center;gap:10px;margin-top:1rem;">
+        ${cat}<span style="flex:1;height:1px;background:var(--accent);opacity:0.2;max-width:60px;"></span>
+      </div>`;
+      items.forEach(item => {
+        html += `<a href="${item.url}" target="_blank" rel="noopener noreferrer" style="
+          background:rgba(240,237,230,0.02);
+          border:1px solid rgba(240,237,230,0.08);
+          border-radius:12px;overflow:hidden;
+          text-decoration:none;color:inherit;
+          display:flex;flex-direction:column;
+          transition:all 0.2s;position:relative;
+        " onmouseenter="this.style.background='rgba(240,237,230,0.05)';this.style.borderColor='rgba(255,45,45,0.25)';this.style.transform='translateY(-3px)'"
+           onmouseleave="this.style.background='rgba(240,237,230,0.02)';this.style.borderColor='rgba(240,237,230,0.08)';this.style.transform='translateY(0)'">
+          <div style="aspect-ratio:1/1;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:1.2rem;">
+            <img
+              data-src="${item.image}"
+              alt="${item.name}"
+              style="max-width:100%;max-height:100%;object-fit:contain;filter:brightness(0.95);transition:transform 0.3s;opacity:0;transition:opacity 0.3s;"
+              onerror="this.style.display='none'"
+            >
           </div>
-        </div>
-      </a>`;
+          <div style="padding:1rem 1.2rem;flex:1;display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:0.82rem;font-weight:500;line-height:1.3;">${item.name}</div>
+            <div style="margin-top:auto;display:inline-flex;align-items:center;gap:5px;font-size:0.62rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;font-weight:600;">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="10" height="10"><path d="M20.47 2H3.53a1.45 1.45 0 0 0-1.45 1.45v17.1A1.45 1.45 0 0 0 3.53 22h16.94a1.45 1.45 0 0 0 1.45-1.45V3.45A1.45 1.45 0 0 0 20.47 2zm-8.5 16.5H7.72v-1.5h4.25v1.5zm4.25-3H7.72V14h8.5v1.5zm0-3H7.72V11h8.5v1.5zm0-3H7.72V8h8.5v1.5z"/></svg>
+              Voir sur Amazon →
+            </div>
+          </div>
+        </a>`;
+      });
+    });
+
+    // Fade out skeletons → fade in real content
+    grid.style.opacity = '0';
+    grid.style.transition = 'opacity 0.3s';
+    setTimeout(() => {
+      grid.innerHTML = html;
+      grid.style.opacity = '1';
+
+      // IntersectionObserver pour charger les images uniquement quand visibles
+      const imgObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.onload = () => { img.style.opacity = '1'; };
+            imgObserver.unobserve(img);
+          }
+        });
+      }, { rootMargin: '100px' });
+
+      grid.querySelectorAll('img[data-src]').forEach(img => imgObserver.observe(img));
+    }, 200);
+  }
+
+  // Lazy : ne charger que quand l'accordéon setup s'ouvre
+  const accordionSetup = document.getElementById('accordion-setup');
+  if(accordionSetup){
+    const setupObserver = new MutationObserver(() => {
+      if(accordionSetup.style.maxHeight && accordionSetup.style.maxHeight !== '0px'){
+        renderSetup();
+      }
+    });
+    setupObserver.observe(accordionSetup, { attributes: true, attributeFilter: ['style'] });
+  } else {
+    // Pas d'accordéon : charger directement
+    renderSetup();
+  }
+})();
+
+// ── Accordéons sections ──────────────────────────────────────
+(function(){
+  document.querySelectorAll('.accordion-header').forEach(function(header){
+    const targetId = header.getAttribute('data-target');
+    const body     = document.getElementById(targetId);
+    const chevron  = header.querySelector('.accordion-chevron');
+    if(!body) return;
+
+    header.addEventListener('click', function(){
+      const isOpen = body.style.maxHeight && body.style.maxHeight !== '0px';
+      if(isOpen){
+        body.style.maxHeight = '0px';
+        chevron.style.transform = 'rotate(0deg)';
+        chevron.style.color = 'rgba(240,237,230,0.3)';
+      } else {
+        body.style.maxHeight = body.scrollHeight + 'px';
+        chevron.style.transform = 'rotate(180deg)';
+        chevron.style.color = 'var(--accent)';
+        // Recalculate after images/embeds load
+        setTimeout(()=>{ body.style.maxHeight = body.scrollHeight + 'px'; }, 400);
+      }
     });
   });
 
-  grid.innerHTML = html;
+  // Ouvrir la section ciblée par un lien nav (#derniere-video etc.)
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(){
+      const target = document.querySelector(a.getAttribute('href'));
+      if(!target) return;
+      const body = target.querySelector('.accordion-body');
+      const chevron = target.querySelector('.accordion-chevron');
+      if(body && (!body.style.maxHeight || body.style.maxHeight === '0px')){
+        body.style.maxHeight = body.scrollHeight + 'px';
+        if(chevron){ chevron.style.transform='rotate(180deg)'; chevron.style.color='var(--accent)'; }
+        setTimeout(()=>{ body.style.maxHeight = body.scrollHeight + 'px'; }, 400);
+      }
+    });
+  });
+})();
+
+// ── Dropdown nav ─────────────────────────────────────────────
+(function(){
+  const dropdown = document.getElementById('nav-dropdown');
+  const btn      = document.getElementById('nav-dropdown-btn');
+  if(!dropdown || !btn) return;
+
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    dropdown.classList.toggle('open');
+  });
+
+  // Fermer en cliquant ailleurs
+  document.addEventListener('click', function(){
+    dropdown.classList.remove('open');
+  });
+
+  // Fermer en cliquant sur un lien du menu
+  document.querySelectorAll('#nav-dropdown-menu a').forEach(a => {
+    a.addEventListener('click', () => dropdown.classList.remove('open'));
+  });
 })();
 
 checkTwitch();loadYT();loadCalendar();
