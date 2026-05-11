@@ -712,6 +712,52 @@ footer{
       <a id="last-clip-btn" href="https://www.twitch.tv/mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Voir le clip →</a>
     </div>
   </div>
+
+  <!-- Dernier TikTok -->
+  <div id="last-tiktok-container" style="
+    background:rgba(240,237,230,0.02);
+    border:1px solid rgba(240,237,230,0.08);
+    border-radius:12px;
+    overflow:hidden;
+    margin-top:12px;
+    display:flex;
+    flex-direction:row;
+    gap:0;
+  ">
+    <a id="last-tiktok-link" href="https://www.tiktok.com/@mickaaz9" target="_blank" style="
+      display:block;
+      width:55%;
+      flex-shrink:0;
+      position:relative;
+      aspect-ratio:16/9;
+      background:#111;
+      overflow:hidden;
+      text-decoration:none;
+    ">
+      <div id="last-tiktok-thumb" style="position:absolute;inset:0;background-size:cover;background-position:center;background-color:#0d0d0d;"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+        <div style="
+          width:56px;height:56px;border-radius:50%;
+          border:1px solid rgba(240,237,230,0.2);
+          display:flex;align-items:center;justify-content:center;
+          backdrop-filter:blur(8px);background:rgba(0,0,0,0.4);
+          transition:all 0.2s;
+        ">
+          <div style="width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:16px solid rgba(240,237,230,0.8);margin-left:4px;"></div>
+        </div>
+      </div>
+      <div style="position:absolute;top:10px;left:10px;background:#010101;border:1px solid #333;border-radius:6px;padding:3px 8px;display:flex;align-items:center;gap:5px;">
+        <svg viewBox="0 0 24 24" fill="white" width="10" height="10"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+        <span style="font-size:9px;font-family:DM Mono,monospace;letter-spacing:1px;color:white;font-weight:600;">TIKTOK</span>
+      </div>
+    </a>
+    <div style="padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1rem;flex:1;">
+      <div style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;">Dernier TikTok</div>
+      <div id="last-tiktok-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:1px;line-height:1.1;">—</div>
+      <div id="last-tiktok-meta" style="font-size:0.72rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;">—</div>
+      <a id="last-tiktok-btn" href="https://www.tiktok.com/@mickaaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Voir le TikTok →</a>
+    </div>
+  </div>
 </section>
 
 <section id="reseaux">
@@ -941,18 +987,14 @@ function applyYTData(data){
     if(thumb)thumb.style.backgroundImage='url(https://img.youtube.com/vi/'+videoId+'/maxresdefault.jpg)';
     if(title&&videoTitle)title.textContent=videoTitle;
     if(meta&&videoMeta)meta.textContent=videoMeta;
-    // Si titre ou meta manquants, les récupérer via l'API (snippet + statistics)
-    if(!videoTitle||!videoMeta){
+    // Si le titre n'est pas dispo depuis le cache API, le récupérer directement
+    if(title&&!videoTitle){
       fetch('/youtube?type=videostats&ids='+videoId).then(r=>r.json()).then(d=>{
         if(d.items&&d.items[0]){
-          const item=d.items[0];
-          const snippet=item.snippet||{};
-          const stats=item.statistics||{};
-          if(title&&snippet.title) title.textContent=snippet.title;
+          const stats=d.items[0].statistics||{};
           const n=parseInt(stats.viewCount||0);
           const views=n>=1000000?(n/1000000).toFixed(1)+'M vues':n>=1000?Math.round(n/1000)+'K vues':n+' vues';
-          const date=snippet.publishedAt?new Date(snippet.publishedAt).toLocaleDateString('fr-FR',{day:'numeric',month:'short'}):'';
-          if(meta) meta.textContent=views+(date?' · '+date:'');
+          if(meta)meta.textContent=views;
         }
       });
     }
@@ -1042,7 +1084,58 @@ async function loadCalendar(){
     }
   }catch(e){console.error('Calendar error',e);}
 }
-const CONFIG = { LATEST_VIDEO_ID: '5WRXxOYbYGI' };
+// ╔══════════════════════════════════════════════════════════════╗
+// ║                     ⚙️  CONFIG MICKAZ9                      ║
+// ║         Tout ce que tu dois mettre à jour régulièrement      ║
+// ╚══════════════════════════════════════════════════════════════╝
+const CONFIG = {
+
+  // ── DERNIÈRE VIDÉO YOUTUBE ──────────────────────────────────
+  // Colle l'ID de ta dernière vidéo (après ?v= dans l'URL YouTube)
+  // Ex: https://www.youtube.com/watch?v=5WRXxOYbYGI → '5WRXxOYbYGI'
+  LATEST_VIDEO_ID: '5WRXxOYbYGI',
+
+  // ── DERNIER TIKTOK ───────────────────────────────────────────
+  // Colle l'URL complète de ton dernier TikTok
+  LATEST_TIKTOK_URL:   'https://www.tiktok.com/@mickaaz9',
+  // Titre affiché (ex: 'Mon meilleur clutch Warzone 💀')
+  LATEST_TIKTOK_TITLE: 'Mon dernier TikTok',
+  // Miniature : fais une capture ou upload une image et colle l'URL ici
+  // Laisse vide ('') pour afficher un fond noir par défaut
+  LATEST_TIKTOK_THUMB: '',
+  // Infos optionnelles (ex: '12K vues · 3 mai')
+  LATEST_TIKTOK_META:  '',
+
+  // ── STATS RÉSEAUX SOCIAUX (mis à jour manuellement) ─────────
+  // Twitch et YouTube sont récupérés automatiquement via l'API
+  DISCORD_MEMBERS:     '900',
+  TWITTER_FOLLOWERS:   '100',
+  TIKTOK_FOLLOWERS:    '2K',
+  INSTAGRAM_FOLLOWERS: '500',
+
+};
+// ╚══════════════════════════════════════════════════════════════╝
+
+// Injection des stats statiques
+document.getElementById('discord-stats').textContent   = CONFIG.DISCORD_MEMBERS;
+document.getElementById('twitter-stats').textContent   = CONFIG.TWITTER_FOLLOWERS;
+document.getElementById('tiktok-stats').textContent    = CONFIG.TIKTOK_FOLLOWERS;
+document.getElementById('instagram-stats').textContent = CONFIG.INSTAGRAM_FOLLOWERS;
+
+// Injection du dernier TikTok
+(function(){
+  const link  = document.getElementById('last-tiktok-link');
+  const btn   = document.getElementById('last-tiktok-btn');
+  const thumb = document.getElementById('last-tiktok-thumb');
+  const title = document.getElementById('last-tiktok-title');
+  const meta  = document.getElementById('last-tiktok-meta');
+  if(link)  link.href  = CONFIG.LATEST_TIKTOK_URL;
+  if(btn)   btn.href   = CONFIG.LATEST_TIKTOK_URL;
+  if(title) title.textContent = CONFIG.LATEST_TIKTOK_TITLE || '—';
+  if(meta && CONFIG.LATEST_TIKTOK_META)  meta.textContent = CONFIG.LATEST_TIKTOK_META;
+  if(thumb && CONFIG.LATEST_TIKTOK_THUMB) thumb.style.backgroundImage = 'url(' + CONFIG.LATEST_TIKTOK_THUMB + ')';
+})();
+
 checkTwitch();loadYT();loadCalendar();
 setInterval(checkTwitch,60000);
 </script>
