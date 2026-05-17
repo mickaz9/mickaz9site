@@ -6,8 +6,7 @@
 <title>Mickaz9 — Streamer & Créateur de contenu</title>
 
 <!-- ═══ FAVICON ═══ -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23080808'/><text y='72' x='50' text-anchor='middle' font-size='68' font-family='Arial Black,sans-serif' font-weight='900' fill='%23ff2d2d'>M9</text></svg>">
-<link rel="alternate icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=">
+<link rel="icon" type="image/png" href="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png">
 <meta name="theme-color" content="#ff2d2d">
 
 <!-- ═══ SEO ═══ -->
@@ -217,7 +216,7 @@ nav{
 }
 .live-dot{width:5px;height:5px;background:var(--accent);border-radius:50%;animation:blink 1.4s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
-@keyframes logoGlow{0%,100%{filter:drop-shadow(0 0 25px rgba(255,45,45,0.6)) drop-shadow(0 0 70px rgba(255,45,45,0.25))}50%{filter:drop-shadow(0 0 45px rgba(255,45,45,0.9)) drop-shadow(0 0 120px rgba(255,45,45,0.45))}}
+@keyframes logoGlow{0%,100%{filter:drop-shadow(0 0 25px rgba(255,45,45,0.6)) drop-shadow(0 0 70px rgba(255,45,45,0.25))}50%{filter:drop-shadow(0 0 50px rgba(255,45,45,1)) drop-shadow(0 0 130px rgba(255,45,45,0.5))}}.logo-glow-bg{position:absolute;inset:-40px;background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(255,45,45,0.55) 0%,transparent 70%);filter:blur(20px);animation:logoGlow 2.5s ease-in-out infinite;pointer-events:none;transform:translateZ(0);z-index:0;}
 h1{
   font-family:'Bebas Neue',sans-serif;
   font-size:clamp(5rem,14vw,13rem);
@@ -600,7 +599,10 @@ footer{
   <div class="hero-content">
     <div class="hero-eyebrow">Streamer & Créateur de contenu</div>
     <div class="live-pill" id="hero-live" style="display:none"><span class="live-dot"></span>Live maintenant</div>
-    <img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="height:clamp(80px,18vw,200px);width:auto;display:block;margin:0 auto 1.5rem;filter:drop-shadow(0 0 30px rgba(255,45,45,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.35));animation:logoGlow 2.5s ease-in-out infinite;">
+    <div style="position:relative;height:clamp(120px,26vw,320px);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;">
+      <div class="logo-glow-bg"></div>
+      <video autoplay loop muted playsinline style="position:relative;z-index:1;height:100%;width:auto;display:block;filter:drop-shadow(0 0 30px rgba(255,45,45,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.35));animation:logoGlow 2.5s ease-in-out infinite;" src="https://raw.githubusercontent.com/mickaz9/mickaz9site/main/Calque%201-Logo-mickaz9--blanc_Personnalis%C3%A9_1.webm"></video>
+    </div>
     <p class="hero-sub">Streams gaming, contenu créatif, communauté.<br>Rejoins l'aventure.</p>
     <div class="hero-ctas" id="hero-ctas-offline">
       <a href="#live" class="btn btn-primary">Regarder en live →</a>
