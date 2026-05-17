@@ -603,16 +603,15 @@ footer{
       <div class="logo-glow-bg"></div>
       <video id="logo-video" autoplay loop muted playsinline style="position:relative;z-index:1;height:100%;width:auto;display:block;filter:drop-shadow(0 0 30px rgba(255,45,45,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.35));animation:logoGlow 2.5s ease-in-out infinite;">
         <source src="https://raw.githubusercontent.com/mickaz9/mickaz9site/main/Calque%201-Logo-mickaz9--blanc_Personnalis%C3%A9_1.webm" type="video/webm">
-        <source src="https://raw.githubusercontent.com/mickaz9/mickaz9site/main/Logooooooooo.mov" type="video/mp4; codecs=hvc1">
       </video>
-      <img id="logo-fallback" src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="display:none;position:relative;z-index:1;height:100%;width:auto;filter:drop-shadow(0 0 30px rgba(255,45,45,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.35));animation:logoGlow 2.5s ease-in-out infinite;">
+      <img id="logo-fallback" src="https://raw.githubusercontent.com/mickaz9/mickaz9site/main/Calque1-Logo-mickaz9--blanc_Personnalis_1-ezgif.com-video-to-apng-converter.png" alt="Mickaz9" style="display:none;position:relative;z-index:1;height:100%;width:auto;filter:drop-shadow(0 0 30px rgba(255,45,45,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.35));animation:logoGlow 2.5s ease-in-out infinite;">
       <script>
       (function(){
         var video = document.getElementById('logo-video');
         var fallback = document.getElementById('logo-fallback');
-        // Check WebM alpha support
+        var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         var canWebM = document.createElement('video').canPlayType('video/webm; codecs="vp9"') !== '';
-        if (!canWebM) {
+        if (isIOS || !canWebM) {
           video.style.display = 'none';
           fallback.style.display = 'block';
         }
