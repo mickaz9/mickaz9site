@@ -1216,11 +1216,19 @@ async function loadCalendar(){
           }
         }
 
+        // Calcul du label relatif (Aujourd'hui / Demain / Après-demain)
+        const today=new Date(); today.setHours(0,0,0,0);
+        const startDay=new Date(start); startDay.setHours(0,0,0,0);
+        const diffDays=Math.round((startDay-today)/(1000*60*60*24));
+        const relLabel=diffDays===0?'Aujourd\'hui':diffDays===1?'Demain':diffDays===2?'Après-demain':null;
+
         const dateBlock = isMultiDay
           ? `<div style="text-align:center;min-width:60px;flex-shrink:0">
+              ${relLabel?`<div style="font-size:0.52rem;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Mono',monospace;color:var(--accent);opacity:0.75;margin-bottom:2px">${relLabel}</div>`:''}
               <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;line-height:1.2;color:var(--accent);letter-spacing:1px">${dateDisplay}</div>
             </div>`
           : `<div style="text-align:center;min-width:36px;flex-shrink:0">
+              ${relLabel?`<div style="font-size:0.52rem;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Mono',monospace;color:var(--accent);opacity:0.75;margin-bottom:2px">${relLabel}</div>`:''}
               <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;line-height:1;color:var(--accent)">${start.getDate()}</div>
               <div style="font-size:0.58rem;color:rgba(240,237,230,0.3);letter-spacing:1px;text-transform:uppercase;font-family:'DM Mono',monospace">${months[start.getMonth()]}</div>
             </div>`;
