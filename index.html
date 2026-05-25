@@ -1216,31 +1216,31 @@ async function loadCalendar(){
           }
         }
 
-        // Calcul du label relatif (Aujourd'hui / Demain / Après-demain)
+        // Label relatif + badge
         const today=new Date(); today.setHours(0,0,0,0);
         const startDay=new Date(start); startDay.setHours(0,0,0,0);
         const diffDays=Math.round((startDay-today)/(1000*60*60*24));
-        const relLabel=diffDays===0?'Aujourd\'hui':diffDays===1?'Demain':diffDays===2?'Après-demain':null;
-
         const isToday=diffDays===0;
+        const badgeLabel=diffDays===0?'Aujourd\'hui':diffDays===1?'Demain':diffDays===2?'Après-demain':`Dans ${diffDays} jours`;
+
+        // Style badge : rouge glow pour aujourd'hui, discret pour le reste
+        const badgeStyle=isToday
+          ?`background:rgba(255,45,45,0.08);border:1px solid rgba(255,45,45,0.25);color:var(--accent);box-shadow:0 0 12px rgba(255,45,45,0.2);`
+          :`background:rgba(240,237,230,0.04);border:1px solid rgba(240,237,230,0.1);color:rgba(240,237,230,0.35);`;
+
+        const badge=`<div style="display:inline-flex;align-items:center;gap:6px;${badgeStyle}padding:4px 11px;border-radius:20px;font-size:0.6rem;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Mono',monospace;flex-shrink:0;white-space:nowrap">
+          ${isToday?`<span style="width:5px;height:5px;background:var(--accent);border-radius:50%;display:inline-block;animation:blink 1.4s infinite"></span>`:''}
+          ${badgeLabel}
+        </div>`;
 
         const dateBlock = isMultiDay
           ? `<div style="text-align:center;min-width:60px;flex-shrink:0">
-              ${relLabel&&!isToday?`<div style="font-size:0.52rem;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Mono',monospace;color:var(--accent);opacity:0.75;margin-bottom:2px">${relLabel}</div>`:''}
               <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;line-height:1.2;color:var(--accent);letter-spacing:1px">${dateDisplay}</div>
             </div>`
           : `<div style="text-align:center;min-width:36px;flex-shrink:0">
-              ${relLabel&&!isToday?`<div style="font-size:0.52rem;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Mono',monospace;color:var(--accent);opacity:0.75;margin-bottom:2px">${relLabel}</div>`:''}
               <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;line-height:1;color:var(--accent)">${start.getDate()}</div>
               <div style="font-size:0.58rem;color:rgba(240,237,230,0.3);letter-spacing:1px;text-transform:uppercase;font-family:'DM Mono',monospace">${months[start.getMonth()]}</div>
             </div>`;
-
-        const todayBadge = isToday
-          ? `<div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,45,45,0.08);border:1px solid rgba(255,45,45,0.25);padding:4px 11px;border-radius:20px;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;box-shadow:0 0 12px rgba(255,45,45,0.2);flex-shrink:0">
-              <span style="width:5px;height:5px;background:var(--accent);border-radius:50%;display:inline-block;animation:blink 1.4s infinite"></span>
-              Ajd
-            </div>`
-          : '';
 
         body.innerHTML+=`<div style="display:flex;align-items:center;gap:16px;padding:1rem 1.25rem;background:rgba(240,237,230,0.02);border:1px solid ${isToday?'rgba(255,45,45,0.15)':'rgba(240,237,230,0.06)'};margin-bottom:8px;border-radius:6px">
           ${dateBlock}
@@ -1249,7 +1249,7 @@ async function loadCalendar(){
             <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase">${ev.summary}</div>
             <div style="font-size:0.62rem;color:rgba(240,237,230,0.25);font-family:'DM Mono',monospace;margin-top:3px;text-transform:uppercase;letter-spacing:1px">${days[start.getDay()]}</div>
           </div>
-          ${todayBadge}
+          ${badge}
           ${hasTime?`<span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--white)">${h}:${m}</span>`:''}
         </div>`;
       });
