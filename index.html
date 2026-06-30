@@ -1253,7 +1253,7 @@ async function loadCalendar(){
           <div style="width:1px;height:36px;background:rgba(240,237,230,0.08);flex-shrink:0"></div>
           <div style="flex:1">
             <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase">${ev.summary}</div>
-            <div style="font-size:0.62rem;color:rgba(240,237,230,0.25);font-family:'DM Mono',monospace;margin-top:3px;text-transform:uppercase;letter-spacing:1px">${days[start.getDay()]}</div>
+            ${isMultiDay?'':`<div style="font-size:0.62rem;color:rgba(240,237,230,0.25);font-family:'DM Mono',monospace;margin-top:3px;text-transform:uppercase;letter-spacing:1px">${days[start.getDay()]}</div>`}
           </div>
           ${badge}
           ${hasTime?`<span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--white)">${h}:${m}</span>`:''}
