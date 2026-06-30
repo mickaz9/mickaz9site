@@ -51,6 +51,7 @@ body::before{
   pointer-events:none;z-index:9998;
   transition:transform 0.25s ease, width 0.2s, height 0.2s;mix-blend-mode:difference;
 }
+@media(hover:none),(pointer:coarse){.cursor,.cursor-follower{display:none!important;}body{cursor:auto!important;}}
 
 /* NAV */
 nav{
@@ -72,10 +73,13 @@ nav{
 .nav-links li{display:flex;align-items:center}
 .nav-links a{
   font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;
-  color:rgba(240,237,230,0.5);text-decoration:none;
-  transition:color 0.2s;font-weight:600;line-height:1;display:flex;align-items:center;
+  color:rgba(240,237,230,0.45);text-decoration:none;
+  transition:color 0.2s, background 0.2s;font-weight:600;line-height:1;
+  display:flex;align-items:center;
+  padding:0.35rem 0.75rem;border-radius:20px;
 }
-.nav-links a:hover{color:var(--accent)}
+.nav-links a:hover{color:var(--white);background:rgba(240,237,230,0.06);}
+.nav-links a.nav-active{color:var(--accent);background:rgba(255,45,45,0.08);border:1px solid rgba(255,45,45,0.15);}
 
 /* NAV DROPDOWN */
 .nav-dropdown{position:relative;}
@@ -550,8 +554,10 @@ footer{
   .cal-head{padding:0.9rem 1rem;}
   .cal-head strong{font-size:0.78rem;}
   .cal-body{padding:0.9rem 1rem;gap:8px;}
-  .cal-title{font-size:0.8rem;}
-  .cal-time{font-size:0.62rem;}
+  .cal-title{font-size:0.78rem;}
+  .cal-time{font-size:0.6rem;}
+  .cal-body > div{flex-wrap:wrap;gap:8px;}
+  .cal-body > div > div[style*="font-family"]{font-size:0.9rem!important;}
 
   /* GRILLES */
   .videos-grid{grid-template-columns:1fr}
@@ -604,13 +610,14 @@ footer{
 /* MENU MOBILE */
 .nav-mobile-menu{
   position:fixed;top:0;left:0;right:0;bottom:0;
-  background:rgba(6,6,6,0.97);
-  backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%);
+  background:rgba(8,8,8,0.99);
+  backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
   flex-direction:column;align-items:center;justify-content:center;
   gap:0;z-index:8000;
   display:flex;
   opacity:0;pointer-events:none;
-  transition:opacity 0.3s ease;
+  transition:opacity 0.25s ease;
+  isolation:isolate;
 }
 .nav-mobile-menu.open{opacity:1;pointer-events:auto;}
 .nav-mobile-menu a{
@@ -748,15 +755,25 @@ footer{
 
 const cursor = document.getElementById('cursor');
 const follower = document.getElementById('follower');
+const isTouch = window.matchMedia('(hover:none),(pointer:coarse)').matches;
+if(cursor) cursor.style.display = isTouch ? 'none' : '';
+if(follower) follower.style.display = isTouch ? 'none' : '';
 let mx=0,my=0,fx=0,fy=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=(mx-5)+'px';cursor.style.top=(my-5)+'px';});
-(function animFollower(){fx+=(mx-fx)*0.12;fy+=(my-fy)*0.12;follower.style.left=(fx-18)+'px';follower.style.top=(fy-18)+'px';requestAnimationFrame(animFollower);})();
-document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{follower.style.width='52px';follower.style.height='52px';});el.addEventListener('mouseleave',()=>{follower.style.width='36px';follower.style.height='36px';});});
+if(!isTouch){
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(cursor){cursor.style.left=(mx-5)+'px';cursor.style.top=(my-5)+'px';}});
+  (function animFollower(){fx+=(mx-fx)*0.12;fy+=(my-fy)*0.12;if(follower){follower.style.left=(fx-18)+'px';follower.style.top=(fy-18)+'px';}requestAnimationFrame(animFollower);})();
+  document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{if(follower){follower.style.width='52px';follower.style.height='52px';}});el.addEventListener('mouseleave',()=>{if(follower){follower.style.width='36px';follower.style.height='36px';}});});
+}
 const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});},{threshold:0.1});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 (function(){
   const page=window.location.pathname.split('/').pop()||'index.html';
-  document.querySelectorAll('.nav-links a,.nav-mobile-menu a').forEach(a=>{if(a.getAttribute('href')===page){a.style.color='var(--accent)';}});
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    if(a.getAttribute('href')===page) a.classList.add('nav-active');
+  });
+  document.querySelectorAll('.nav-mobile-menu a').forEach(a=>{
+    if(a.getAttribute('href')===page) a.style.color='var(--accent)';
+  });
 })();
 (function(){
   const burger=document.getElementById('nav-burger');
