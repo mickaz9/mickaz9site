@@ -565,11 +565,24 @@ footer{
   .cal-head{padding:1rem 1.2rem;}
   .cal-body{padding:1rem 1.2rem;}
   /* Dernière vidéo - layout vertical bien centré */
-  #last-video-container, #last-clip-container{border-radius:10px;}
-  #last-video-container > a, #last-clip-container > a{width:100%;}
+  #last-video-container, #last-clip-container, #last-short-container{
+    border-radius:10px;
+    flex-direction:column !important;
+  }
+  #last-video-container > a, #last-clip-container > a{width:100% !important;}
   #last-video-container > div, #last-clip-container > div{padding:1.2rem 1.2rem;}
+  /* Short YouTube : le player portrait fixe (340px) déborde sur petit écran */
+  #last-short-container > div:first-child{
+    width:100% !important;
+    min-height:auto !important;
+    aspect-ratio:9/16;
+    max-width:340px;
+    margin:0 auto;
+  }
+  #last-short-container iframe{width:100% !important;height:100% !important;}
+  #last-short-container > div:last-child{padding:1.2rem 1.2rem;}
   /* Boutons */
-  .btn{padding:0.75rem 1.5rem;font-size:0.65rem;}
+  .btn{padding:0.75rem 1.5rem;font-size:0.65rem;white-space:nowrap;}
   /* Hero */
   .hero-sub{font-size:0.85rem;max-width:90%;}
   .hero-ctas{flex-direction:column;align-items:center;gap:0.75rem;}
