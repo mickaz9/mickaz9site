@@ -604,15 +604,7 @@ footer{
 .loadout-card:hover .loadout-img{transform:scale(1.03);}
 .loadout-img-wrap{overflow:hidden;aspect-ratio:16/9;position:relative;background:#0a0a0a;}
 .loadout-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;}
-.loadout-tag{
-  position:absolute;top:12px;left:12px;
-  font-size:0.55rem;letter-spacing:2px;text-transform:uppercase;
-  font-family:'DM Mono',monospace;font-weight:700;
-  background:rgba(255,45,45,0.85);color:#fff;
-  padding:3px 10px;border-radius:20px;
-  box-shadow:0 2px 8px rgba(255,45,45,0.4),inset 0 1px 0 rgba(255,255,255,0.2);
-  backdrop-filter:blur(8px);
-}
+
 .loadout-body{padding:1.5rem 1.75rem;}
 .loadout-name{
   font-family:"transducer-extended",sans-serif;font-style:italic;font-weight:600;
@@ -621,6 +613,49 @@ footer{
 }
 @media(max-width:768px){
   .loadout-grid{grid-template-columns:1fr;}
+}
+
+/* ── MODAL LOADOUT ─────────────────────────────────────────── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(8,8,8,0.85);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity 0.25s ease;
+  padding:1.5rem;
+}
+.modal-overlay.open{opacity:1;pointer-events:auto;}
+.modal-box{
+  background:rgba(18,18,18,0.95);
+  border:1px solid rgba(240,237,230,0.1);
+  border-radius:28px;
+  max-width:700px;width:100%;
+  overflow:hidden;
+  box-shadow:0 32px 80px rgba(0,0,0,0.6),inset 0 1px 0 rgba(255,255,255,0.06);
+  transform:translateY(20px) scale(0.97);
+  transition:transform 0.25s ease;
+}
+.modal-overlay.open .modal-box{transform:translateY(0) scale(1);}
+.modal-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;}
+.modal-body{padding:2rem 2.5rem;}
+.modal-title{
+  font-family:"transducer-extended",sans-serif;font-style:italic;font-weight:600;
+  font-size:2rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:1.5rem;
+}
+.modal-close{
+  position:absolute;top:1.25rem;right:1.25rem;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(240,237,230,0.08);border:1px solid rgba(240,237,230,0.12);
+  color:rgba(240,237,230,0.6);font-size:1.1rem;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all 0.2s;backdrop-filter:blur(10px);
+  font-family:sans-serif;line-height:1;
+}
+.modal-close:hover{background:rgba(255,45,45,0.15);border-color:rgba(255,45,45,0.3);color:var(--accent);}
+.modal-box{position:relative;}
+@media(max-width:768px){
+  .modal-body{padding:1.25rem 1.5rem;}
+  .modal-title{font-size:1.5rem;}
 }
 </style>
 </head>
@@ -723,11 +758,10 @@ const LOADOUTS = [
 (function(){
   const grid = document.getElementById('loadout-grid');
   if(!grid) return;
-  grid.innerHTML = LOADOUTS.map(l => `
-    <div class="loadout-card reveal">
+  grid.innerHTML = LOADOUTS.map((l,i) => `
+    <div class="loadout-card reveal" onclick="openLoadout(${i})" style="cursor:pointer;">
       <div class="loadout-img-wrap">
         <img class="loadout-img" src="${l.image}" alt="${l.name}" loading="lazy" onerror="this.parentElement.style.background='#111'">
-        <div class="loadout-tag">${l.tag}</div>
       </div>
       <div class="loadout-body">
         <div class="loadout-name">${l.name}</div>
@@ -738,5 +772,32 @@ const LOADOUTS = [
   grid.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 })();
 
+</script>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeLoadout(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeLoadout()">✕</button>
+    <img class="modal-img" id="modal-img" src="" alt="">
+    <div class="modal-body">
+      <div class="modal-title" id="modal-title"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openLoadout(i){
+  const l = LOADOUTS[i];
+  document.getElementById('modal-img').src = l.image;
+  document.getElementById('modal-img').alt = l.name;
+  document.getElementById('modal-title').textContent = l.name;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLoadout(e){
+  if(e && e.target !== document.getElementById('modal-overlay') && !e.target.classList.contains('modal-close')) return;
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLoadout({target: document.getElementById('modal-overlay')}); });
 </script>
 </body></html>
