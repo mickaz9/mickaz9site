@@ -609,17 +609,16 @@ footer{
 
 /* MENU MOBILE */
 .nav-mobile-menu{
-  position:fixed;top:0;left:0;right:0;bottom:0;
-  background:rgba(8,8,8,0.99);
-  backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+  position:fixed;inset:0;
+  background:#080808;
   flex-direction:column;align-items:center;justify-content:center;
   gap:0;z-index:8000;
   display:flex;
+  visibility:hidden;
   opacity:0;pointer-events:none;
-  transition:opacity 0.25s ease;
-  isolation:isolate;
+  transition:opacity 0.25s ease, visibility 0.25s ease;
 }
-.nav-mobile-menu.open{opacity:1;pointer-events:auto;}
+.nav-mobile-menu.open{opacity:1;pointer-events:auto;visibility:visible;}
 .nav-mobile-menu a{
   font-family:"transducer-extended",sans-serif;font-style:italic;font-weight:600;
   font-size:2.2rem;letter-spacing:4px;text-transform:uppercase;
@@ -653,16 +652,16 @@ footer{
     <li><a href="warzone.html">Warzone</a></li>
     <li><a href="reseaux.html">Réseaux</a></li>
   </ul>
-  <button class="nav-burger" id="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
-  <div class="nav-mobile-menu" id="nav-mobile-menu">
-    <a href="index.html">Accueil</a>
-    <div class="nav-mobile-divider"></div>
-    <a href="videos.html">Vidéos</a>
-    <a href="setup.html">Setup</a>
-    <a href="warzone.html">Warzone</a>
-    <a href="reseaux.html">Réseaux</a>
-  </div>
 </nav>
+<button class="nav-burger" id="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="index.html">Accueil</a>
+  <div class="nav-mobile-divider"></div>
+  <a href="videos.html">Vidéos</a>
+  <a href="setup.html">Setup</a>
+  <a href="warzone.html">Warzone</a>
+  <a href="reseaux.html">Réseaux</a>
+</div>
 <section id="reseaux" style="padding-top:8rem">
   <div class="accordion-header reveal" data-target="accordion-reseaux" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding-bottom:1rem;border-bottom:1px solid rgba(240,237,230,0.06);margin-bottom:2rem;user-select:none;">
     <div>
