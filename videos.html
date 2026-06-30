@@ -585,6 +585,7 @@ footer{
 </style>
 </head>
 <body>
+<body>
 <div class="cursor" id="cursor"></div>
 <div class="cursor-follower" id="follower"></div>
 <nav>
@@ -602,61 +603,154 @@ footer{
     <a href="warzone.html">Warzone</a>
   </div>
 </nav>
-<section style="padding-top:8rem">
-  <div class="reveal">
-    <div class="section-label">Contenu</div>
-    <div class="section-title">MES <span class="dim">VIDÉOS</span></div>
-  </div>
 
-  <div class="reveal reveal-delay-1" id="last-video-container" style="background:rgba(240,237,230,0.03);border:1px solid rgba(240,237,230,0.08);border-radius:22px;overflow:hidden;display:flex;gap:0;margin-bottom:12px;">
-    <a id="last-video-link" href="https://www.youtube.com/@mickaz9" target="_blank" style="display:block;width:55%;flex-shrink:0;position:relative;aspect-ratio:16/9;background:#111;overflow:hidden;text-decoration:none;">
-      <div id="last-video-thumb" style="position:absolute;inset:0;background-size:cover;background-position:center;background-color:#1a0d0d;"></div>
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-        <div id="last-video-play" style="width:56px;height:56px;border-radius:50%;border:1px solid rgba(240,237,230,0.2);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);background:rgba(0,0,0,0.4);transition:all 0.2s;">
+<section id="derniere-video">
+  <div class="accordion-header reveal" data-target="accordion-video" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding-bottom:1rem;border-bottom:1px solid rgba(240,237,230,0.06);margin-bottom:2rem;user-select:none;">
+    <div class="section-title" style="margin-bottom:0">DERNIÈRE <span class="dim">VIDÉO</span></div>
+    <div class="accordion-chevron" style="color:rgba(240,237,230,0.3);transition:transform 0.3s,color 0.2s;flex-shrink:0;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </div>
+  <div id="accordion-video" class="accordion-body" style="overflow:hidden;max-height:9999px;transition:max-height 0.45s ease;">
+  <div class="reveal reveal-delay-1" id="last-video-container" style="
+    background:rgba(240,237,230,0.02);
+    border:1px solid rgba(240,237,230,0.08);
+    border-radius:12px;
+    overflow:hidden;
+    display:flex;
+    gap:0;
+  ">
+    <a id="last-video-link" href="https://www.youtube.com/@mickaz9" target="_blank" style="
+      display:block;
+      width:55%;
+      flex-shrink:0;
+      position:relative;
+      aspect-ratio:16/9;
+      background:#111;
+      overflow:hidden;
+      text-decoration:none;
+    ">
+      <div id="last-video-thumb" style="
+        position:absolute;inset:0;
+        background-size:cover;background-position:center;
+        background-color:#1a0d0d;
+      "></div>
+      <div style="
+        position:absolute;inset:0;
+        display:flex;align-items:center;justify-content:center;
+      ">
+        <div id="last-video-play" style="
+          width:56px;height:56px;border-radius:50%;
+          border:1px solid rgba(240,237,230,0.2);
+          display:flex;align-items:center;justify-content:center;
+          backdrop-filter:blur(8px);
+          background:rgba(0,0,0,0.4);
+          transition:all 0.2s;
+        ">
           <div style="width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:16px solid rgba(240,237,230,0.8);margin-left:4px;"></div>
         </div>
       </div>
     </a>
     <div style="padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1rem;flex:1;">
       <div style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;">Dernière vidéo</div>
-      <div id="last-video-title" style="font-family:'transducer-extended',sans-serif;font-style:italic;font-weight:600;font-size:clamp(1rem,2vw,1.5rem);letter-spacing:1px;line-height:1.1;">Chargement...</div>
+      <div id="last-video-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:1px;line-height:1.1;">Chargement...</div>
       <div id="last-video-meta" style="font-size:0.72rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;">—</div>
       <a id="last-video-btn" href="https://www.youtube.com/@mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Regarder →</a>
     </div>
   </div>
 
-  <div id="last-clip-container" style="background:rgba(240,237,230,0.03);border:1px solid rgba(240,237,230,0.08);border-radius:22px;overflow:hidden;margin-bottom:12px;display:none;flex-direction:row;gap:0;">
-    <a id="last-clip-link" href="https://www.twitch.tv/mickaz9" target="_blank" style="display:block;width:55%;flex-shrink:0;position:relative;aspect-ratio:16/9;background:#111;overflow:hidden;text-decoration:none;">
+  <!-- Dernier clip Twitch -->
+  <div id="last-clip-container" style="
+    background:rgba(240,237,230,0.02);
+    border:1px solid rgba(240,237,230,0.08);
+    border-radius:12px;
+    overflow:hidden;
+    margin-top:12px;
+    display:none;
+    flex-direction:row;
+    gap:0;
+  ">
+    <a id="last-clip-link" href="https://www.twitch.tv/mickaz9" target="_blank" style="
+      display:block;
+      width:55%;
+      flex-shrink:0;
+      position:relative;
+      aspect-ratio:16/9;
+      background:#111;
+      overflow:hidden;
+      text-decoration:none;
+    ">
       <div id="last-clip-thumb" style="position:absolute;inset:0;background-size:cover;background-position:center;background-color:#0d0d1a;"></div>
       <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-        <div style="width:56px;height:56px;border-radius:50%;border:1px solid rgba(240,237,230,0.2);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);background:rgba(0,0,0,0.4);">
+        <div style="
+          width:56px;height:56px;border-radius:50%;
+          border:1px solid rgba(240,237,230,0.2);
+          display:flex;align-items:center;justify-content:center;
+          backdrop-filter:blur(8px);background:rgba(0,0,0,0.4);
+          transition:all 0.2s;
+        ">
           <div style="width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:16px solid rgba(240,237,230,0.8);margin-left:4px;"></div>
         </div>
       </div>
-      <div style="position:absolute;top:10px;left:10px;background:#9146ff;border-radius:6px;padding:3px 8px;display:flex;align-items:center;gap:5px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.25);">
+      <div style="position:absolute;top:10px;left:10px;background:#9146ff;border-radius:6px;padding:3px 8px;display:flex;align-items:center;gap:5px;">
         <svg viewBox="0 0 24 24" fill="white" width="10" height="10"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
         <span style="font-size:9px;font-family:DM Mono,monospace;letter-spacing:1px;color:white;font-weight:600;">CLIP</span>
       </div>
     </a>
     <div style="padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1rem;flex:1;">
       <div style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;">Dernier clip Twitch</div>
-      <div id="last-clip-title" style="font-family:'transducer-extended',sans-serif;font-style:italic;font-weight:600;font-size:clamp(1rem,2vw,1.5rem);letter-spacing:1px;line-height:1.1;">Chargement...</div>
+      <div id="last-clip-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:1px;line-height:1.1;">Chargement...</div>
       <div id="last-clip-meta" style="font-size:0.72rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;">—</div>
       <a id="last-clip-btn" href="https://www.twitch.tv/mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Voir le clip →</a>
     </div>
   </div>
 
-  <div id="last-short-container" style="background:rgba(240,237,230,0.03);border:1px solid rgba(240,237,230,0.08);border-radius:22px;overflow:hidden;display:flex;flex-direction:row;gap:0;align-items:stretch;">
-    <div style="width:340px;flex-shrink:0;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:580px;">
-      <iframe id="last-short-iframe" src="" width="340" height="605" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="display:block;border:none;"></iframe>
+  <!-- Dernier Short YouTube -->
+  <div id="last-short-container" style="
+    background:rgba(240,237,230,0.02);
+    border:1px solid rgba(240,237,230,0.08);
+    border-radius:12px;
+    overflow:hidden;
+    margin-top:12px;
+    display:flex;
+    flex-direction:row;
+    gap:0;
+    align-items:stretch;
+  ">
+    <!-- Colonne gauche : player YouTube embed format portrait -->
+    <div style="
+      width:340px;
+      flex-shrink:0;
+      background:#000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      min-height:580px;
+    ">
+      <iframe
+        id="last-short-iframe"
+        src=""
+        width="340"
+        height="605"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        style="display:block;border:none;"
+      ></iframe>
     </div>
+    <!-- Colonne droite : infos -->
     <div style="padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1rem;flex:1;">
-      <div style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> Dernier Short</div>
-      <div id="last-short-title" style="font-family:'transducer-extended',sans-serif;font-style:italic;font-weight:600;font-size:clamp(1rem,2vw,1.5rem);letter-spacing:1px;line-height:1.1;">—</div>
+      <div style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;display:flex;align-items:center;gap:8px;">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        Dernier Short
+      </div>
+      <div id="last-short-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:1px;line-height:1.1;">—</div>
       <div id="last-short-meta" style="font-size:0.72rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;">—</div>
       <a id="last-short-btn" href="https://www.youtube.com/@mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Voir sur YouTube →</a>
     </div>
   </div>
+  </div><!-- /accordion-video -->
 </section>
 <footer>
   <div>
@@ -691,6 +785,148 @@ document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
   burger.addEventListener('click',()=>{menu.classList.toggle('open');burger.classList.toggle('open');});
   menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');burger.classList.remove('open');}));
 })();
+
+
+const CONFIG = {
+
+  // ── DERNIÈRE VIDÉO YOUTUBE ──────────────────────────────────
+  // Colle l'ID de ta dernière vidéo (après ?v= dans l'URL YouTube)
+  // Ex: https://www.youtube.com/watch?v=5WRXxOYbYGI → '5WRXxOYbYGI'
+  LATEST_VIDEO_ID: 'aa0G6HfPDYo',
+
+  // ── DERNIER SHORT YOUTUBE ────────────────────────────────────
+  // Colle l'ID de ton dernier Short YouTube (après ?v= ou /shorts/)
+  // Ex: https://www.youtube.com/shorts/abc123 → 'abc123'
+  // → Le player YouTube s'affiche automatiquement en format portrait
+  LATEST_SHORT_ID:    'NG8Qyj1vwVY',
+  // Titre affiché à droite
+  LATEST_SHORT_TITLE: 'Mon dernier Short',
+  // Infos optionnelles (ex: '5K vues · 3 mai')
+  LATEST_SHORT_META:  '',
+
+  // ── SETUP / LIENS AMAZON ────────────────────────────────────
+  // Ajoute autant de produits que tu veux dans ce tableau
+  // image: URL de l'image produit (Amazon ou autre)
+  // url: lien affilié Amazon
+  // category: 'PC' | 'Périphériques' | 'Audio' | 'Streaming' | autre
+  SETUP: [
+
+    // ── PC ───────────────────────────────────────────────────────
+    {
+      name:     'Intel Core i9-12900K',
+      category: 'PC',
+      image:    'https://media.ldlc.com/r705/ld/products/00/05/90/02/LD0005900230_1.jpg',
+      url:      'https://www.amazon.fr/Processeur-Intel-Core-i9-12900KF-BX8071512900KF/dp/B09GYHRNBL',
+    },
+    {
+      name:     'ASUS Dual RTX 4070 OC 12GB',
+      category: 'PC',
+      image:    'https://m.media-amazon.com/images/I/81V++7RW8wL._AC_UF350,350_QL50_.jpg',
+      url:      'https://www.amazon.fr/ASUS-GeForce-Graphique-DisplayPort-DUAL-RTX4070-O12GD6-EVO/dp/B0DGL6N1ZT',
+    },
+    {
+      name:     'Gigabyte Z690 Aorus Ultra',
+      category: 'PC',
+      image:    'https://m.media-amazon.com/images/I/71UhwSmrQxL._AC_SX679_.jpg',
+      url:      'https://www.amazon.fr/Gigabyte-Z690-AORUS-ULTRA-Motherboard/dp/B09LHBXM3Z',
+    },
+    {
+      name:     'HyperX Fury DDR5 32Go',
+      category: 'PC',
+      image:    'https://media.rueducommerce.fr/r500/ld/products/00/05/95/90/LD0005959023_0005959075_0005959091_0005959106_0005959110_0005982047_0006173018_0006188882.jpg',
+      url:      'https://www.amazon.fr/Kingston-6000MT-Desktop-Gaming-Memory/dp/B0CYM58GFS',
+    },
+    {
+      name:     'Alphacool Eisbaer 240 AIO',
+      category: 'PC',
+      image:    'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQorBZl63dqditAi27u1upfYjOV4ffbOwIQHrVhUCvS-uJxu8oEPWKJtu6GIX_lH3xw32P1ElR-P1MBlO6NwQjv5ye9b3eNnkqHVqNcfdhdsNd2kxURmLZW',
+      url:      'https://www.amazon.fr/Alphacool-eisbaer-Aurora-240-komplett-wasserk%C3%BChlung/dp/B084VHMDHZ',
+    },
+
+    // ── Écrans ───────────────────────────────────────────────────
+    {
+      name:     'Acer KG251Q 144Hz 25"',
+      category: 'Écrans',
+      image:    'https://media.rueducommerce.fr/r500/mktp/product/productImage/2/64/cddc68ab236443ca9718bb256975444a.webp',
+      url:      'https://www.amazon.fr/Acer-KG251Q-Jbmidpx-rafra%C3%AEchissement-haut-parleurs/dp/B08DTNK3V5',
+    },
+    {
+      name:     'CHIQ 22F650 22" FHD',
+      category: 'Écrans',
+      image:    'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRZT895TWuB8GXf3rZnlnSt1BSU-z5z1xIxAIfyeqXYNQRXVyHgv7XCvnJkD6bw8SHlIQBXRPkZ4sdMQ6RsAlZ6Y2Y4WWkzhtqV7PRYsF-udpOXQIa6vBTwZxWWOOAneW7QLoyLB14&usqp=CAc',
+      url:      'https://www.amazon.fr/dp/B0BYMR3XM7',
+    },
+
+    // ── Périphériques ────────────────────────────────────────────
+    {
+      name:     'Corsair K70 Core TKL',
+      category: 'Périphériques',
+      image:    'https://assets.corsair.com/image/upload/c_pad,q_85,h_1100,w_1100,f_auto/products/Gaming-Keyboards/base-k70-core-tkl-config/gallery/CH-911911E-FR/K70_CORE_TKL_01.webp',
+      url:      'https://www.amazon.fr/CORSAIR-CORE-Clavier-M%C3%A9canique-Sans/dp/B0DG363LK1',
+    },
+    {
+      name:     'Logitech G Pro X Superlight 2',
+      category: 'Périphériques',
+      image:    'https://www.logitechg.com/content/dam/gaming/en/products/pro-x-superlight-2-se-pdp/gallery/pro-x-superlight-2-se-red-top-angle-gallery-1.png',
+      url:      'https://www.amazon.fr/Logitech-SUPERLIGHT-Pro-Grade-programmables-recharge/dp/B07W6JCF7Y',
+    },
+    {
+      name:     'ASUS ROG Moonstone Ace L',
+      category: 'Périphériques',
+      image:    'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQwi_EsxkR1_nTf89i6RCuOVFqaZhs-dBJjFCw607oqNggbTvgSsCg8IJoQ5KLCbLTxb0ADgliJsnsakmvrlS252lTKOoQyK5LVaN5D8_WZUKYEaAhqCz5XTmzo1pOtkuW-HJvBjQ&usqp=CAc',
+      url:      'https://www.amazon.fr/ROG-Moonstone-Ace-L-White/dp/B07MRJ975T',
+    },
+
+    // ── Audio ────────────────────────────────────────────────────
+    {
+      name:     'HyperX Cloud Flight Wireless',
+      category: 'Audio',
+      image:    'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSKgPLcG3-jJsb_8DK9dPH3E2ZJRpx8WlJ-ubOh7bvuT9G-YSLbVBgp35HwsXL27ZN533i2VXCPGD1EPxTdqZ9QxFmCAOi7U6bGy-JorqKHl3Np0zFcYSYwYC0r-zN7oyoeGwgDPi8&usqp=CAc',
+      url:      'https://www.amazon.fr/HyperX-Cloud-Flight-Casque-Micro-sans/dp/B078HT686T',
+    },
+    {
+      name:     'Tonor TD510 Microphone XLR',
+      category: 'Audio',
+      image:    'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQGRPLA5hAqz5Qvvmoj4gifxiR8rmI14HKcWjx7VTMCm6XSYIawGPQlupwRI4Np7Ku7y-bKqKn_HKjkwkg_ifPZ_yGN2VbHKfXsKiu8j0SkdfAg9dj9AJaD9NRZB4UmHicyMmmq85k&usqp=CAc',
+      url:      'https://www.amazon.fr/dp/B0BRKFP94K',
+    },
+    {
+      name:     'Fifine SC3 Interface Audio',
+      category: 'Audio',
+      image:    'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT0GzTmB42_1Grizv385DVYMQwDdQwY_jxJdHwfeyudpX1LMb49CZTZwmodRmer2mfemrz7r7S2NTk3kbUHRbo51_OGMi3A6tFMiRcNlKhx3Du4uwgoE5yLATeS__lNCXaxdKa5&usqp=CAc',
+      url:      'https://www.amazon.fr/dp/B0CMDB29YC',
+    },
+
+    // ── Streaming ────────────────────────────────────────────────
+    {
+      name:     'Anker AnkerWork C310 Webcam',
+      category: 'Streaming',
+      image:    'data:image/jpeg;base64,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',
+      url:      'https://www.amazon.fr/Anker-A3367-AnkerWork-C310-Webcam/dp/B0CCY8RBJD',
+    },
+    {
+      name:     'DJI Osmo Pocket 3',
+      category: 'Streaming',
+      image:    'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcREhpAG_a0ddk21z5sgQ9Jk4qA47vU7l42KemXqV1UXlKUD_b6EjhK4EIjM_tK49aqOjm5pVwy4iAVXkb4Z0JMJoAhn9GIC5L8z9myqBRcvKJ9TQ1IxVxKSMXdOHY-PkrwzSFslIA&usqp=CAc',
+      url:      'https://www.amazon.fr/DJI-Cr%C3%A9ateur-Vlogging-Stabilisation-Photographie/dp/B0CG19FGQ5',
+    },
+    {
+      name:     'Elgato HD60 S+ Capture Card',
+      category: 'Streaming',
+      image:    'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQe_tySST2XSe4CXaGl1AyumSQENvDNZQKQ7S7FZpIdChVVZKQwxsxboDFsr_ZC7hpq58zqlKIJZyniyvt-T2uXITyJHqT1vdofx1vlvFIoEw9JPBil8AHNX3GSmK1IAgvpEuvbiubYdA&usqp=CAc',
+      url:      'https://www.amazon.fr/Elgato-Game-Capture-HD60-dacquisition/dp/B07XB6VNLJ',
+    },
+
+  ],
+
+  // ── STATS RÉSEAUX SOCIAUX (mis à jour manuellement) ─────────
+  // Twitch et YouTube sont récupérés automatiquement via l'API
+  DISCORD_MEMBERS:     '3',
+  TWITTER_FOLLOWERS:   '100',
+  TIKTOK_FOLLOWERS:    '2K',
+  INSTAGRAM_FOLLOWERS: '500',
+
+};
 
 
 // Twitch live check
@@ -855,216 +1091,6 @@ function applyYTData(data){
   });
 }
 
-async function loadYT(){
-  const CACHE_KEY='mickaz9_yt_cache_v2';
-  const CACHE_TTL=3600000; // 1 heure
-  try{
-    // Supprimer l'ancien cache si présent
-    localStorage.removeItem('mickaz9_yt_cache');
-    const cached=localStorage.getItem(CACHE_KEY);
-    if(cached){
-      const {data,timestamp,videoId}=JSON.parse(cached);
-      // Invalider le cache si la vidéo a changé dans le CONFIG
-      if(videoId===CONFIG.LATEST_VIDEO_ID && Date.now()-timestamp<CACHE_TTL){applyYTData(data);return;}
-    }
-    const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'K';return n;};
-    const data={subs:null,live:null,videos:[]};
-
-    // Stats channel (abonnés + status live) — 3 unités seulement
-    const chanR=await fetch('/youtube');
-    const chanD=await chanR.json();
-    if(chanD.items&&chanD.items[0]){
-      const ch=chanD.items[0];
-      const n=parseInt(ch.statistics?.subscriberCount||0);
-      data.subs=fmtN(n);
-      // Détecter live via snippet.liveBroadcastContent
-      if(ch.snippet?.liveBroadcastContent==='live') data.live=ch.snippet?.title||'En live';
-    }
-
-    // Vidéos récentes — 100 unités (mis en cache 1h)
-    const vR=await fetch('/youtube?type=videos');
-    if(vR.ok){
-      const vD=await vR.json();
-      if(vD.items&&vD.items.length>0){
-        const fixTitle=t=>t.replace(/&#39;/g,"'").replace(/&amp;/g,'&').replace(/&quot;/g,'"');
-        const fmt=dt=>new Date(dt).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
-        const ids=vD.items.slice(0,3).map(i=>i.id?.videoId).filter(Boolean).join(',');
-        let statsMap={};
-        if(ids){
-          const sR=await fetch('/youtube?type=videostats&ids='+ids);
-          if(sR.ok){const sD=await sR.json();if(sD.items)sD.items.forEach(s=>statsMap[s.id]=s.statistics);}
-        }
-        vD.items.slice(0,3).forEach((item)=>{
-          if(!item.id?.videoId)return;
-          const vid=item.id.videoId;
-          const stats=statsMap[vid]||{};
-          const n=parseInt(stats.viewCount||0);
-          const views=n>=1000000?(n/1000000).toFixed(1)+'M vues':n>=1000?Math.round(n/1000)+'K vues':n+' vues';
-          data.videos.push({id:vid,title:fixTitle(item.snippet.title),meta:views+' · '+fmt(item.snippet.publishedAt)});
-        });
-      }
-    }
-
-    localStorage.setItem(CACHE_KEY,JSON.stringify({data,timestamp:Date.now(),videoId:CONFIG.LATEST_VIDEO_ID}));
-    applyYTData(data);
-  }catch(e){console.error('YT error',e);}
-}
-
-function applyYTData(data){
-  // Utiliser LATEST_VIDEO_ID si défini, sinon prendre le premier de l'API
-  const manualId = CONFIG.LATEST_VIDEO_ID;
-  let videoId = null;
-  let videoTitle = null;
-  let videoMeta = null;
-
-  if(manualId){
-    videoId = manualId;
-    // Chercher le titre dans les données API si disponible
-    const found = data.videos?.find(v => v.id === manualId);
-    if(found){ videoTitle = found.title; videoMeta = found.meta; }
-  } else if(data.videos&&data.videos.length>0){
-    videoId = data.videos[0].id;
-    videoTitle = data.videos[0].title;
-    videoMeta = data.videos[0].meta;
-  }
-
-  if(videoId){
-    const link=document.getElementById('last-video-link');
-    const btn=document.getElementById('last-video-btn');
-    const thumb=document.getElementById('last-video-thumb');
-    const title=document.getElementById('last-video-title');
-    const meta=document.getElementById('last-video-meta');
-    const url='https://www.youtube.com/watch?v='+videoId;
-    if(link)link.href=url;
-    if(btn)btn.href=url;
-    if(thumb)thumb.style.backgroundImage='url(https://img.youtube.com/vi/'+videoId+'/maxresdefault.jpg)';
-    if(title&&videoTitle)title.textContent=videoTitle;
-    if(meta&&videoMeta)meta.textContent=videoMeta;
-    // Si titre ou meta manquants, les récupérer via l'API (snippet + statistics)
-    if(!videoTitle||!videoMeta){
-      fetch('/youtube?type=videostats&ids='+videoId).then(r=>r.json()).then(d=>{
-        if(d.items&&d.items[0]){
-          const item=d.items[0];
-          const snippet=item.snippet||{};
-          const stats=item.statistics||{};
-          if(title&&snippet.title) title.textContent=snippet.title;
-          const n=parseInt(stats.viewCount||0);
-          const views=n>=1000000?(n/1000000).toFixed(1)+'M vues':n>=1000?Math.round(n/1000)+'K vues':n+' vues';
-          const date=snippet.publishedAt?new Date(snippet.publishedAt).toLocaleDateString('fr-FR',{day:'numeric',month:'short'}):'';
-          if(meta) meta.textContent=views+(date?' · '+date:'');
-        }
-      });
-    }
-  }
-  if(data.subs){const el=document.getElementById('yt-subs');if(el)el.textContent=data.subs;}
-  if(data.live){
-    const badge=document.getElementById('yt-status-badge');
-    if(badge){badge.textContent='En stream';badge.className='status-badge status-live';}
-    const title=document.getElementById('yt-live-title');
-    if(title)title.textContent=data.live;
-    document.getElementById('hero-live').style.display='inline-flex';
-  }
-  data.videos.forEach((v,i)=>{
-    const n=i+1;
-    const card=document.getElementById('vid'+n);
-    if(card)card.href='https://www.youtube.com/watch?v='+v.id;
-    const bg=document.getElementById('vid'+n+'-thumb-bg');
-    if(bg){bg.style.backgroundImage='url(https://img.youtube.com/vi/'+v.id+'/hqdefault.jpg)';bg.style.backgroundSize='cover';bg.style.backgroundPosition='center';}
-    const title=document.getElementById('vid'+n+'-title');
-    if(title)title.textContent=v.title;
-    const meta=document.getElementById('vid'+n+'-meta');
-    if(meta)meta.textContent=v.meta;
-  });
-}
-
-// Google Calendar
-async function loadCalendar(){
-  try{
-    const r=await fetch('/calendar');
-    const d=await r.json();
-    const body=document.getElementById('cal-body');
-    body.innerHTML='';
-    if(d.items&&d.items.length>0){
-      const days=['DIM','LUN','MAR','MER','JEU','VEN','SAM'];
-      const months=['jan','fév','mar','avr','mai','juin','juil','août','sep','oct','nov','déc'];
-      const monthsFull=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-      const firstDate=new Date(d.items[0].start.dateTime||d.items[0].start.date);
-      document.getElementById('cal-month-label').textContent=monthsFull[firstDate.getMonth()]+' '+firstDate.getFullYear();
-      d.items.forEach(ev=>{
-        const start=new Date(ev.start.dateTime||ev.start.date);
-        const hasTime=!!ev.start.dateTime;
-        const h=start.getHours().toString().padStart(2,'0');
-        const m=start.getMinutes().toString().padStart(2,'0');
-
-        // Détecter si l'événement dure plusieurs jours
-        let dateDisplay='';
-        let isMultiDay=false;
-        let endDay=null;
-        if(ev.end){
-          const end=new Date(ev.end.dateTime||ev.end.date);
-          // Pour les événements all-day, end est le lendemain — on soustrait 1 jour
-          if(!ev.end.dateTime){
-            end.setDate(end.getDate()-1);
-          }
-          endDay=new Date(end); endDay.setHours(0,0,0,0);
-          if(end.getDate()!==start.getDate()||end.getMonth()!==start.getMonth()){
-            isMultiDay=true;
-            // Si même mois → "1 au 3 jan" sinon "28 jan au 2 fév"
-            if(end.getMonth()===start.getMonth()){
-              dateDisplay=start.getDate()+' au '+end.getDate()+' '+months[end.getMonth()];
-            } else {
-              dateDisplay=start.getDate()+' '+months[start.getMonth()]+' au '+end.getDate()+' '+months[end.getMonth()];
-            }
-          }
-        }
-
-        // Label relatif + badge
-        const today=new Date(); today.setHours(0,0,0,0);
-        const startDay=new Date(start); startDay.setHours(0,0,0,0);
-        const diffDays=Math.round((startDay-today)/(1000*60*60*24));
-        const isToday=diffDays===0;
-        // Event multi-jours déjà commencé et pas encore terminé → en cours
-        const isOngoing=isMultiDay&&endDay&&startDay<=today&&today<=endDay;
-        const badgeLabel=isOngoing?'Absent':diffDays===0?'Aujourd\'hui':diffDays===1?'Demain':diffDays===2?'Après-demain':`Dans ${diffDays} jours`;
-
-        // Style badge : orange glow si absent, rouge glow pour aujourd'hui, discret pour le reste
-        const badgeStyle=isOngoing
-          ?`background:rgba(255,160,0,0.08);border:1px solid rgba(255,160,0,0.3);color:#ffa000;box-shadow:0 0 12px rgba(255,160,0,0.2);`
-          :isToday
-          ?`background:rgba(255,45,45,0.08);border:1px solid rgba(255,45,45,0.25);color:var(--accent);box-shadow:0 0 12px rgba(255,45,45,0.2);`
-          :`background:rgba(240,237,230,0.04);border:1px solid rgba(240,237,230,0.1);color:rgba(240,237,230,0.35);`;
-
-        const badge=`<div style="display:inline-flex;align-items:center;gap:6px;${badgeStyle}padding:4px 11px;border-radius:20px;font-size:0.6rem;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Mono',monospace;flex-shrink:0;white-space:nowrap">
-          ${badgeLabel}
-        </div>`;
-
-        const dateBlock = isMultiDay
-          ? `<div style="text-align:center;min-width:60px;flex-shrink:0">
-              <div style="font-family:'transducer-extended',sans-serif;font-style:italic;font-weight:600;font-size:1rem;line-height:1.2;color:var(--accent);letter-spacing:1px">${dateDisplay}</div>
-            </div>`
-          : `<div style="text-align:center;min-width:36px;flex-shrink:0">
-              <div style="font-family:'transducer-extended',sans-serif;font-style:italic;font-weight:600;font-size:1.8rem;line-height:1;color:var(--accent)">${start.getDate()}</div>
-              <div style="font-size:0.58rem;color:rgba(240,237,230,0.3);letter-spacing:1px;text-transform:uppercase;font-family:'DM Mono',monospace">${months[start.getMonth()]}</div>
-            </div>`;
-
-        body.innerHTML+=`<div style="display:flex;align-items:center;gap:16px;padding:1rem 1.25rem;background:rgba(240,237,230,0.03);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid ${isToday?'rgba(255,45,45,0.15)':'rgba(240,237,230,0.06)'};margin-bottom:8px;border-radius:16px">
-          ${dateBlock}
-          <div style="width:1px;height:36px;background:rgba(240,237,230,0.08);flex-shrink:0"></div>
-          <div style="flex:1">
-            <div style="font-family:'transducer-extended',sans-serif;font-style:italic;font-weight:600;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase">${ev.summary}</div>
-            ${isMultiDay?'':`<div style="font-size:0.62rem;color:rgba(240,237,230,0.25);font-family:'DM Mono',monospace;margin-top:3px;text-transform:uppercase;letter-spacing:1px">${days[start.getDay()]}</div>`}
-          </div>
-          ${badge}
-          ${hasTime?`<span style="font-family:'transducer-extended',sans-serif;font-style:italic;font-weight:600;font-size:1.4rem;letter-spacing:2px;color:var(--white)">${h}:${m}</span>`:''}
-        </div>`;
-      });
-    } else {
-      document.getElementById('cal-month-label').textContent=new Date().toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
-      body.innerHTML='<div style="font-size:0.75rem;color:rgba(240,237,230,0.25);font-family:DM Mono,monospace;padding:0.5rem 0">Aucun événement à venir.</div>';
-    }
-  }catch(e){console.error('Calendar error',e);}
-}
-
 // Injection du dernier Short YouTube
 (function(){
   const iframe = document.getElementById('last-short-iframe');
@@ -1096,294 +1122,6 @@ async function loadCalendar(){
         if(meta) meta.textContent = views + (date ? ' · ' + date : '');
       }
     });
-  }
-})();
-
-// ╔══════════════════════════════════════════════════════════════╗
-// ║                     ⚙️  CONFIG MICKAZ9                      ║
-// ║         Tout ce que tu dois mettre à jour régulièrement      ║
-// ╚══════════════════════════════════════════════════════════════╝
-const CONFIG = {
-
-  // ── DERNIÈRE VIDÉO YOUTUBE ──────────────────────────────────
-  // Colle l'ID de ta dernière vidéo (après ?v= dans l'URL YouTube)
-  // Ex: https://www.youtube.com/watch?v=5WRXxOYbYGI → '5WRXxOYbYGI'
-  LATEST_VIDEO_ID: 'aa0G6HfPDYo',
-
-  // ── DERNIER SHORT YOUTUBE ────────────────────────────────────
-  // Colle l'ID de ton dernier Short YouTube (après ?v= ou /shorts/)
-  // Ex: https://www.youtube.com/shorts/abc123 → 'abc123'
-  // → Le player YouTube s'affiche automatiquement en format portrait
-  LATEST_SHORT_ID:    'NG8Qyj1vwVY',
-  // Titre affiché à droite
-  LATEST_SHORT_TITLE: 'Mon dernier Short',
-  // Infos optionnelles (ex: '5K vues · 3 mai')
-  LATEST_SHORT_META:  '',
-
-  // ── SETUP / LIENS AMAZON ────────────────────────────────────
-  // Ajoute autant de produits que tu veux dans ce tableau
-  // image: URL de l'image produit (Amazon ou autre)
-  // url: lien affilié Amazon
-  // category: 'PC' | 'Périphériques' | 'Audio' | 'Streaming' | autre
-  SETUP: [
-
-    // ── PC ───────────────────────────────────────────────────────
-    {
-      name:     'Intel Core i9-12900K',
-      category: 'PC',
-      image:    'https://media.ldlc.com/r705/ld/products/00/05/90/02/LD0005900230_1.jpg',
-      url:      'https://www.amazon.fr/Processeur-Intel-Core-i9-12900KF-BX8071512900KF/dp/B09GYHRNBL',
-    },
-    {
-      name:     'ASUS Dual RTX 4070 OC 12GB',
-      category: 'PC',
-      image:    'https://m.media-amazon.com/images/I/81V++7RW8wL._AC_UF350,350_QL50_.jpg',
-      url:      'https://www.amazon.fr/ASUS-GeForce-Graphique-DisplayPort-DUAL-RTX4070-O12GD6-EVO/dp/B0DGL6N1ZT',
-    },
-    {
-      name:     'Gigabyte Z690 Aorus Ultra',
-      category: 'PC',
-      image:    'https://m.media-amazon.com/images/I/71UhwSmrQxL._AC_SX679_.jpg',
-      url:      'https://www.amazon.fr/Gigabyte-Z690-AORUS-ULTRA-Motherboard/dp/B09LHBXM3Z',
-    },
-    {
-      name:     'HyperX Fury DDR5 32Go',
-      category: 'PC',
-      image:    'https://media.rueducommerce.fr/r500/ld/products/00/05/95/90/LD0005959023_0005959075_0005959091_0005959106_0005959110_0005982047_0006173018_0006188882.jpg',
-      url:      'https://www.amazon.fr/Kingston-6000MT-Desktop-Gaming-Memory/dp/B0CYM58GFS',
-    },
-    {
-      name:     'Alphacool Eisbaer 240 AIO',
-      category: 'PC',
-      image:    'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQorBZl63dqditAi27u1upfYjOV4ffbOwIQHrVhUCvS-uJxu8oEPWKJtu6GIX_lH3xw32P1ElR-P1MBlO6NwQjv5ye9b3eNnkqHVqNcfdhdsNd2kxURmLZW',
-      url:      'https://www.amazon.fr/Alphacool-eisbaer-Aurora-240-komplett-wasserk%C3%BChlung/dp/B084VHMDHZ',
-    },
-
-    // ── Écrans ───────────────────────────────────────────────────
-    {
-      name:     'Acer KG251Q 144Hz 25"',
-      category: 'Écrans',
-      image:    'https://media.rueducommerce.fr/r500/mktp/product/productImage/2/64/cddc68ab236443ca9718bb256975444a.webp',
-      url:      'https://www.amazon.fr/Acer-KG251Q-Jbmidpx-rafra%C3%AEchissement-haut-parleurs/dp/B08DTNK3V5',
-    },
-    {
-      name:     'CHIQ 22F650 22" FHD',
-      category: 'Écrans',
-      image:    'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRZT895TWuB8GXf3rZnlnSt1BSU-z5z1xIxAIfyeqXYNQRXVyHgv7XCvnJkD6bw8SHlIQBXRPkZ4sdMQ6RsAlZ6Y2Y4WWkzhtqV7PRYsF-udpOXQIa6vBTwZxWWOOAneW7QLoyLB14&usqp=CAc',
-      url:      'https://www.amazon.fr/dp/B0BYMR3XM7',
-    },
-
-    // ── Périphériques ────────────────────────────────────────────
-    {
-      name:     'Corsair K70 Core TKL',
-      category: 'Périphériques',
-      image:    'https://assets.corsair.com/image/upload/c_pad,q_85,h_1100,w_1100,f_auto/products/Gaming-Keyboards/base-k70-core-tkl-config/gallery/CH-911911E-FR/K70_CORE_TKL_01.webp',
-      url:      'https://www.amazon.fr/CORSAIR-CORE-Clavier-M%C3%A9canique-Sans/dp/B0DG363LK1',
-    },
-    {
-      name:     'Logitech G Pro X Superlight 2',
-      category: 'Périphériques',
-      image:    'https://www.logitechg.com/content/dam/gaming/en/products/pro-x-superlight-2-se-pdp/gallery/pro-x-superlight-2-se-red-top-angle-gallery-1.png',
-      url:      'https://www.amazon.fr/Logitech-SUPERLIGHT-Pro-Grade-programmables-recharge/dp/B07W6JCF7Y',
-    },
-    {
-      name:     'ASUS ROG Moonstone Ace L',
-      category: 'Périphériques',
-      image:    'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQwi_EsxkR1_nTf89i6RCuOVFqaZhs-dBJjFCw607oqNggbTvgSsCg8IJoQ5KLCbLTxb0ADgliJsnsakmvrlS252lTKOoQyK5LVaN5D8_WZUKYEaAhqCz5XTmzo1pOtkuW-HJvBjQ&usqp=CAc',
-      url:      'https://www.amazon.fr/ROG-Moonstone-Ace-L-White/dp/B07MRJ975T',
-    },
-
-    // ── Audio ────────────────────────────────────────────────────
-    {
-      name:     'HyperX Cloud Flight Wireless',
-      category: 'Audio',
-      image:    'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSKgPLcG3-jJsb_8DK9dPH3E2ZJRpx8WlJ-ubOh7bvuT9G-YSLbVBgp35HwsXL27ZN533i2VXCPGD1EPxTdqZ9QxFmCAOi7U6bGy-JorqKHl3Np0zFcYSYwYC0r-zN7oyoeGwgDPi8&usqp=CAc',
-      url:      'https://www.amazon.fr/HyperX-Cloud-Flight-Casque-Micro-sans/dp/B078HT686T',
-    },
-    {
-      name:     'Tonor TD510 Microphone XLR',
-      category: 'Audio',
-      image:    'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQGRPLA5hAqz5Qvvmoj4gifxiR8rmI14HKcWjx7VTMCm6XSYIawGPQlupwRI4Np7Ku7y-bKqKn_HKjkwkg_ifPZ_yGN2VbHKfXsKiu8j0SkdfAg9dj9AJaD9NRZB4UmHicyMmmq85k&usqp=CAc',
-      url:      'https://www.amazon.fr/dp/B0BRKFP94K',
-    },
-    {
-      name:     'Fifine SC3 Interface Audio',
-      category: 'Audio',
-      image:    'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT0GzTmB42_1Grizv385DVYMQwDdQwY_jxJdHwfeyudpX1LMb49CZTZwmodRmer2mfemrz7r7S2NTk3kbUHRbo51_OGMi3A6tFMiRcNlKhx3Du4uwgoE5yLATeS__lNCXaxdKa5&usqp=CAc',
-      url:      'https://www.amazon.fr/dp/B0CMDB29YC',
-    },
-
-    // ── Streaming ────────────────────────────────────────────────
-    {
-      name:     'Anker AnkerWork C310 Webcam',
-      category: 'Streaming',
-      image:    'data:image/jpeg;base64,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',
-      url:      'https://www.amazon.fr/Anker-A3367-AnkerWork-C310-Webcam/dp/B0CCY8RBJD',
-    },
-    {
-      name:     'DJI Osmo Pocket 3',
-      category: 'Streaming',
-      image:    'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcREhpAG_a0ddk21z5sgQ9Jk4qA47vU7l42KemXqV1UXlKUD_b6EjhK4EIjM_tK49aqOjm5pVwy4iAVXkb4Z0JMJoAhn9GIC5L8z9myqBRcvKJ9TQ1IxVxKSMXdOHY-PkrwzSFslIA&usqp=CAc',
-      url:      'https://www.amazon.fr/DJI-Cr%C3%A9ateur-Vlogging-Stabilisation-Photographie/dp/B0CG19FGQ5',
-    },
-    {
-      name:     'Elgato HD60 S+ Capture Card',
-      category: 'Streaming',
-      image:    'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQe_tySST2XSe4CXaGl1AyumSQENvDNZQKQ7S7FZpIdChVVZKQwxsxboDFsr_ZC7hpq58zqlKIJZyniyvt-T2uXITyJHqT1vdofx1vlvFIoEw9JPBil8AHNX3GSmK1IAgvpEuvbiubYdA&usqp=CAc',
-      url:      'https://www.amazon.fr/Elgato-Game-Capture-HD60-dacquisition/dp/B07XB6VNLJ',
-    },
-
-  ],
-
-  // ── STATS RÉSEAUX SOCIAUX (mis à jour manuellement) ─────────
-  // Twitch et YouTube sont récupérés automatiquement via l'API
-  DISCORD_MEMBERS:     '3',
-  TWITTER_FOLLOWERS:   '100',
-  TIKTOK_FOLLOWERS:    '2K',
-  INSTAGRAM_FOLLOWERS: '500',
-
-};
-// ╚══════════════════════════════════════════════════════════════╝
-
-// Injection des stats statiques
-document.getElementById('discord-stats').textContent   = CONFIG.DISCORD_MEMBERS;
-document.getElementById('twitter-stats').textContent   = CONFIG.TWITTER_FOLLOWERS;
-document.getElementById('tiktok-stats').textContent    = CONFIG.TIKTOK_FOLLOWERS;
-document.getElementById('instagram-stats').textContent = CONFIG.INSTAGRAM_FOLLOWERS;
-
-// Injection du dernier Short YouTube
-(function(){
-  const iframe = document.getElementById('last-short-iframe');
-  const btn    = document.getElementById('last-short-btn');
-  const title  = document.getElementById('last-short-title');
-  const meta   = document.getElementById('last-short-meta');
-
-  if(!CONFIG.LATEST_SHORT_ID) return;
-
-  const videoUrl = 'https://www.youtube.com/shorts/' + CONFIG.LATEST_SHORT_ID;
-  const embedUrl = 'https://www.youtube.com/embed/' + CONFIG.LATEST_SHORT_ID + '?rel=0&modestbranding=1';
-
-  if(iframe) iframe.src = embedUrl;
-  if(btn)    btn.href   = videoUrl;
-  if(title)  title.textContent = CONFIG.LATEST_SHORT_TITLE || '—';
-  if(meta && CONFIG.LATEST_SHORT_META) meta.textContent = CONFIG.LATEST_SHORT_META;
-
-  // Récupérer les stats via l'API si pas de meta défini
-  if(meta && !CONFIG.LATEST_SHORT_META){
-    fetch('/youtube?type=videostats&ids=' + CONFIG.LATEST_SHORT_ID).then(r=>r.json()).then(d=>{
-      if(d.items && d.items[0]){
-        const item = d.items[0];
-        const snippet = item.snippet || {};
-        const stats   = item.statistics || {};
-        if(title && snippet.title) title.textContent = snippet.title;
-        const n = parseInt(stats.viewCount || 0);
-        const views = n>=1000000?(n/1000000).toFixed(1)+'M vues':n>=1000?Math.round(n/1000)+'K vues':n+' vues';
-        const date = snippet.publishedAt ? new Date(snippet.publishedAt).toLocaleDateString('fr-FR',{day:'numeric',month:'short'}) : '';
-        if(meta) meta.textContent = views + (date ? ' · ' + date : '');
-      }
-    });
-  }
-})();
-
-// ── Rendu du Setup (lazy + skeleton) ────────────────────────
-(function(){
-  const grid = document.getElementById('setup-grid');
-  if(!grid || !CONFIG.SETUP || !CONFIG.SETUP.length) return;
-
-  // Grouper par catégorie
-  const categories = {};
-  CONFIG.SETUP.forEach(item => {
-    const cat = item.category || 'Autre';
-    if(!categories[cat]) categories[cat] = [];
-    categories[cat].push(item);
-  });
-
-  // Générer les skeletons immédiatement (1 par produit)
-  const total = CONFIG.SETUP.length;
-  let skeletonHtml = '';
-  for(let i = 0; i < total; i++){
-    skeletonHtml += `<div class="setup-skeleton-card">
-      <div class="setup-skeleton-img skeleton"></div>
-      <div class="setup-skeleton-title skeleton"></div>
-      <div class="setup-skeleton-btn skeleton"></div>
-    </div>`;
-  }
-  grid.innerHTML = skeletonHtml;
-
-  // Fonction qui génère le vrai contenu
-  function renderSetup(){
-    if(grid.dataset.loaded) return;
-    grid.dataset.loaded = '1';
-
-    let html = '';
-    Object.entries(categories).forEach(([cat, items]) => {
-      html += `<div style="grid-column:1/-1;font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;display:flex;align-items:center;gap:10px;margin-top:1rem;">
-        ${cat}<span style="flex:1;height:1px;background:var(--accent);opacity:0.2;max-width:60px;"></span>
-      </div>`;
-      items.forEach(item => {
-        html += `<a href="${item.url}" target="_blank" rel="noopener noreferrer" style="
-          background:rgba(240,237,230,0.02);
-          border:1px solid rgba(240,237,230,0.08);
-          border-radius:12px;overflow:hidden;
-          text-decoration:none;color:inherit;
-          display:flex;flex-direction:column;
-          transition:all 0.2s;position:relative;
-        " onmouseenter="this.style.background='rgba(240,237,230,0.05)';this.style.borderColor='rgba(255,45,45,0.25)';this.style.transform='translateY(-3px)'"
-           onmouseleave="this.style.background='rgba(240,237,230,0.02)';this.style.borderColor='rgba(240,237,230,0.08)';this.style.transform='translateY(0)'">
-          <div style="aspect-ratio:1/1;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:1.2rem;">
-            <img
-              data-src="${item.image}"
-              alt="${item.name}"
-              style="max-width:100%;max-height:100%;object-fit:contain;filter:brightness(0.95);transition:transform 0.3s;opacity:0;transition:opacity 0.3s;"
-              onerror="this.style.display='none'"
-            >
-          </div>
-          <div style="padding:1rem 1.2rem;flex:1;display:flex;flex-direction:column;gap:8px;">
-            <div style="font-size:0.82rem;font-weight:600;line-height:1.3;">${item.name}</div>
-            <div style="margin-top:auto;display:inline-flex;align-items:center;gap:5px;font-size:0.62rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;font-weight:600;">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="10" height="10"><path d="M20.47 2H3.53a1.45 1.45 0 0 0-1.45 1.45v17.1A1.45 1.45 0 0 0 3.53 22h16.94a1.45 1.45 0 0 0 1.45-1.45V3.45A1.45 1.45 0 0 0 20.47 2zm-8.5 16.5H7.72v-1.5h4.25v1.5zm4.25-3H7.72V14h8.5v1.5zm0-3H7.72V11h8.5v1.5zm0-3H7.72V8h8.5v1.5z"/></svg>
-              Voir sur Amazon →
-            </div>
-          </div>
-        </a>`;
-      });
-    });
-
-    // Fade out skeletons → fade in real content
-    grid.style.opacity = '0';
-    grid.style.transition = 'opacity 0.3s';
-    setTimeout(() => {
-      grid.innerHTML = html;
-      grid.style.opacity = '1';
-
-      // IntersectionObserver pour charger les images uniquement quand visibles
-      const imgObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if(entry.isIntersecting){
-            const img = entry.target;
-            img.src = img.dataset.src;
-            img.onload = () => { img.style.opacity = '1'; };
-            imgObserver.unobserve(img);
-          }
-        });
-      }, { rootMargin: '100px' });
-
-      grid.querySelectorAll('img[data-src]').forEach(img => imgObserver.observe(img));
-    }, 200);
-  }
-
-  // Lazy : ne charger que quand l'accordéon setup s'ouvre
-  const accordionSetup = document.getElementById('accordion-setup');
-  if(accordionSetup){
-    const setupObserver = new MutationObserver(() => {
-      if(accordionSetup.style.maxHeight && accordionSetup.style.maxHeight !== '0px'){
-        renderSetup();
-      }
-    });
-    setupObserver.observe(accordionSetup, { attributes: true, attributeFilter: ['style'] });
-  } else {
-    // Pas d'accordéon : charger directement
-    renderSetup();
   }
 })();
 
@@ -1427,196 +1165,8 @@ document.getElementById('instagram-stats').textContent = CONFIG.INSTAGRAM_FOLLOW
   });
 })();
 
-// ── Dropdown nav ─────────────────────────────────────────────
-(function(){
-  const dropdown = document.getElementById('nav-dropdown');
-  const btn      = document.getElementById('nav-dropdown-btn');
-  if(!dropdown || !btn) return;
-
-  btn.addEventListener('click', function(e){
-    e.stopPropagation();
-    dropdown.classList.toggle('open');
-  });
-
-  // Fermer en cliquant ailleurs
-  document.addEventListener('click', function(){
-    dropdown.classList.remove('open');
-  });
-
-  // Fermer en cliquant sur un lien du menu
-  document.querySelectorAll('#nav-dropdown-menu a').forEach(a => {
-    a.addEventListener('click', () => dropdown.classList.remove('open'));
-  });
-})();
-
-// Init
-(function(){
-  if(CONFIG.LATEST_VIDEO_ID){
-    const link=document.getElementById('last-video-link');
-    const btn=document.getElementById('last-video-btn');
-    const thumb=document.getElementById('last-video-thumb');
-    if(link)link.href='https://www.youtube.com/watch?v='+CONFIG.LATEST_VIDEO_ID;
-    if(btn)btn.href='https://www.youtube.com/watch?v='+CONFIG.LATEST_VIDEO_ID;
-    if(thumb)thumb.style.backgroundImage='url(https://img.youtube.com/vi/'+CONFIG.LATEST_VIDEO_ID+'/maxresdefault.jpg)';
-    fetch('/youtube?type=videostats&ids='+CONFIG.LATEST_VIDEO_ID).then(r=>r.json()).then(d=>{
-      if(d.items&&d.items[0]){
-        const s=d.items[0].snippet||{};const st=d.items[0].statistics||{};
-        const t=document.getElementById('last-video-title');const m=document.getElementById('last-video-meta');
-        if(t&&s.title)t.textContent=s.title;
-        const n=parseInt(st.viewCount||0);
-        const v=n>=1000000?(n/1000000).toFixed(1)+'M vues':n>=1000?Math.round(n/1000)+'K vues':n+' vues';
-        const date=s.publishedAt?new Date(s.publishedAt).toLocaleDateString('fr-FR',{day:'numeric',month:'short'}):'';
-        if(m)m.textContent=v+(date?' · '+date:'');
-      }
-    }).catch(()=>{});
-  }
-})();
-
-
-const CONFIG = {
-
-  // ── DERNIÈRE VIDÉO YOUTUBE ──────────────────────────────────
-  // Colle l'ID de ta dernière vidéo (après ?v= dans l'URL YouTube)
-  // Ex: https://www.youtube.com/watch?v=5WRXxOYbYGI → '5WRXxOYbYGI'
-  LATEST_VIDEO_ID: 'aa0G6HfPDYo',
-
-  // ── DERNIER SHORT YOUTUBE ────────────────────────────────────
-  // Colle l'ID de ton dernier Short YouTube (après ?v= ou /shorts/)
-  // Ex: https://www.youtube.com/shorts/abc123 → 'abc123'
-  // → Le player YouTube s'affiche automatiquement en format portrait
-  LATEST_SHORT_ID:    'NG8Qyj1vwVY',
-  // Titre affiché à droite
-  LATEST_SHORT_TITLE: 'Mon dernier Short',
-  // Infos optionnelles (ex: '5K vues · 3 mai')
-  LATEST_SHORT_META:  '',
-
-  // ── SETUP / LIENS AMAZON ────────────────────────────────────
-  // Ajoute autant de produits que tu veux dans ce tableau
-  // image: URL de l'image produit (Amazon ou autre)
-  // url: lien affilié Amazon
-  // category: 'PC' | 'Périphériques' | 'Audio' | 'Streaming' | autre
-  SETUP: [
-
-    // ── PC ───────────────────────────────────────────────────────
-    {
-      name:     'Intel Core i9-12900K',
-      category: 'PC',
-      image:    'https://media.ldlc.com/r705/ld/products/00/05/90/02/LD0005900230_1.jpg',
-      url:      'https://www.amazon.fr/Processeur-Intel-Core-i9-12900KF-BX8071512900KF/dp/B09GYHRNBL',
-    },
-    {
-      name:     'ASUS Dual RTX 4070 OC 12GB',
-      category: 'PC',
-      image:    'https://m.media-amazon.com/images/I/81V++7RW8wL._AC_UF350,350_QL50_.jpg',
-      url:      'https://www.amazon.fr/ASUS-GeForce-Graphique-DisplayPort-DUAL-RTX4070-O12GD6-EVO/dp/B0DGL6N1ZT',
-    },
-    {
-      name:     'Gigabyte Z690 Aorus Ultra',
-      category: 'PC',
-      image:    'https://m.media-amazon.com/images/I/71UhwSmrQxL._AC_SX679_.jpg',
-      url:      'https://www.amazon.fr/Gigabyte-Z690-AORUS-ULTRA-Motherboard/dp/B09LHBXM3Z',
-    },
-    {
-      name:     'HyperX Fury DDR5 32Go',
-      category: 'PC',
-      image:    'https://media.rueducommerce.fr/r500/ld/products/00/05/95/90/LD0005959023_0005959075_0005959091_0005959106_0005959110_0005982047_0006173018_0006188882.jpg',
-      url:      'https://www.amazon.fr/Kingston-6000MT-Desktop-Gaming-Memory/dp/B0CYM58GFS',
-    },
-    {
-      name:     'Alphacool Eisbaer 240 AIO',
-      category: 'PC',
-      image:    'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQorBZl63dqditAi27u1upfYjOV4ffbOwIQHrVhUCvS-uJxu8oEPWKJtu6GIX_lH3xw32P1ElR-P1MBlO6NwQjv5ye9b3eNnkqHVqNcfdhdsNd2kxURmLZW',
-      url:      'https://www.amazon.fr/Alphacool-eisbaer-Aurora-240-komplett-wasserk%C3%BChlung/dp/B084VHMDHZ',
-    },
-
-    // ── Écrans ───────────────────────────────────────────────────
-    {
-      name:     'Acer KG251Q 144Hz 25"',
-      category: 'Écrans',
-      image:    'https://media.rueducommerce.fr/r500/mktp/product/productImage/2/64/cddc68ab236443ca9718bb256975444a.webp',
-      url:      'https://www.amazon.fr/Acer-KG251Q-Jbmidpx-rafra%C3%AEchissement-haut-parleurs/dp/B08DTNK3V5',
-    },
-    {
-      name:     'CHIQ 22F650 22" FHD',
-      category: 'Écrans',
-      image:    'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRZT895TWuB8GXf3rZnlnSt1BSU-z5z1xIxAIfyeqXYNQRXVyHgv7XCvnJkD6bw8SHlIQBXRPkZ4sdMQ6RsAlZ6Y2Y4WWkzhtqV7PRYsF-udpOXQIa6vBTwZxWWOOAneW7QLoyLB14&usqp=CAc',
-      url:      'https://www.amazon.fr/dp/B0BYMR3XM7',
-    },
-
-    // ── Périphériques ────────────────────────────────────────────
-    {
-      name:     'Corsair K70 Core TKL',
-      category: 'Périphériques',
-      image:    'https://assets.corsair.com/image/upload/c_pad,q_85,h_1100,w_1100,f_auto/products/Gaming-Keyboards/base-k70-core-tkl-config/gallery/CH-911911E-FR/K70_CORE_TKL_01.webp',
-      url:      'https://www.amazon.fr/CORSAIR-CORE-Clavier-M%C3%A9canique-Sans/dp/B0DG363LK1',
-    },
-    {
-      name:     'Logitech G Pro X Superlight 2',
-      category: 'Périphériques',
-      image:    'https://www.logitechg.com/content/dam/gaming/en/products/pro-x-superlight-2-se-pdp/gallery/pro-x-superlight-2-se-red-top-angle-gallery-1.png',
-      url:      'https://www.amazon.fr/Logitech-SUPERLIGHT-Pro-Grade-programmables-recharge/dp/B07W6JCF7Y',
-    },
-    {
-      name:     'ASUS ROG Moonstone Ace L',
-      category: 'Périphériques',
-      image:    'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQwi_EsxkR1_nTf89i6RCuOVFqaZhs-dBJjFCw607oqNggbTvgSsCg8IJoQ5KLCbLTxb0ADgliJsnsakmvrlS252lTKOoQyK5LVaN5D8_WZUKYEaAhqCz5XTmzo1pOtkuW-HJvBjQ&usqp=CAc',
-      url:      'https://www.amazon.fr/ROG-Moonstone-Ace-L-White/dp/B07MRJ975T',
-    },
-
-    // ── Audio ────────────────────────────────────────────────────
-    {
-      name:     'HyperX Cloud Flight Wireless',
-      category: 'Audio',
-      image:    'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSKgPLcG3-jJsb_8DK9dPH3E2ZJRpx8WlJ-ubOh7bvuT9G-YSLbVBgp35HwsXL27ZN533i2VXCPGD1EPxTdqZ9QxFmCAOi7U6bGy-JorqKHl3Np0zFcYSYwYC0r-zN7oyoeGwgDPi8&usqp=CAc',
-      url:      'https://www.amazon.fr/HyperX-Cloud-Flight-Casque-Micro-sans/dp/B078HT686T',
-    },
-    {
-      name:     'Tonor TD510 Microphone XLR',
-      category: 'Audio',
-      image:    'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQGRPLA5hAqz5Qvvmoj4gifxiR8rmI14HKcWjx7VTMCm6XSYIawGPQlupwRI4Np7Ku7y-bKqKn_HKjkwkg_ifPZ_yGN2VbHKfXsKiu8j0SkdfAg9dj9AJaD9NRZB4UmHicyMmmq85k&usqp=CAc',
-      url:      'https://www.amazon.fr/dp/B0BRKFP94K',
-    },
-    {
-      name:     'Fifine SC3 Interface Audio',
-      category: 'Audio',
-      image:    'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT0GzTmB42_1Grizv385DVYMQwDdQwY_jxJdHwfeyudpX1LMb49CZTZwmodRmer2mfemrz7r7S2NTk3kbUHRbo51_OGMi3A6tFMiRcNlKhx3Du4uwgoE5yLATeS__lNCXaxdKa5&usqp=CAc',
-      url:      'https://www.amazon.fr/dp/B0CMDB29YC',
-    },
-
-    // ── Streaming ────────────────────────────────────────────────
-    {
-      name:     'Anker AnkerWork C310 Webcam',
-      category: 'Streaming',
-      image:    'data:image/jpeg;base64,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',
-      url:      'https://www.amazon.fr/Anker-A3367-AnkerWork-C310-Webcam/dp/B0CCY8RBJD',
-    },
-    {
-      name:     'DJI Osmo Pocket 3',
-      category: 'Streaming',
-      image:    'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcREhpAG_a0ddk21z5sgQ9Jk4qA47vU7l42KemXqV1UXlKUD_b6EjhK4EIjM_tK49aqOjm5pVwy4iAVXkb4Z0JMJoAhn9GIC5L8z9myqBRcvKJ9TQ1IxVxKSMXdOHY-PkrwzSFslIA&usqp=CAc',
-      url:      'https://www.amazon.fr/DJI-Cr%C3%A9ateur-Vlogging-Stabilisation-Photographie/dp/B0CG19FGQ5',
-    },
-    {
-      name:     'Elgato HD60 S+ Capture Card',
-      category: 'Streaming',
-      image:    'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQe_tySST2XSe4CXaGl1AyumSQENvDNZQKQ7S7FZpIdChVVZKQwxsxboDFsr_ZC7hpq58zqlKIJZyniyvt-T2uXITyJHqT1vdofx1vlvFIoEw9JPBil8AHNX3GSmK1IAgvpEuvbiubYdA&usqp=CAc',
-      url:      'https://www.amazon.fr/Elgato-Game-Capture-HD60-dacquisition/dp/B07XB6VNLJ',
-    },
-
-  ],
-
-  // ── STATS RÉSEAUX SOCIAUX (mis à jour manuellement) ─────────
-  // Twitch et YouTube sont récupérés automatiquement via l'API
-  DISCORD_MEMBERS:     '3',
-  TWITTER_FOLLOWERS:   '100',
-  TIKTOK_FOLLOWERS:    '2K',
-  INSTAGRAM_FOLLOWERS: '500',
-
-};
-
-
 checkTwitch();
 loadYT();
-
+setInterval(checkTwitch, 60000);
 </script>
 </body></html>
