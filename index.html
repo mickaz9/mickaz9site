@@ -330,7 +330,7 @@ section{padding:6rem 3rem;max-width:1100px;margin:0 auto}
 .section-label::after{content:'';flex:1;max-width:40px;height:1px;background:var(--accent);opacity:0.4}
 .section-title{
   font-family:"transducer-extended",sans-serif;font-style:italic;font-weight:600;
-  font-size:clamp(3rem,6vw,5.5rem);line-height:0.9;
+  font-size:clamp(2.2rem,4.5vw,4rem);line-height:0.9;
   letter-spacing:-1px;margin-bottom:3rem;
 }
 .section-title .dim{color:rgba(240,237,230,0.15)}
@@ -551,44 +551,73 @@ footer{
 .config-banner code{background:rgba(255,45,45,0.08);padding:1px 5px;border-radius:2px}
 
 @media(max-width:768px){
-  nav{padding:1rem 1.5rem}
+  /* NAV */
+  nav{padding:0.85rem 1.2rem}
   .nav-links{display:none}
-  section{padding:3rem 1.2rem}
-  h1{font-size:clamp(4rem,18vw,6rem)}
-  .live-grid,.videos-grid,.networks-wrap{grid-template-columns:1fr}
-  /* Section titre */
-  .section-title{font-size:clamp(2.2rem,10vw,4rem);margin-bottom:1.5rem;}
-  /* Live cards */
-  .live-card{padding:1.5rem;}
-  /* Réseaux */
-  .network-item{padding:1rem 1.2rem;}
-  .net-stats{min-width:50px;margin-right:0.8rem;font-size:1rem;}
-  /* Calendrier */
-  .cal-head{padding:1rem 1.2rem;}
-  .cal-body{padding:1rem 1.2rem;}
-  /* Dernière vidéo - layout vertical bien centré */
+
+  /* SECTIONS */
+  section{padding:2.5rem 1rem}
+
+  /* HERO */
+  h1{font-size:clamp(3.5rem,16vw,5.5rem)}
+  .hero-sub{font-size:0.82rem;max-width:95%;line-height:1.6;margin-bottom:1.5rem;}
+  .hero-ctas{flex-direction:column;align-items:center;gap:0.75rem;}
+  .hero-ctas .btn{width:100%;max-width:300px;justify-content:center;}
+
+  /* TITRES DE SECTION */
+  .section-title{font-size:clamp(1.8rem,9vw,3rem);margin-bottom:1.2rem;letter-spacing:-0.5px;}
+  .section-label{font-size:0.58rem;letter-spacing:2px;margin-bottom:0.75rem;}
+
+  /* BOUTONS */
+  .btn{padding:0.7rem 1.4rem;font-size:0.62rem;white-space:nowrap;letter-spacing:1.5px;}
+
+  /* LIVE */
+  .live-grid{grid-template-columns:1fr}
+  .live-card{padding:1.2rem;}
+  .live-title{font-size:1rem;}
+  .live-meta{font-size:0.7rem;}
+
+  /* RÉSEAUX */
+  .networks-wrap{border-radius:16px;}
+  .network-item{padding:0.9rem 1rem;}
+  .net-name{font-size:1rem;letter-spacing:1px;}
+  .net-handle{font-size:0.62rem;}
+  .net-stats{min-width:45px;margin-right:0.6rem;font-size:0.9rem;}
+  .net-icon{width:30px;height:30px;}
+
+  /* CALENDRIER */
+  .calendar-wrap{border-radius:16px;}
+  .cal-head{padding:0.9rem 1rem;}
+  .cal-head strong{font-size:0.78rem;}
+  .cal-body{padding:0.9rem 1rem;gap:8px;}
+  .cal-title{font-size:0.8rem;}
+  .cal-time{font-size:0.62rem;}
+
+  /* GRILLES */
+  .videos-grid{grid-template-columns:1fr}
+
+  /* DERNIÈRE VIDÉO */
   #last-video-container, #last-clip-container, #last-short-container{
-    border-radius:10px;
+    border-radius:14px;
     flex-direction:column !important;
   }
   #last-video-container > a, #last-clip-container > a{width:100% !important;}
-  #last-video-container > div, #last-clip-container > div{padding:1.2rem 1.2rem;}
-  /* Short YouTube : le player portrait fixe (340px) déborde sur petit écran */
+  #last-video-container > div, #last-clip-container > div{padding:1rem;}
+  #last-video-container > div *, #last-clip-container > div *{letter-spacing:0.5px;}
+
+  /* SHORT YOUTUBE */
   #last-short-container > div:first-child{
     width:100% !important;
     min-height:auto !important;
     aspect-ratio:9/16;
-    max-width:340px;
+    max-width:300px;
     margin:0 auto;
   }
   #last-short-container iframe{width:100% !important;height:100% !important;}
-  #last-short-container > div:last-child{padding:1.2rem 1.2rem;}
-  /* Boutons */
-  .btn{padding:0.75rem 1.5rem;font-size:0.65rem;white-space:nowrap;}
-  /* Hero */
-  .hero-sub{font-size:0.85rem;max-width:90%;}
-  .hero-ctas{flex-direction:column;align-items:center;gap:0.75rem;}
-  .hero-ctas .btn{width:100%;max-width:280px;justify-content:center;}
+  #last-short-container > div:last-child{padding:1rem;}
+
+  /* ACCORDION */
+  .accordion-header{padding-bottom:0.75rem;margin-bottom:1.2rem;}
 }
 </style>
 </head>
@@ -817,7 +846,7 @@ footer{
     </a>
     <div style="padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1rem;flex:1;">
       <div style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;">Dernière vidéo</div>
-      <div id="last-video-title" style="font-family:'transducer-extended',sans-serif;font-style:italic;font-weight:600;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:1px;line-height:1.1;">Chargement...</div>
+      <div id="last-video-title" style="font-family:'transducer-extended',sans-serif;font-style:italic;font-weight:600;font-size:clamp(1rem,2vw,1.5rem);letter-spacing:1px;line-height:1.1;">Chargement...</div>
       <div id="last-video-meta" style="font-size:0.72rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;">—</div>
       <a id="last-video-btn" href="https://www.youtube.com/@mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Regarder →</a>
     </div>
@@ -863,7 +892,7 @@ footer{
     </a>
     <div style="padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1rem;flex:1;">
       <div style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;">Dernier clip Twitch</div>
-      <div id="last-clip-title" style="font-family:'transducer-extended',sans-serif;font-style:italic;font-weight:600;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:1px;line-height:1.1;">Chargement...</div>
+      <div id="last-clip-title" style="font-family:'transducer-extended',sans-serif;font-style:italic;font-weight:600;font-size:clamp(1rem,2vw,1.5rem);letter-spacing:1px;line-height:1.1;">Chargement...</div>
       <div id="last-clip-meta" style="font-size:0.72rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;">—</div>
       <a id="last-clip-btn" href="https://www.twitch.tv/mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Voir le clip →</a>
     </div>
@@ -909,7 +938,7 @@ footer{
         <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
         Dernier Short
       </div>
-      <div id="last-short-title" style="font-family:'transducer-extended',sans-serif;font-style:italic;font-weight:600;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:1px;line-height:1.1;">—</div>
+      <div id="last-short-title" style="font-family:'transducer-extended',sans-serif;font-style:italic;font-weight:600;font-size:clamp(1rem,2vw,1.5rem);letter-spacing:1px;line-height:1.1;">—</div>
       <div id="last-short-meta" style="font-size:0.72rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;">—</div>
       <a id="last-short-btn" href="https://www.youtube.com/@mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Voir sur YouTube →</a>
     </div>
