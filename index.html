@@ -580,15 +580,58 @@ footer{
   .accordion-header{padding-bottom:0.75rem;margin-bottom:1.2rem;}
 }
 
-.nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;z-index:200;position:relative;}
-.nav-burger span{display:block;width:22px;height:2px;background:rgba(240,237,230,0.7);border-radius:2px;transition:all 0.3s;}
-.nav-burger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
-.nav-burger.open span:nth-child(2){opacity:0;}
-.nav-burger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
-.nav-mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(8,8,8,0.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;z-index:150;}
-.nav-mobile-menu.open{display:flex;}
-.nav-mobile-menu a{font-family:"transducer-extended",sans-serif;font-style:italic;font-weight:600;font-size:2rem;letter-spacing:3px;text-transform:uppercase;color:rgba(240,237,230,0.6);text-decoration:none;transition:color 0.2s;}
-.nav-mobile-menu a:hover,.nav-mobile-menu a.active{color:var(--accent);}
+/* BURGER MOBILE */
+.nav-burger{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  background:none;border:none;cursor:pointer;
+  padding:8px;border-radius:10px;
+  position:fixed;top:0.75rem;right:1.2rem;
+  z-index:9000;
+  width:40px;height:40px;
+  transition:background 0.2s;
+}
+.nav-burger:hover{background:rgba(240,237,230,0.08);}
+.nav-burger span{
+  display:block;width:22px;height:2px;
+  background:rgba(240,237,230,0.85);border-radius:2px;
+  transition:all 0.3s cubic-bezier(.25,.8,.25,1);
+  transform-origin:center;
+}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* MENU MOBILE */
+.nav-mobile-menu{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(6,6,6,0.97);
+  backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%);
+  flex-direction:column;align-items:center;justify-content:center;
+  gap:0;z-index:8000;
+  display:flex;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.3s ease;
+}
+.nav-mobile-menu.open{opacity:1;pointer-events:auto;}
+.nav-mobile-menu a{
+  font-family:"transducer-extended",sans-serif;font-style:italic;font-weight:600;
+  font-size:2.2rem;letter-spacing:4px;text-transform:uppercase;
+  color:rgba(240,237,230,0.25);text-decoration:none;
+  padding:0.75rem 2rem;
+  transition:color 0.2s,transform 0.2s;
+  transform:translateY(10px);
+  transition:color 0.2s, opacity 0.3s, transform 0.3s;
+  opacity:0;
+}
+.nav-mobile-menu.open a{opacity:1;transform:translateY(0);}
+.nav-mobile-menu.open a:nth-child(1){transition-delay:0.05s;}
+.nav-mobile-menu.open a:nth-child(2){transition-delay:0.10s;}
+.nav-mobile-menu.open a:nth-child(3){transition-delay:0.15s;}
+.nav-mobile-menu.open a:nth-child(4){transition-delay:0.20s;}
+.nav-mobile-menu.open a:nth-child(5){transition-delay:0.25s;}
+.nav-mobile-menu.open a:nth-child(6){transition-delay:0.30s;}
+.nav-mobile-menu a:hover,.nav-mobile-menu a.active{color:var(--accent);transform:translateX(6px);}
+.nav-mobile-divider{width:40px;height:1px;background:rgba(255,45,45,0.2);margin:1rem 0;}
 @media(max-width:768px){.nav-burger{display:flex;}}
 </style>
 </head>
@@ -601,13 +644,16 @@ footer{
     <li><a href="videos.html">Vidéos</a></li>
     <li><a href="setup.html">Setup</a></li>
     <li><a href="warzone.html">Warzone</a></li>
+    <li><a href="reseaux.html">Réseaux</a></li>
   </ul>
   <button class="nav-burger" id="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
   <div class="nav-mobile-menu" id="nav-mobile-menu">
     <a href="index.html">Accueil</a>
+    <div class="nav-mobile-divider"></div>
     <a href="videos.html">Vidéos</a>
     <a href="setup.html">Setup</a>
     <a href="warzone.html">Warzone</a>
+    <a href="reseaux.html">Réseaux</a>
   </div>
 </nav>
 <section class="hero" style="padding:0;max-width:100%">
