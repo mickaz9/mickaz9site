@@ -218,6 +218,14 @@ h1 .accent{color:var(--accent)}
   box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);
 }
 .btn-ghost:hover{background:rgba(240,237,230,0.12);border-color:rgba(240,237,230,0.28);color:var(--white);}
+.btn-glass{
+  background:rgba(240,237,230,0.07);
+  border:1px solid rgba(255,255,255,0.12);
+  color:rgba(240,237,230,0.85);
+  box-shadow:0 8px 32px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.18),inset 0 -1px 0 rgba(0,0,0,0.08);
+  backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);
+}
+.btn-glass:hover{background:rgba(240,237,230,0.13);border-color:rgba(255,255,255,0.22);color:var(--white);transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.25);}
 .hero-scroll{
   position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center;gap:8px;
@@ -583,19 +591,37 @@ footer{
 .nav-mobile-menu a:hover,.nav-mobile-menu a.active{color:var(--accent);}
 @media(max-width:768px){.nav-burger{display:flex;}}
 
-.loadout-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:2rem;}
-.loadout-card{background:rgba(240,237,230,0.03);border:1px solid rgba(240,237,230,0.08);border-radius:22px;overflow:hidden;transition:all 0.25s cubic-bezier(.25,.8,.25,1);position:relative;}
-.loadout-card:hover{transform:translateY(-4px);border-color:rgba(255,45,45,0.2);box-shadow:0 16px 40px rgba(0,0,0,0.3);}
-.loadout-img{width:100%;aspect-ratio:16/9;object-fit:cover;background:#111;display:flex;align-items:center;justify-content:center;}
-.loadout-img-placeholder{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,rgba(255,45,45,0.05),rgba(8,8,8,0.8));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border-bottom:1px solid rgba(240,237,230,0.06);}
-.loadout-body{padding:1.5rem;}
-.loadout-name{font-family:"transducer-extended",sans-serif;font-style:italic;font-weight:600;font-size:1.3rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:0.5rem;}
-.loadout-tag{display:inline-flex;align-items:center;font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;font-family:"DM Mono",monospace;color:var(--accent);background:rgba(255,45,45,0.08);border:1px solid rgba(255,45,45,0.2);padding:3px 10px;border-radius:20px;margin-bottom:1rem;}
-.loadout-attachments{display:flex;flex-direction:column;gap:6px;}
-.loadout-att{display:flex;align-items:center;gap:8px;font-size:0.72rem;color:rgba(240,237,230,0.5);font-family:"DM Mono",monospace;}
-.loadout-att::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0;}
-.coming-soon-banner{text-align:center;padding:4rem 2rem;border:1px dashed rgba(255,45,45,0.2);border-radius:22px;background:rgba(255,45,45,0.02);}
-@media(max-width:768px){.loadout-grid{grid-template-columns:1fr;}}
+/* ── LOADOUT GRID ─────────────────────────────────────────── */
+.loadout-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;margin-top:2rem;}
+.loadout-card{
+  background:rgba(240,237,230,0.03);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(240,237,230,0.08);border-radius:22px;overflow:hidden;
+  transition:all 0.25s cubic-bezier(.25,.8,.25,1);position:relative;
+  box-shadow:0 8px 32px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.04);
+}
+.loadout-card:hover{transform:translateY(-5px);border-color:rgba(255,45,45,0.25);box-shadow:0 20px 48px rgba(0,0,0,0.35),inset 0 1px 0 rgba(255,255,255,0.06);}
+.loadout-card:hover .loadout-img{transform:scale(1.03);}
+.loadout-img-wrap{overflow:hidden;aspect-ratio:16/9;position:relative;background:#0a0a0a;}
+.loadout-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;}
+.loadout-tag{
+  position:absolute;top:12px;left:12px;
+  font-size:0.55rem;letter-spacing:2px;text-transform:uppercase;
+  font-family:'DM Mono',monospace;font-weight:700;
+  background:rgba(255,45,45,0.85);color:#fff;
+  padding:3px 10px;border-radius:20px;
+  box-shadow:0 2px 8px rgba(255,45,45,0.4),inset 0 1px 0 rgba(255,255,255,0.2);
+  backdrop-filter:blur(8px);
+}
+.loadout-body{padding:1.5rem 1.75rem;}
+.loadout-name{
+  font-family:"transducer-extended",sans-serif;font-style:italic;font-weight:600;
+  font-size:1.4rem;letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:0.75rem;line-height:1;
+}
+@media(max-width:768px){
+  .loadout-grid{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
@@ -616,67 +642,15 @@ footer{
     <a href="warzone.html">Warzone</a>
   </div>
 </nav>
+
 <section style="padding-top:8rem">
   <div class="reveal">
     <div class="section-label">Gameplay</div>
     <div class="section-title">MES <span class="dim">LOADOUTS</span></div>
   </div>
-
-  <div class="loadout-grid reveal reveal-delay-1">
-
-    <!-- LOADOUT 1 — SMG -->
-    <div class="loadout-card">
-      <div class="loadout-img-placeholder">
-        <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,45,45,0.3)" stroke-width="1" width="48" height="48"><path d="M3 12h18M3 12l4-4m-4 4l4 4M15 8l2-2 2 2M15 16l2 2 2-2"/></svg>
-        <span style="font-size:0.6rem;letter-spacing:2px;color:rgba(240,237,230,0.2);font-family:'DM Mono',monospace;text-transform:uppercase;">Image à venir</span>
-      </div>
-      <div class="loadout-body">
-        <div class="loadout-tag">SMG</div>
-        <div class="loadout-name">Close Range</div>
-        <div class="loadout-attachments">
-          <div class="loadout-att">Arme principale — à renseigner</div>
-          <div class="loadout-att">Attachments — à renseigner</div>
-          <div class="loadout-att">Perks — à renseigner</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- LOADOUT 2 — AR -->
-    <div class="loadout-card">
-      <div class="loadout-img-placeholder">
-        <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,45,45,0.3)" stroke-width="1" width="48" height="48"><path d="M3 12h18M3 12l4-4m-4 4l4 4M15 8l2-2 2 2M15 16l2 2 2-2"/></svg>
-        <span style="font-size:0.6rem;letter-spacing:2px;color:rgba(240,237,230,0.2);font-family:'DM Mono',monospace;text-transform:uppercase;">Image à venir</span>
-      </div>
-      <div class="loadout-body">
-        <div class="loadout-tag">AR</div>
-        <div class="loadout-name">Mid Range</div>
-        <div class="loadout-attachments">
-          <div class="loadout-att">Arme principale — à renseigner</div>
-          <div class="loadout-att">Attachments — à renseigner</div>
-          <div class="loadout-att">Perks — à renseigner</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- LOADOUT 3 — Sniper -->
-    <div class="loadout-card">
-      <div class="loadout-img-placeholder">
-        <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,45,45,0.3)" stroke-width="1" width="48" height="48"><path d="M3 12h18M3 12l4-4m-4 4l4 4M15 8l2-2 2 2M15 16l2 2 2-2"/></svg>
-        <span style="font-size:0.6rem;letter-spacing:2px;color:rgba(240,237,230,0.2);font-family:'DM Mono',monospace;text-transform:uppercase;">Image à venir</span>
-      </div>
-      <div class="loadout-body">
-        <div class="loadout-tag">SNIPER</div>
-        <div class="loadout-name">Long Range</div>
-        <div class="loadout-attachments">
-          <div class="loadout-att">Arme principale — à renseigner</div>
-          <div class="loadout-att">Attachments — à renseigner</div>
-          <div class="loadout-att">Perks — à renseigner</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
+  <div class="loadout-grid" id="loadout-grid"></div>
 </section>
+
 <footer>
   <div>
     <div class="footer-logo">MICKAZ<span>9</span></div>
@@ -711,6 +685,58 @@ document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
   menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');burger.classList.remove('open');}));
 })();
 
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║               ⚙️  CONFIG LOADOUTS WARZONE                   ║
+// ║     Modifie ici les noms et images de tes loadouts          ║
+// ╚══════════════════════════════════════════════════════════════╝
+const LOADOUTS = [
+  {
+    name: 'MPC',
+    tag: 'SMG',
+    image: 'https://media.discordapp.net/attachments/1509969451091624038/1509969467369721886/image.png?ex=6a454c26&is=6a43faa6&hm=6e5eba5b90cd0887751a62e1ac3adc0aa9cbaf89b5597719f86a34b531be097c&=&format=webp&quality=lossless&width=912&height=514',
+  },
+  {
+    name: 'KAR 98K',
+    tag: 'Sniper',
+    image: 'https://media.discordapp.net/attachments/1509969451091624038/1510205035382964294/image.png?ex=6a457eca&is=6a442d4a&hm=5eaf8917c540a4faba3a1c12ffcb2c1f050a10e5a57b73762195d2301966359f&=&format=webp&quality=lossless&width=912&height=509',
+  },
+  {
+    name: 'DRAVEC',
+    tag: 'AR',
+    image: 'https://media.discordapp.net/attachments/1509969451091624038/1512730494725525545/image.png?ex=6a45744f&is=6a4422cf&hm=5dafa9ca050109faee810d78090d433322e1a9f43725d14065c126d008b9990e&=&format=webp&quality=lossless&width=912&height=513',
+  },
+  {
+    name: 'DS20',
+    tag: 'Fusil',
+    image: 'https://media.discordapp.net/attachments/1509969451091624038/1512730539055124570/image.png?ex=6a457459&is=6a4422d9&hm=d0f168e44a1c1b4b046d69284c5f7a862c44fbcda6faa271108a38db19304276&=&format=webp&quality=lossless&width=912&height=502',
+  },
+  {
+    name: 'REV 46',
+    tag: 'Pistolet',
+    image: 'https://media.discordapp.net/attachments/1509969451091624038/1515057065201107015/image.png?ex=6a455958&is=6a4407d8&hm=507c6b2731c645b0c86d9acb5dac1b5b748c169a0d54925b2aba03e3f6f91209&=&format=webp&quality=lossless&width=912&height=512',
+  },
+];
+// ╚══════════════════════════════════════════════════════════════╝
+
+// Rendu des loadouts
+(function(){
+  const grid = document.getElementById('loadout-grid');
+  if(!grid) return;
+  grid.innerHTML = LOADOUTS.map(l => `
+    <div class="loadout-card reveal">
+      <div class="loadout-img-wrap">
+        <img class="loadout-img" src="${l.image}" alt="${l.name}" loading="lazy" onerror="this.parentElement.style.background='#111'">
+        <div class="loadout-tag">${l.tag}</div>
+      </div>
+      <div class="loadout-body">
+        <div class="loadout-name">${l.name}</div>
+      </div>
+    </div>
+  `).join('');
+  // Re-observer les nouvelles cartes pour le reveal
+  grid.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+})();
 
 </script>
 </body></html>
