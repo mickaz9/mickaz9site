@@ -685,7 +685,27 @@ footer{
   transition:transform 0.25s ease;
 }
 .modal-overlay.open .modal-box{transform:translateY(0) scale(1);}
-.modal-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;}
+.modal-img-wrap{
+  position:relative;overflow:hidden;cursor:crosshair;
+  background:#000;
+}
+.modal-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;transition:transform 0.1s ease;transform-origin:center center;}
+.modal-zoom-btn{
+  position:absolute;bottom:12px;right:12px;
+  width:36px;height:36px;border-radius:10px;
+  background:rgba(8,8,8,0.7);border:1px solid rgba(240,237,230,0.15);
+  color:rgba(240,237,230,0.7);font-size:1rem;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;backdrop-filter:blur(10px);transition:all 0.2s;
+  z-index:10;
+}
+.modal-zoom-btn:hover{background:rgba(255,45,45,0.15);border-color:rgba(255,45,45,0.3);color:var(--accent);}
+.modal-zoom-hint{
+  position:absolute;bottom:12px;left:12px;
+  font-size:0.55rem;letter-spacing:1.5px;text-transform:uppercase;
+  font-family:'DM Mono',monospace;color:rgba(240,237,230,0.25);
+  pointer-events:none;
+}
 .modal-body{padding:1.25rem 1.75rem;}
 .modal-title{
   font-family:"transducer-extended",sans-serif;font-style:italic;font-weight:600;
@@ -819,7 +839,11 @@ const LOADOUTS = [
 <div class="modal-overlay" id="modal-overlay" onclick="closeLoadout(event)">
   <div class="modal-box">
     <button class="modal-close" onclick="closeLoadout()">✕</button>
-    <img class="modal-img" id="modal-img" src="" alt="">
+    <div class="modal-img-wrap" id="modal-img-wrap">
+      <img class="modal-img" id="modal-img" src="" alt="">
+      <button class="modal-zoom-btn" id="zoom-btn" title="Zoom">🔍</button>
+      <div class="modal-zoom-hint" id="zoom-hint">Clic pour zoomer</div>
+    </div>
     <div class="modal-body">
       <div class="modal-title" id="modal-title"></div>
     </div>
@@ -829,11 +853,70 @@ const LOADOUTS = [
 <script>
 function openLoadout(i){
   const l = LOADOUTS[i];
-  document.getElementById('modal-img').src = l.image;
-  document.getElementById('modal-img').alt = l.name;
+  const img = document.getElementById('modal-img');
+  img.src = l.image;
+  img.alt = l.name;
+  img.style.transform = 'scale(1)';
   document.getElementById('modal-title').textContent = l.name;
   document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('zoom-btn').textContent = '🔍';
+  document.getElementById('zoom-hint').textContent = 'Clic pour zoomer';
   document.body.style.overflow = 'hidden';
+  isZoomed = false;
+}
+
+let isZoomed = false;
+
+document.addEventListener('DOMContentLoaded', function(){
+  const wrap = document.getElementById('modal-img-wrap');
+  const img = document.getElementById('modal-img');
+  const btn = document.getElementById('zoom-btn');
+  const hint = document.getElementById('zoom-hint');
+
+  // Clic pour toggle zoom
+  wrap.addEventListener('click', function(e){
+    if(e.target === btn) return;
+    isZoomed = !isZoomed;
+    if(isZoomed){
+      img.style.transform = 'scale(2.2)';
+      img.style.transformOrigin = getOrigin(e, wrap);
+      wrap.style.cursor = 'zoom-out';
+      btn.textContent = '🔎';
+      hint.textContent = 'Déplacez la souris';
+    } else {
+      img.style.transform = 'scale(1)';
+      img.style.transformOrigin = 'center center';
+      wrap.style.cursor = 'crosshair';
+      btn.textContent = '🔍';
+      hint.textContent = 'Clic pour zoomer';
+    }
+  });
+
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    wrap.click();
+  });
+
+  // Déplacer le zoom selon la position de la souris
+  wrap.addEventListener('mousemove', function(e){
+    if(!isZoomed) return;
+    img.style.transformOrigin = getOrigin(e, wrap);
+  });
+
+  // Touch support
+  wrap.addEventListener('touchmove', function(e){
+    if(!isZoomed) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    img.style.transformOrigin = getOrigin(touch, wrap);
+  }, {passive:false});
+});
+
+function getOrigin(e, el){
+  const rect = el.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+  const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+  return `${x}% ${y}%`;
 }
 function closeLoadout(e){
   if(e && e.target !== document.getElementById('modal-overlay') && !e.target.classList.contains('modal-close')) return;
