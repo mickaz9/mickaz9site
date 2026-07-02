@@ -934,6 +934,19 @@ document.getElementById('instagram-stats').textContent = CONFIG.INSTAGRAM_FOLLOW
 async function checkTwitch(){
   try{
     const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'K';return n;};
+    const TWITCH_CACHE_KEY='mickaz9_twitch_cache_v1';
+    const TWITCH_CACHE_TTL=3600000; // 1h
+
+    // Afficher le cache immédiatement si dispo
+    const cached=localStorage.getItem(TWITCH_CACHE_KEY);
+    if(cached){
+      const {followers,timestamp}=JSON.parse(cached);
+      if(Date.now()-timestamp<TWITCH_CACHE_TTL){
+        const el=document.getElementById('twitch-subs');
+        if(el&&followers!=null)el.textContent=fmtN(followers);
+      }
+    }
+
     const r=await fetch('/twitch');
     const d=await r.json();
     if(d.data&&d.data.length>0){
@@ -954,6 +967,7 @@ async function checkTwitch(){
     if(d.followers!=null){
       const el=document.getElementById('twitch-subs');
       if(el)el.textContent=fmtN(d.followers);
+      localStorage.setItem(TWITCH_CACHE_KEY,JSON.stringify({followers:d.followers,timestamp:Date.now()}));
     }
     if(d.lastClip){
       const c=d.lastClip;
