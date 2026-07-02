@@ -893,12 +893,11 @@ const CONFIG = {
       user-select:none;
       margin-bottom:0;
     }
-    .setup-cat-header:hover{background:rgba(240,237,230,0.06);border-color:rgba(255,45,45,0.2);}
+    .setup-cat-header:hover{background:rgba(240,237,230,0.06);border-color:rgba(240,237,230,0.14);}
     .setup-cat-header.open{
       border-radius:16px 16px 0 0;
-      border-bottom:1px solid rgba(240,237,230,0.04);
-      background:rgba(255,45,45,0.04);
-      border-color:rgba(255,45,45,0.15);
+      border-bottom:none;
+      background:rgba(240,237,230,0.05);
     }
     .setup-cat-left{display:flex;align-items:center;gap:12px;}
     .setup-cat-name{
@@ -914,15 +913,19 @@ const CONFIG = {
     .setup-cat-chevron{
       color:rgba(240,237,230,0.3);transition:transform 0.3s ease;font-size:0.9rem;
     }
-    .setup-cat-header.open .setup-cat-chevron{transform:rotate(180deg);color:var(--accent);}
+    .setup-cat-header.open .setup-cat-chevron{transform:rotate(180deg);color:rgba(240,237,230,0.6);}
     .setup-cat-body{
       overflow:hidden;
       max-height:0;
       transition:max-height 0.4s ease;
-      border:1px solid rgba(255,45,45,0.15);
-      border-top:none;
+      border:none;
       border-radius:0 0 16px 16px;
       margin-bottom:10px;
+    }
+    .setup-cat-body.open{
+      max-height:2000px;
+      border:1px solid rgba(240,237,230,0.08);
+      border-top:none;
     }
     .setup-cat-body.open{max-height:2000px;}
     .setup-cat-grid{
