@@ -766,18 +766,6 @@ const CONFIG = {
       image:    'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQorBZl63dqditAi27u1upfYjOV4ffbOwIQHrVhUCvS-uJxu8oEPWKJtu6GIX_lH3xw32P1ElR-P1MBlO6NwQjv5ye9b3eNnkqHVqNcfdhdsNd2kxURmLZW',
       url:      'https://www.amazon.fr/Alphacool-eisbaer-Aurora-240-komplett-wasserk%C3%BChlung/dp/B084VHMDHZ',
     },
-     {
-      name:     'SSD Crucial P310 1TO',
-      category: 'PC',
-      image:    'https://m.media-amazon.com/images/I/51lrFzSnxhL._AC_SL1080_.jpg',
-      url:      'https://amzn.eu/d/07KgV6F5',
-    },
-    {
-      name:     'SSD Crucial P310 2TO',
-      category: 'PC',
-      image:    'https://m.media-amazon.com/images/I/51lrFzSnxhL._AC_SL1080_.jpg',
-      url:      'https://amzn.eu/d/02yJeLDh',
-    },
 
     // ── Écrans ───────────────────────────────────────────────────
     {
@@ -812,13 +800,7 @@ const CONFIG = {
       image:    'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQwi_EsxkR1_nTf89i6RCuOVFqaZhs-dBJjFCw607oqNggbTvgSsCg8IJoQ5KLCbLTxb0ADgliJsnsakmvrlS252lTKOoQyK5LVaN5D8_WZUKYEaAhqCz5XTmzo1pOtkuW-HJvBjQ&usqp=CAc',
       url:      'https://www.amazon.fr/ROG-Moonstone-Ace-L-White/dp/B07MRJ975T',
     },
-     {
-      name:     'Hyper X Pulsefire Haste 2 Pro 4K',
-      category: 'Périphériques',
-      image:    'https://m.media-amazon.com/images/I/61giuk1o6fL._AC_SL1500_.jpg',
-      url:      'https://amzn.eu/d/0aSHT3oz',
-    },
-    
+
     // ── Audio ────────────────────────────────────────────────────
     {
       name:     'HyperX Cloud Flight Wireless',
@@ -837,12 +819,6 @@ const CONFIG = {
       category: 'Audio',
       image:    'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT0GzTmB42_1Grizv385DVYMQwDdQwY_jxJdHwfeyudpX1LMb49CZTZwmodRmer2mfemrz7r7S2NTk3kbUHRbo51_OGMi3A6tFMiRcNlKhx3Du4uwgoE5yLATeS__lNCXaxdKa5&usqp=CAc',
       url:      'https://www.amazon.fr/dp/B0CMDB29YC',
-    },
-     {
-      name:     'Linsoul 7Hz Salnotes Zero IEM',
-      category: 'Audio',
-      image:    'https://m.media-amazon.com/images/I/61pXKTzkt9L._AC_SL1500_.jpg',
-      url:      'https://amzn.eu/d/0iLvPlog',
     },
 
     // ── Streaming ────────────────────────────────────────────────
@@ -970,7 +946,7 @@ const CONFIG = {
 
     let html = '';
     Object.entries(categories).forEach(([cat, items], idx) => {
-      const isFirst = idx === 0;
+      const isFirst = false;
       html += `
         <div class="setup-cat-wrap">
           <div class="setup-cat-header ${isFirst ? 'open' : ''}" onclick="toggleSetupCat(this)">
