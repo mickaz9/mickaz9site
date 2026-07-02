@@ -939,12 +939,17 @@ async function checkTwitch(){
     if(d.data&&d.data.length>0){
       const s=d.data[0];
       const badge=document.getElementById('twitch-status-badge');
-      badge.textContent='En stream';badge.className='status-badge status-live';
-      document.getElementById('twitch-title').textContent=s.title;
-      document.getElementById('twitch-meta').textContent=s.viewer_count.toLocaleString()+' spectateurs';
-      document.getElementById('hero-live').style.display='inline-flex';
-      document.getElementById('hero-ctas-offline').style.display='none';
-      document.getElementById('hero-ctas-live').style.display='flex';
+      if(badge){badge.textContent='En stream';badge.className='status-badge status-live';}
+      const ttitle=document.getElementById('twitch-title');
+      if(ttitle)ttitle.textContent=s.title;
+      const tmeta=document.getElementById('twitch-meta');
+      if(tmeta)tmeta.textContent=s.viewer_count.toLocaleString()+' spectateurs';
+      const heroLive=document.getElementById('hero-live');
+      if(heroLive)heroLive.style.display='inline-flex';
+      const offline=document.getElementById('hero-ctas-offline');
+      if(offline)offline.style.display='none';
+      const live=document.getElementById('hero-ctas-live');
+      if(live)live.style.display='flex';
     }
     if(d.followers!=null){
       const el=document.getElementById('twitch-subs');
