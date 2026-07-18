@@ -985,6 +985,26 @@ async function loadCalendar(){
     const d=await r.json();
     const body=document.getElementById('cal-body');
     body.innerHTML='';
+
+    // Fenêtre de visibilité : aujourd'hui + 3 prochains jours calendaires max
+    if(d.items&&d.items.length>0){
+      const todayLimit=new Date(); todayLimit.setHours(0,0,0,0);
+      d.items=d.items.filter(ev=>{
+        const start=new Date(ev.start.dateTime||ev.start.date);
+        const startDay=new Date(start); startDay.setHours(0,0,0,0);
+        let endDay=startDay;
+        if(ev.end){
+          const end=new Date(ev.end.dateTime||ev.end.date);
+          if(!ev.end.dateTime) end.setDate(end.getDate()-1);
+          endDay=new Date(end); endDay.setHours(0,0,0,0);
+        }
+        const diffStart=Math.round((startDay-todayLimit)/(1000*60*60*24));
+        const diffEnd=Math.round((endDay-todayLimit)/(1000*60*60*24));
+        // On garde l'événement s'il touche la fenêtre [aujourd'hui, aujourd'hui+3]
+        return diffEnd>=0 && diffStart<=3;
+      });
+    }
+
     if(d.items&&d.items.length>0){
       const days=['DIM','LUN','MAR','MER','JEU','VEN','SAM'];
       const months=['jan','fév','mar','avr','mai','juin','juil','août','sep','oct','nov','déc'];
