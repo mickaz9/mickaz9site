@@ -983,11 +983,6 @@ document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 })();
 
 
-const CONFIG = {
-  // Colle l'ID de ta dernière vidéo YouTube (après ?v= dans l'URL)
-  LATEST_VIDEO_ID: 'WzZiDmct3ig',
-};
-
 // Twitch live check
 async function checkTwitch(){
   try{
@@ -1029,16 +1024,13 @@ async function checkTwitch(){
 }
 
 async function loadYT(){
-  const CACHE_KEY='mickaz9_yt_cache_v3';
+  const CACHE_KEY='mickaz9_yt_cache_v4';
   const CACHE_TTL=3600000; // 1 heure
   try{
-    // Supprimer l'ancien cache si présent
-    localStorage.removeItem('mickaz9_yt_cache');
     const cached=localStorage.getItem(CACHE_KEY);
     if(cached){
-      const {data,timestamp,videoId}=JSON.parse(cached);
-      // Invalider le cache si la vidéo a changé dans le CONFIG
-      if(videoId===CONFIG.LATEST_VIDEO_ID && Date.now()-timestamp<CACHE_TTL){applyYTData(data);return;}
+      const {data,timestamp}=JSON.parse(cached);
+      if(Date.now()-timestamp<CACHE_TTL){applyYTData(data);return;}
     }
     const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'K';return n;};
     const data={subs:null,live:null,videos:[]};
@@ -1078,24 +1070,17 @@ async function loadYT(){
       }
     }
 
-    localStorage.setItem(CACHE_KEY,JSON.stringify({data,timestamp:Date.now(),videoId:CONFIG.LATEST_VIDEO_ID}));
+    localStorage.setItem(CACHE_KEY,JSON.stringify({data,timestamp:Date.now()}));
     applyYTData(data);
   }catch(e){console.error('YT error',e);}
 }
 
 function applyYTData(data){
-  // Utiliser LATEST_VIDEO_ID si défini, sinon prendre le premier de l'API
-  const manualId = CONFIG.LATEST_VIDEO_ID;
   let videoId = null;
   let videoTitle = null;
   let videoMeta = null;
 
-  if(manualId){
-    videoId = manualId;
-    // Chercher le titre dans les données API si disponible
-    const found = data.videos?.find(v => v.id === manualId);
-    if(found){ videoTitle = found.title; videoMeta = found.meta; }
-  } else if(data.videos&&data.videos.length>0){
+  if(data.videos&&data.videos.length>0){
     videoId = data.videos[0].id;
     videoTitle = data.videos[0].title;
     videoMeta = data.videos[0].meta;

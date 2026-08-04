@@ -51,14 +51,15 @@ export async function onRequest(context) {
         durationMap[v.id] = parseDuration(v.contentDetails?.duration);
       });
     }
-    // Shorts <= 60s, rediffs live > 3600s (1h) → vidéos longues entre 60s et 3600s
+    // Shorts <= 180s (limite YouTube depuis fin 2024, plus 60s), rediffs live > 3600s (1h) → vidéos longues entre 180s et 3600s
+    const SHORT_MAX = 180;
     const longVideos = items.filter(item => {
       const dur = durationMap[item.id.videoId] || 0;
-      return dur > 60 && dur <= 3600;
+      return dur > SHORT_MAX && dur <= 3600;
     });
     const shorts = items.filter(item => {
       const dur = durationMap[item.id.videoId] || 0;
-      return dur > 0 && dur <= 60;
+      return dur > 0 && dur <= SHORT_MAX;
     });
     return new Response(JSON.stringify({ longVideos, shorts }), {
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'public, max-age=60' }
