@@ -11,15 +11,31 @@ export async function onRequest(context) {
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
     });
   } else if(type === 'videos'){
-    const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&order=date&type=video&maxResults=25&key=${API_KEY}`;
-    const searchRes = await fetch(searchUrl);
-    const searchData = await searchRes.json();
-    if(!searchData.items || searchData.items.length === 0){
-      return new Response(JSON.stringify(searchData), {
+    // Playlist des uploads = 'UU' + channelId sans son préfixe 'UC'.
+    // playlistItems.list est instantané (pas de délai d'indexation comme search.list)
+    // et coûte 1 unité de quota au lieu de 100.
+    const uploadsPlaylistId = 'UU' + CHANNEL_ID.slice(2);
+    const playlistUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=25&key=${API_KEY}`;
+    const playlistRes = await fetch(playlistUrl);
+    const playlistData = await playlistRes.json();
+    if(!playlistData.items || playlistData.items.length === 0){
+      return new Response(JSON.stringify({ longVideos: [], shorts: [] }), {
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
       });
     }
-    const ids = searchData.items.map(i => i.id.videoId).filter(Boolean).join(',');
+    // Normalisée à la même forme que l'ancienne réponse search.list ({ id: { videoId }, snippet })
+    // pour ne rien changer côté frontend.
+    const items = playlistData.items
+      .filter(i => i.snippet?.resourceId?.videoId)
+      .map(i => ({
+        id: { videoId: i.snippet.resourceId.videoId },
+        snippet: {
+          title: i.snippet.title,
+          publishedAt: i.snippet.publishedAt,
+          thumbnails: i.snippet.thumbnails
+        }
+      }));
+    const ids = items.map(i => i.id.videoId).join(',');
     const detailsUrl = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${ids}&key=${API_KEY}`;
     const detailsRes = await fetch(detailsUrl);
     const detailsData = await detailsRes.json();
@@ -36,11 +52,11 @@ export async function onRequest(context) {
       });
     }
     // Shorts <= 60s, rediffs live > 3600s (1h) → vidéos longues entre 60s et 3600s
-    const longVideos = searchData.items.filter(item => {
+    const longVideos = items.filter(item => {
       const dur = durationMap[item.id.videoId] || 0;
       return dur > 60 && dur <= 3600;
     });
-    const shorts = searchData.items.filter(item => {
+    const shorts = items.filter(item => {
       const dur = durationMap[item.id.videoId] || 0;
       return dur > 0 && dur <= 60;
     });
