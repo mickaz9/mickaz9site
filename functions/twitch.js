@@ -21,35 +21,44 @@ export async function onRequest(context) {
     followers = folData.total ?? null;
   }
 
-  // 3 derniers clips par date — Twitch ne garantit pas un tri par date sur cet
-  // endpoint (souvent par vues), donc on pagine plusieurs pages, on regroupe,
-  // et on trie nous-mêmes par date décroissante avant de garder les 3 plus récents.
-  let lastClips = [];
+  // 3 derniers clips par date. L'endpoint clips sans bornes de date ne garantit
+  // aucun ordre stable (pas forcément la date), donc paginer "à l'aveugle" peut
+  // rater les clips récents si le broadcaster en a beaucoup au total. On borne
+  // donc par fenêtres de 30 jours (comme Twitch le recommande), mais en paginant
+  // CHAQUE fenêtre en entier (pas juste la 1ère page) pour ne rien manquer,
+  // et on continue sur les fenêtres précédentes tant qu'on n'a pas assez de clips.
+  let allClips = [];
   if (userId) {
-    let allClips = [];
-    let cursor = null;
-    for (let page = 0; page < 5; page++) {
-      let clipsUrl = `https://api.twitch.tv/helix/clips?broadcaster_id=${userId}&first=100`;
-      if (cursor) clipsUrl += `&after=${cursor}`;
-      const clipRes = await fetch(clipsUrl, { headers });
-      const clipData = await clipRes.json();
-      if (clipData.data && clipData.data.length > 0) allClips.push(...clipData.data);
-      cursor = clipData.pagination?.cursor;
-      if (!cursor || !clipData.data || clipData.data.length === 0) break;
+    const now = new Date();
+    for (let i = 0; i < 6 && allClips.length < 10; i++) {
+      const endDate = new Date(now);
+      endDate.setMonth(endDate.getMonth() - i);
+      const startDate = new Date(endDate);
+      startDate.setMonth(startDate.getMonth() - 1);
+
+      let cursor = null;
+      for (let page = 0; page < 3; page++) {
+        let clipsUrl = `https://api.twitch.tv/helix/clips?broadcaster_id=${userId}&first=100&started_at=${startDate.toISOString()}&ended_at=${endDate.toISOString()}`;
+        if (cursor) clipsUrl += `&after=${cursor}`;
+        const clipRes = await fetch(clipsUrl, { headers });
+        const clipData = await clipRes.json();
+        if (clipData.data && clipData.data.length > 0) allClips.push(...clipData.data);
+        cursor = clipData.pagination?.cursor;
+        if (!cursor || !clipData.data || clipData.data.length === 0) break;
+      }
     }
-
-    allClips.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-    lastClips = allClips.slice(0, 3).map(c => ({
-      id: c.id,
-      title: c.title,
-      url: c.url,
-      thumbnail: c.thumbnail_url,
-      views: c.view_count,
-      duration: c.duration,
-      created_at: c.created_at
-    }));
   }
+
+  allClips.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const lastClips = allClips.slice(0, 3).map(c => ({
+    id: c.id,
+    title: c.title,
+    url: c.url,
+    thumbnail: c.thumbnail_url,
+    views: c.view_count,
+    duration: c.duration,
+    created_at: c.created_at
+  }));
 
   return new Response(JSON.stringify({
     data: streamData.data || [],
