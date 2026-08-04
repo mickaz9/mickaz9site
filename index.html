@@ -10,15 +10,17 @@
 <meta property="og:site_name" content="Mickaz9">
 <meta property="og:title" content="Mickaz9 — Streamer & Créateur de contenu">
 <meta property="og:description" content="Streams gaming, contenu créatif, communauté. Rejoins l'aventure sur Twitch et YouTube.">
-<meta property="og:image" content="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png">
+<meta property="og:image" content="https://res.cloudinary.com/ddj8pfqti/image/upload/f_auto,q_auto/v1777570083/Logo-mickaz9.-blanc_mlty4s.png">
 <meta property="og:url" content="https://mickaz9.site/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Mickaz9 — Streamer & Créateur de contenu">
 <meta name="twitter:description" content="Streams gaming, contenu créatif, communauté. Rejoins l'aventure sur Twitch et YouTube.">
-<meta name="twitter:image" content="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png">
-<link rel="icon" type="image/png" href="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png">
+<meta name="twitter:image" content="https://res.cloudinary.com/ddj8pfqti/image/upload/f_auto,q_auto/v1777570083/Logo-mickaz9.-blanc_mlty4s.png">
+<link rel="icon" type="image/png" href="https://res.cloudinary.com/ddj8pfqti/image/upload/f_auto,q_auto/v1777570083/Logo-mickaz9.-blanc_mlty4s.png">
 <meta name="theme-color" content="#ff2d2d">
 <link rel="preconnect" href="https://use.typekit.net">
+<link rel="preconnect" href="https://res.cloudinary.com">
+<link rel="preconnect" href="https://img.youtube.com">
 <link rel="stylesheet" href="https://use.typekit.net/dxb6efn.css">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -705,7 +707,7 @@ footer{
 <div class="cursor" id="cursor"></div>
 <div class="cursor-follower" id="follower"></div>
 <nav>
-  <a href="index.html" class="nav-logo"><img src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="height:32px;width:auto;display:block;"></a>
+  <a href="index.html" class="nav-logo"><img src="https://res.cloudinary.com/ddj8pfqti/image/upload/f_auto,q_auto/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="height:32px;width:auto;display:block;"></a>
   <ul class="nav-links">
     <li><a href="videos.html">Vidéos</a></li>
     <li><a href="setup.html">Setup</a></li>
@@ -730,10 +732,9 @@ footer{
     <div class="live-pill" id="hero-live" style="display:none"><span class="live-dot"></span>Live maintenant</div>
     <div style="position:relative;height:clamp(120px,26vw,320px);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;">
       <div class="logo-glow-bg"></div>
-      <video id="logo-video" autoplay loop muted playsinline style="position:relative;z-index:1;height:100%;width:auto;display:block;filter:drop-shadow(0 0 30px rgba(255,45,45,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.35));animation:logoGlow 2.5s ease-in-out infinite;">
-        <source src="Calque%201-Logo-mickaz9--blanc_Personnalis%C3%A9_1.webm" type="video/webm">
+      <video id="logo-video" autoplay loop muted playsinline preload="none" style="position:relative;z-index:1;height:100%;width:auto;display:block;filter:drop-shadow(0 0 30px rgba(255,45,45,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.35));animation:logoGlow 2.5s ease-in-out infinite;">
       </video>
-      <img id="logo-fallback" src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="display:none;position:relative;z-index:1;height:100%;width:auto;filter:drop-shadow(0 0 30px rgba(255,45,45,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.35));animation:logoGlow 2.5s ease-in-out infinite;">
+      <img id="logo-fallback" src="https://res.cloudinary.com/ddj8pfqti/image/upload/f_auto,q_auto/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="display:none;position:relative;z-index:1;height:100%;width:auto;filter:drop-shadow(0 0 30px rgba(255,45,45,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.35));animation:logoGlow 2.5s ease-in-out infinite;">
       <script>
       (function(){
         var video=document.getElementById('logo-video');
@@ -743,8 +744,13 @@ footer{
         var canWebM=document.createElement('video').canPlayType('video/webm; codecs="vp9"')!=='';
         if(isMobile||isIOS||!canWebM){
           video.style.display='none';
-          video.src='';
           fallback.style.display='block';
+        } else {
+          var source=document.createElement('source');
+          source.src='Calque%201-Logo-mickaz9--blanc_Personnalis%C3%A9_1.webm';
+          source.type='video/webm';
+          video.appendChild(source);
+          video.load();
         }
       })();
       </script>
