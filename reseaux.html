@@ -933,7 +933,7 @@ document.getElementById('instagram-stats').textContent = CONFIG.INSTAGRAM_FOLLOW
 // Twitch live check
 async function checkTwitch(){
   try{
-    const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'K';return n;};
+    const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1).replace('.',',')+'M';if(n>=1000)return(n/1000).toFixed(1).replace('.',',')+'k';return n;};
     const TWITCH_CACHE_KEY='mickaz9_twitch_cache_v1';
     const TWITCH_CACHE_TTL=3600000; // 1h
 
@@ -990,7 +990,7 @@ async function checkTwitch(){
 }
 async function loadYT(){
   try{
-    const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'K';return n;};
+    const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1).replace('.',',')+'M';if(n>=1000)return(n/1000).toFixed(1).replace('.',',')+'k';return n;};
     const r=await fetch('/youtube');
     const d=await r.json();
     if(d.items&&d.items[0]){
