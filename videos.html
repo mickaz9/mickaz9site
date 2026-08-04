@@ -905,8 +905,8 @@ async function checkTwitch(){
 
 // Dernières vidéos + Shorts YouTube (100% automatique, cache 1h)
 async function loadYT(){
-  const CACHE_KEY='mickaz9_yt_cache_v5';
-  const CACHE_TTL=3600000; // 1 heure
+  const CACHE_KEY='mickaz9_yt_cache_v6';
+  const CACHE_TTL=300000; // 5 minutes
   try{
     const cached=localStorage.getItem(CACHE_KEY);
     if(cached){
