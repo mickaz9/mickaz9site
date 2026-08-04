@@ -958,6 +958,26 @@ async function loadYT(){
   }catch(e){console.error('YT error',e);}
 }
 
+// Charge la meilleure résolution de vignette disponible pour une vidéo,
+// avec repli en cascade si une qualité n'existe pas (YouTube renvoie parfois
+// une image grise 120x90 avec un statut 200 au lieu d'une vraie 404).
+function loadBestThumb(bgEl, videoId){
+  const qualities = ['maxresdefault','sddefault','hqdefault'];
+  let i = 0;
+  const tryNext = () => {
+    if(i >= qualities.length) return;
+    const url = 'https://img.youtube.com/vi/'+videoId+'/'+qualities[i]+'.jpg';
+    const probe = new Image();
+    probe.onload = () => {
+      if(probe.naturalWidth <= 120 && i < qualities.length-1){ i++; tryNext(); return; }
+      bgEl.style.backgroundImage = 'url('+url+')';
+    };
+    probe.onerror = () => { i++; tryNext(); };
+    probe.src = url;
+  };
+  tryNext();
+}
+
 function applyYTData(data){
   if(data.subs){const el=document.getElementById('yt-subs');if(el)el.textContent=data.subs;}
   if(data.live){
@@ -972,7 +992,7 @@ function applyYTData(data){
     const card=document.getElementById('vid'+n);
     if(card)card.href='https://www.youtube.com/watch?v='+v.id;
     const bg=document.getElementById('vid'+n+'-thumb-bg');
-    if(bg){bg.style.backgroundImage='url(https://img.youtube.com/vi/'+v.id+'/hqdefault.jpg)';bg.style.backgroundSize='cover';bg.style.backgroundPosition='center';}
+    if(bg){bg.style.backgroundSize='cover';bg.style.backgroundPosition='center';loadBestThumb(bg,v.id);}
     const title=document.getElementById('vid'+n+'-title');
     if(title)title.textContent=v.title;
     const meta=document.getElementById('vid'+n+'-meta');
@@ -983,7 +1003,7 @@ function applyYTData(data){
     const card=document.getElementById('short'+n);
     if(card)card.href='https://www.youtube.com/shorts/'+v.id;
     const bg=document.getElementById('short'+n+'-thumb-bg');
-    if(bg){bg.style.backgroundImage='url(https://img.youtube.com/vi/'+v.id+'/sddefault.jpg)';bg.style.backgroundSize='cover';bg.style.backgroundPosition='center';}
+    if(bg){bg.style.backgroundSize='cover';bg.style.backgroundPosition='center';loadBestThumb(bg,v.id);}
     const title=document.getElementById('short'+n+'-title');
     if(title)title.textContent=v.title;
     const meta=document.getElementById('short'+n+'-meta');
