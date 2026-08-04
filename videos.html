@@ -360,13 +360,16 @@ section{padding:6rem 3rem;max-width:1100px;margin:0 auto}
 .arrow{display:inline-block}
 
 /* VIDEOS */
-.videos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.videos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .video-card{
   background:var(--black);
   display:flex;flex-direction:column;
-  transition:background 0.2s;cursor:pointer;text-decoration:none;color:inherit;
+  transition:background 0.2s,transform 0.2s,box-shadow 0.2s;cursor:pointer;text-decoration:none;color:inherit;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid rgba(240,237,230,0.08);
 }
-.video-card:hover{background:rgba(240,237,230,0.02)}
+.video-card:hover{background:rgba(240,237,230,0.02);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.3);}
 .video-thumb{
   aspect-ratio:16/9;
   background:#111;
@@ -376,31 +379,19 @@ section{padding:6rem 3rem;max-width:1100px;margin:0 auto}
 .thumb-bg{
   position:absolute;inset:0;
   background:linear-gradient(135deg,#0d0d1a 0%,#1a0d0d 100%);
+  background-size:cover;background-position:center;
+  transition:transform 0.4s ease;
 }
-.play-ring{
-  width:44px;height:44px;border-radius:50%;
-  border:1px solid rgba(240,237,230,0.15);
-  display:flex;align-items:center;justify-content:center;
-  position:relative;z-index:1;
-  transition:border-color 0.2s,transform 0.2s;
-}
-.video-card:hover .play-ring{border-color:var(--accent);transform:scale(1.1)}
-.play-tri{
-  width:0;height:0;
-  border-top:7px solid transparent;border-bottom:7px solid transparent;
-  border-left:12px solid rgba(240,237,230,0.6);
-  margin-left:3px;
-}
-.video-card:hover .play-tri{border-left-color:var(--accent)}
+.video-card:hover .thumb-bg{transform:scale(1.08)}
 .vid-type{
   position:absolute;bottom:8px;left:8px;z-index:1;
   font-size:0.55rem;letter-spacing:1.5px;text-transform:uppercase;
-  font-family:'DM Mono',monospace;padding:2px 6px;border-radius:2px;font-weight:600;
+  font-family:'DM Mono',monospace;padding:2px 6px;border-radius:6px;font-weight:600;
 }
 .vt-long{background:rgba(255,45,45,0.15);color:#ff7070;border:1px solid rgba(255,45,45,0.2)}
 .vt-short{background:rgba(255,45,45,0.1);color:var(--accent);border:1px solid rgba(255,45,45,0.15)}
 .vt-clip{background:rgba(145,70,255,0.15);color:#c9a9ff;border:1px solid rgba(145,70,255,0.25);display:flex;align-items:center;gap:5px}
-.video-thumb.thumb-portrait{aspect-ratio:9/16;max-width:220px;margin:0 auto;}
+.video-thumb.thumb-portrait{aspect-ratio:9/16;max-width:220px;margin:0 auto;border-radius:12px;}
 .video-info{padding:1.25rem 1.5rem}
 .video-info strong{font-size:0.9rem;font-weight:600;display:block;margin-bottom:6px;line-height:1.4}
 .video-info span{font-size:0.7rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace}
@@ -654,15 +645,15 @@ footer{
     <div class="content-subtitle reveal">Dernières vidéos</div>
     <div class="videos-grid reveal reveal-delay-1" id="videos-grid-long">
       <a class="video-card" id="vid1" href="https://www.youtube.com/@mickaz9" target="_blank">
-        <div class="video-thumb"><div class="thumb-bg" id="vid1-thumb-bg"></div><div class="play-ring"><div class="play-tri"></div></div><span class="vid-type vt-long">Vidéo</span></div>
+        <div class="video-thumb"><div class="thumb-bg" id="vid1-thumb-bg"></div><span class="vid-type vt-long">Vidéo</span></div>
         <div class="video-info"><strong id="vid1-title">Chargement...</strong><span id="vid1-meta">—</span></div>
       </a>
       <a class="video-card" id="vid2" href="https://www.youtube.com/@mickaz9" target="_blank">
-        <div class="video-thumb"><div class="thumb-bg" id="vid2-thumb-bg"></div><div class="play-ring"><div class="play-tri"></div></div><span class="vid-type vt-long">Vidéo</span></div>
+        <div class="video-thumb"><div class="thumb-bg" id="vid2-thumb-bg"></div><span class="vid-type vt-long">Vidéo</span></div>
         <div class="video-info"><strong id="vid2-title">Chargement...</strong><span id="vid2-meta">—</span></div>
       </a>
       <a class="video-card" id="vid3" href="https://www.youtube.com/@mickaz9" target="_blank">
-        <div class="video-thumb"><div class="thumb-bg" id="vid3-thumb-bg"></div><div class="play-ring"><div class="play-tri"></div></div><span class="vid-type vt-long">Vidéo</span></div>
+        <div class="video-thumb"><div class="thumb-bg" id="vid3-thumb-bg"></div><span class="vid-type vt-long">Vidéo</span></div>
         <div class="video-info"><strong id="vid3-title">Chargement...</strong><span id="vid3-meta">—</span></div>
       </a>
     </div>
@@ -670,15 +661,15 @@ footer{
     <div class="content-subtitle reveal">Derniers Shorts</div>
     <div class="videos-grid reveal reveal-delay-1" id="videos-grid-shorts">
       <a class="video-card" id="short1" href="https://www.youtube.com/@mickaz9/shorts" target="_blank">
-        <div class="video-thumb thumb-portrait"><div class="thumb-bg" id="short1-thumb-bg"></div><div class="play-ring"><div class="play-tri"></div></div><span class="vid-type vt-short">Short</span></div>
+        <div class="video-thumb thumb-portrait"><div class="thumb-bg" id="short1-thumb-bg"></div><span class="vid-type vt-short">Short</span></div>
         <div class="video-info"><strong id="short1-title">Chargement...</strong><span id="short1-meta">—</span></div>
       </a>
       <a class="video-card" id="short2" href="https://www.youtube.com/@mickaz9/shorts" target="_blank">
-        <div class="video-thumb thumb-portrait"><div class="thumb-bg" id="short2-thumb-bg"></div><div class="play-ring"><div class="play-tri"></div></div><span class="vid-type vt-short">Short</span></div>
+        <div class="video-thumb thumb-portrait"><div class="thumb-bg" id="short2-thumb-bg"></div><span class="vid-type vt-short">Short</span></div>
         <div class="video-info"><strong id="short2-title">Chargement...</strong><span id="short2-meta">—</span></div>
       </a>
       <a class="video-card" id="short3" href="https://www.youtube.com/@mickaz9/shorts" target="_blank">
-        <div class="video-thumb thumb-portrait"><div class="thumb-bg" id="short3-thumb-bg"></div><div class="play-ring"><div class="play-tri"></div></div><span class="vid-type vt-short">Short</span></div>
+        <div class="video-thumb thumb-portrait"><div class="thumb-bg" id="short3-thumb-bg"></div><span class="vid-type vt-short">Short</span></div>
         <div class="video-info"><strong id="short3-title">Chargement...</strong><span id="short3-meta">—</span></div>
       </a>
     </div>
@@ -686,15 +677,15 @@ footer{
     <div class="content-subtitle reveal">Derniers clips Twitch</div>
     <div class="videos-grid reveal reveal-delay-1" id="videos-grid-clips">
       <a class="video-card" id="clip1" href="https://www.twitch.tv/mickaz9" target="_blank">
-        <div class="video-thumb"><div class="thumb-bg" id="clip1-thumb-bg"></div><div class="play-ring"><div class="play-tri"></div></div><span class="vid-type vt-clip"><svg viewBox="0 0 24 24" fill="#c9a9ff" width="9" height="9"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>Clip</span></div>
+        <div class="video-thumb"><div class="thumb-bg" id="clip1-thumb-bg"></div><span class="vid-type vt-clip"><svg viewBox="0 0 24 24" fill="#c9a9ff" width="9" height="9"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>Clip</span></div>
         <div class="video-info"><strong id="clip1-title">Chargement...</strong><span id="clip1-meta">—</span></div>
       </a>
       <a class="video-card" id="clip2" href="https://www.twitch.tv/mickaz9" target="_blank">
-        <div class="video-thumb"><div class="thumb-bg" id="clip2-thumb-bg"></div><div class="play-ring"><div class="play-tri"></div></div><span class="vid-type vt-clip"><svg viewBox="0 0 24 24" fill="#c9a9ff" width="9" height="9"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>Clip</span></div>
+        <div class="video-thumb"><div class="thumb-bg" id="clip2-thumb-bg"></div><span class="vid-type vt-clip"><svg viewBox="0 0 24 24" fill="#c9a9ff" width="9" height="9"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>Clip</span></div>
         <div class="video-info"><strong id="clip2-title">Chargement...</strong><span id="clip2-meta">—</span></div>
       </a>
       <a class="video-card" id="clip3" href="https://www.twitch.tv/mickaz9" target="_blank">
-        <div class="video-thumb"><div class="thumb-bg" id="clip3-thumb-bg"></div><div class="play-ring"><div class="play-tri"></div></div><span class="vid-type vt-clip"><svg viewBox="0 0 24 24" fill="#c9a9ff" width="9" height="9"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>Clip</span></div>
+        <div class="video-thumb"><div class="thumb-bg" id="clip3-thumb-bg"></div><span class="vid-type vt-clip"><svg viewBox="0 0 24 24" fill="#c9a9ff" width="9" height="9"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>Clip</span></div>
         <div class="video-info"><strong id="clip3-title">Chargement...</strong><span id="clip3-meta">—</span></div>
       </a>
     </div>
