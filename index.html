@@ -4,6 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Accueil — Mickaz9</title>
+<meta name="description" content="Mickaz9, streamer et créateur de contenu gaming sur Warzone. Lives sur Twitch et YouTube, clips, planning et communauté Discord.">
+<link rel="canonical" href="https://mickaz9.site/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mickaz9">
+<meta property="og:title" content="Mickaz9 — Streamer & Créateur de contenu">
+<meta property="og:description" content="Streams gaming, contenu créatif, communauté. Rejoins l'aventure sur Twitch et YouTube.">
+<meta property="og:image" content="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png">
+<meta property="og:url" content="https://mickaz9.site/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mickaz9 — Streamer & Créateur de contenu">
+<meta name="twitter:description" content="Streams gaming, contenu créatif, communauté. Rejoins l'aventure sur Twitch et YouTube.">
+<meta name="twitter:image" content="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png">
 <link rel="icon" type="image/png" href="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png">
 <meta name="theme-color" content="#ff2d2d">
 <link rel="preconnect" href="https://use.typekit.net">
@@ -28,8 +40,8 @@ body{
   background:var(--black);
   color:var(--white);
   overflow-x:hidden;
-  cursor:none;
 }
+body.custom-cursor-active{cursor:none;}
 body::before{
   content:'';
   position:fixed;inset:0;pointer-events:none;z-index:0;
@@ -51,7 +63,7 @@ body::before{
   pointer-events:none;z-index:9998;
   transition:transform 0.25s ease, width 0.2s, height 0.2s;mix-blend-mode:difference;
 }
-@media(hover:none),(pointer:coarse){.cursor,.cursor-follower{display:none!important;}body{cursor:auto!important;}}
+@media(hover:none),(pointer:coarse){.cursor,.cursor-follower{display:none!important;}}
 
 /* NAV */
 nav{
@@ -484,6 +496,42 @@ section{padding:6rem 3rem;max-width:1100px;margin:0 auto}
   font-family:'DM Mono',monospace;display:flex;align-items:center;gap:8px;
 }
 
+/* ABOUT */
+.about-bio{
+  font-size:1rem;line-height:1.9;color:rgba(240,237,230,0.65);
+  max-width:680px;font-style:normal;font-weight:500;
+  margin-bottom:1.75rem;
+}
+.about-tags{display:flex;flex-wrap:wrap;gap:10px;}
+.tag-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,45,45,0.06);border:1px solid rgba(255,45,45,0.18);
+  color:rgba(240,237,230,0.7);
+  padding:6px 14px;border-radius:20px;
+  font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;
+  font-family:'DM Mono',monospace;
+}
+
+/* STATS BAND */
+.stats-band{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:2.5rem;}
+.stat-card{
+  background:rgba(240,237,230,0.04);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(240,237,230,0.08);
+  border-radius:20px;
+  padding:2rem 1.5rem;
+  text-align:center;
+  box-shadow:0 8px 32px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.stat-value{
+  font-family:"transducer-extended",sans-serif;font-style:italic;font-weight:600;
+  font-size:2.4rem;color:var(--accent);line-height:1;margin-bottom:0.6rem;
+}
+.stat-label{font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:rgba(240,237,230,0.35);font-family:'DM Mono',monospace;}
+@media(max-width:768px){
+  .stats-band{grid-template-columns:1fr;margin-top:1.75rem;}
+}
+
 /* FOOTER */
 footer{
   border-top:1px solid var(--border);
@@ -671,22 +719,19 @@ footer{
     <div style="position:relative;height:clamp(120px,26vw,320px);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;">
       <div class="logo-glow-bg"></div>
       <video id="logo-video" autoplay loop muted playsinline style="position:relative;z-index:1;height:100%;width:auto;display:block;filter:drop-shadow(0 0 30px rgba(255,45,45,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.35));animation:logoGlow 2.5s ease-in-out infinite;">
-        <source src="https://raw.githubusercontent.com/mickaz9/mickaz9site/main/Calque%201-Logo-mickaz9--blanc_Personnalis%C3%A9_1.webm" type="video/webm">
+        <source src="Calque%201-Logo-mickaz9--blanc_Personnalis%C3%A9_1.webm" type="video/webm">
       </video>
       <img id="logo-fallback" src="https://res.cloudinary.com/ddj8pfqti/image/upload/v1777570083/Logo-mickaz9.-blanc_mlty4s.png" alt="Mickaz9" style="display:none;position:relative;z-index:1;height:100%;width:auto;filter:drop-shadow(0 0 30px rgba(255,45,45,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.35));animation:logoGlow 2.5s ease-in-out infinite;">
-      <img id="logo-apng" src="https://raw.githubusercontent.com/mickaz9/mickaz9site/main/logo.apng" alt="Mickaz9" style="display:none;position:relative;z-index:1;height:100%;width:auto;filter:drop-shadow(0 0 30px rgba(255,45,45,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.35));">
       <script>
       (function(){
         var video=document.getElementById('logo-video');
         var fallback=document.getElementById('logo-fallback');
-        var apng=document.getElementById('logo-apng');
         var isMobile=/Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
         var isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
         var canWebM=document.createElement('video').canPlayType('video/webm; codecs="vp9"')!=='';
         if(isMobile||isIOS||!canWebM){
           video.style.display='none';
           video.src='';
-          if(apng)apng.style.display='none';
           fallback.style.display='block';
         }
       })();
@@ -695,10 +740,7 @@ footer{
     <p class="hero-sub">Streams gaming, contenu créatif, communauté.<br>Rejoins l'aventure.</p>
     <div class="hero-ctas" id="hero-ctas-offline">
       <a href="#live" class="btn btn-primary">Voir le live</a>
-      <a href="#planning" class="btn btn-glass">Planning</a>
       <a href="videos.html" class="btn btn-glass">Mes vidéos</a>
-      <a href="warzone.html" class="btn btn-glass">Classes Warzone</a>
-      <a href="reseaux.html" class="btn btn-glass">Réseaux</a>
     </div>
     <div class="hero-ctas" id="hero-ctas-live" style="display:none">
       <a href="https://www.twitch.tv/mickaz9" target="_blank" class="btn btn-primary" style="background:#9146ff;border-color:rgba(145,70,255,0.4);"><svg viewBox="0 0 24 24" fill="white" width="14" height="14"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg> Twitch</a>
@@ -710,16 +752,145 @@ footer{
 
 <div class="marquee-wrap">
   <div class="marquee-track">
-    <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
-    <span class="marquee-item">CRÉATEUR DE CONTENU</span><span class="marquee-item accent">✦</span>
-    <span class="marquee-item">GAMING</span><span class="marquee-item accent">✦</span>
-    <span class="marquee-item">WARZONE</span><span class="marquee-item accent">✦</span>
-    <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
-    <span class="marquee-item">CRÉATEUR DE CONTENU</span><span class="marquee-item accent">✦</span>
-    <span class="marquee-item">GAMING</span><span class="marquee-item accent">✦</span>
-    <span class="marquee-item">WARZONE</span><span class="marquee-item accent">✦</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item accent">✦</span>
   </div>
 </div>
+
+<section id="about">
+  <div class="reveal">
+    <div class="section-label">À propos</div>
+    <div class="section-title">QUI SUIS-<span class="dim">JE</span></div>
+  </div>
+  <div class="reveal reveal-delay-1">
+    <!-- ✏️ À personnaliser : remplace ce texte par ton vrai parcours, ton ton, ce qui te différencie -->
+    <p class="about-bio">Je suis Mickaz9, streamer et créateur de contenu gaming. Je joue principalement sur Warzone, en live sur Twitch et YouTube, avec une communauté qui grandit stream après stream. Entre gameplay compétitif, bonne humeur et setup au top, je partage tout ici — des lives aux meilleurs clips.</p>
+    <div class="about-tags">
+      <span class="tag-pill">FPS · Warzone</span>
+      <span class="tag-pill">Live Twitch & YouTube</span>
+      <span class="tag-pill">Setup gaming</span>
+      <span class="tag-pill">Communauté Discord</span>
+    </div>
+    <div class="stats-band">
+      <div class="stat-card">
+        <div class="stat-value" id="twitch-subs">—</div>
+        <div class="stat-label">Followers Twitch</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="yt-subs">—</div>
+        <div class="stat-label">Abonnés YouTube</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="font-size:1.5rem;">Warzone</div>
+        <div class="stat-label">Spécialité gaming</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="showcase">
+  <div class="reveal">
+    <div class="section-label">Contenu</div>
+    <div class="section-title">À LA <span class="dim">UNE</span></div>
+  </div>
+  <div class="reveal reveal-delay-1" style="display:flex;flex-direction:column;gap:12px;">
+    <div id="last-video-container" style="
+      background:rgba(240,237,230,0.02);
+      border:1px solid rgba(240,237,230,0.08);
+      border-radius:12px;
+      overflow:hidden;
+      display:flex;
+      gap:0;
+    ">
+      <a id="last-video-link" href="https://www.youtube.com/@mickaz9" target="_blank" style="
+        display:block;
+        width:55%;
+        flex-shrink:0;
+        position:relative;
+        aspect-ratio:16/9;
+        background:#111;
+        overflow:hidden;
+        text-decoration:none;
+      ">
+        <div id="last-video-thumb" style="
+          position:absolute;inset:0;
+          background-size:cover;background-position:center;
+          background-color:#1a0d0d;
+        "></div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+          <div style="
+            width:56px;height:56px;border-radius:50%;
+            border:1px solid rgba(240,237,230,0.2);
+            display:flex;align-items:center;justify-content:center;
+            backdrop-filter:blur(8px);background:rgba(0,0,0,0.4);
+            transition:all 0.2s;
+          ">
+            <div style="width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:16px solid rgba(240,237,230,0.8);margin-left:4px;"></div>
+          </div>
+        </div>
+      </a>
+      <div style="padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1rem;flex:1;">
+        <div style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;">Dernière vidéo</div>
+        <div id="last-video-title" style="font-size:clamp(1.2rem,2.6vw,1.8rem);letter-spacing:0.5px;line-height:1.25;">Chargement...</div>
+        <div id="last-video-meta" style="font-size:0.72rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;">—</div>
+        <a id="last-video-btn" href="https://www.youtube.com/@mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Regarder →</a>
+      </div>
+    </div>
+
+    <div id="last-clip-container" style="
+      background:rgba(240,237,230,0.02);
+      border:1px solid rgba(240,237,230,0.08);
+      border-radius:12px;
+      overflow:hidden;
+      display:none;
+      flex-direction:row;
+      gap:0;
+    ">
+      <a id="last-clip-link" href="https://www.twitch.tv/mickaz9" target="_blank" style="
+        display:block;
+        width:55%;
+        flex-shrink:0;
+        position:relative;
+        aspect-ratio:16/9;
+        background:#111;
+        overflow:hidden;
+        text-decoration:none;
+      ">
+        <div id="last-clip-thumb" style="position:absolute;inset:0;background-size:cover;background-position:center;background-color:#0d0d1a;"></div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+          <div style="
+            width:56px;height:56px;border-radius:50%;
+            border:1px solid rgba(240,237,230,0.2);
+            display:flex;align-items:center;justify-content:center;
+            backdrop-filter:blur(8px);background:rgba(0,0,0,0.4);
+            transition:all 0.2s;
+          ">
+            <div style="width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:16px solid rgba(240,237,230,0.8);margin-left:4px;"></div>
+          </div>
+        </div>
+        <div style="position:absolute;top:10px;left:10px;background:#9146ff;border-radius:6px;padding:3px 8px;display:flex;align-items:center;gap:5px;">
+          <svg viewBox="0 0 24 24" fill="white" width="10" height="10"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
+          <span style="font-size:9px;font-family:DM Mono,monospace;letter-spacing:1px;color:white;font-weight:600;">CLIP</span>
+        </div>
+      </a>
+      <div style="padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1rem;flex:1;">
+        <div style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;">Dernier clip Twitch</div>
+        <div id="last-clip-title" style="font-size:clamp(1.2rem,2.6vw,1.8rem);letter-spacing:0.5px;line-height:1.25;">Chargement...</div>
+        <div id="last-clip-meta" style="font-size:0.72rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace;">—</div>
+        <a id="last-clip-btn" href="https://www.twitch.tv/mickaz9" target="_blank" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">Voir le clip →</a>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:1.5rem;">
+    <a href="videos.html" class="btn btn-ghost">Voir toutes les vidéos →</a>
+  </div>
+</section>
 
 <section id="live">
   <div class="reveal">
@@ -730,8 +901,7 @@ footer{
     <div class="platform-row">
       <div style="display:flex;align-items:center;gap:8px;">
         <div class="platform-icon pi-twitch"><svg viewBox="0 0 24 24" fill="white" width="14" height="14"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg></div>
-        <div class="platform-icon pi-youtube" style="margin-left:-6px;"><svg viewBox="0 0 24 24" fill="white" width="14" height="14"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></div>
-        <span class="platform-badge" style="margin-left:4px;">Twitch & YouTube</span>
+        <span class="platform-badge" style="margin-left:4px;">Twitch</span>
       </div>
       <span class="status-badge status-offline" id="twitch-status-badge">Hors ligne</span>
     </div>
@@ -743,10 +913,6 @@ footer{
       <a href="https://www.twitch.tv/mickaz9" target="_blank" class="live-link" style="background:rgba(145,70,255,0.1);border:1px solid rgba(145,70,255,0.25);padding:5px 14px;border-radius:20px;backdrop-filter:blur(10px);">
         <svg viewBox="0 0 24 24" fill="#9146ff" width="11" height="11" style="margin-right:4px;"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
         Twitch <span class="arrow">→</span>
-      </a>
-      <a href="https://www.youtube.com/@mickaz9" target="_blank" class="live-link" style="background:rgba(255,45,45,0.1);border:1px solid rgba(255,45,45,0.25);padding:5px 14px;border-radius:20px;backdrop-filter:blur(10px);">
-        <svg viewBox="0 0 24 24" fill="#ff2d2d" width="11" height="11" style="margin-right:4px;"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-        YouTube <span class="arrow">→</span>
       </a>
     </div>
   </div>
@@ -790,6 +956,7 @@ const follower = document.getElementById('follower');
 const isTouch = window.matchMedia('(hover:none),(pointer:coarse)').matches;
 if(cursor) cursor.style.display = isTouch ? 'none' : '';
 if(follower) follower.style.display = isTouch ? 'none' : '';
+if(!isTouch) document.body.classList.add('custom-cursor-active');
 let mx=0,my=0,fx=0,fy=0;
 if(!isTouch){
   document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(cursor){cursor.style.left=(mx-5)+'px';cursor.style.top=(my-5)+'px';}});
@@ -815,6 +982,11 @@ document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
   menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');burger.classList.remove('open');}));
 })();
 
+
+const CONFIG = {
+  // Colle l'ID de ta dernière vidéo YouTube (après ?v= dans l'URL)
+  LATEST_VIDEO_ID: 'WzZiDmct3ig',
+};
 
 // Twitch live check
 async function checkTwitch(){
@@ -1087,6 +1259,7 @@ async function loadCalendar(){
 }
 
 checkTwitch();
+loadYT();
 loadCalendar();
 setInterval(checkTwitch, 60000);
 
