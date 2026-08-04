@@ -29,8 +29,8 @@ body{
   background:var(--black);
   color:var(--white);
   overflow-x:hidden;
-  cursor:none;
 }
+body.custom-cursor-active{cursor:none;}
 body::before{
   content:'';
   position:fixed;inset:0;pointer-events:none;z-index:0;
@@ -52,7 +52,13 @@ body::before{
   pointer-events:none;z-index:9998;
   transition:transform 0.25s ease, width 0.2s, height 0.2s;mix-blend-mode:difference;
 }
-@media(hover:none),(pointer:coarse){.cursor,.cursor-follower{display:none!important;}body{cursor:auto!important;}}
+@media(hover:none),(pointer:coarse){
+  .cursor,.cursor-follower{display:none!important;}
+  /* Les effets :hover ne se déclenchent jamais au toucher — retour visuel à l'appui */
+  .btn:active{transform:scale(0.96);}
+  .btn-primary:active{background:rgba(255,45,45,0.9);}
+  .btn-glass:active,.btn-ghost:active{background:rgba(240,237,230,0.13);}
+}
 
 /* NAV */
 nav{
@@ -634,7 +640,7 @@ footer{
 @media(max-width:768px){.nav-burger{display:flex;}}
 </style>
 </head>
-<body>
+<body ontouchstart="">
 <div class="cursor" id="cursor"></div>
 <div class="cursor-follower" id="follower"></div>
 <nav>
@@ -682,6 +688,7 @@ const follower = document.getElementById('follower');
 const isTouch = window.matchMedia('(hover:none),(pointer:coarse)').matches;
 if(cursor) cursor.style.display = isTouch ? 'none' : '';
 if(follower) follower.style.display = isTouch ? 'none' : '';
+if(!isTouch) document.body.classList.add('custom-cursor-active');
 let mx=0,my=0,fx=0,fy=0;
 if(!isTouch){
   document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(cursor){cursor.style.left=(mx-5)+'px';cursor.style.top=(my-5)+'px';}});

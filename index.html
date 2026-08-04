@@ -65,7 +65,18 @@ body::before{
   pointer-events:none;z-index:9998;
   transition:transform 0.25s ease, width 0.2s, height 0.2s;mix-blend-mode:difference;
 }
-@media(hover:none),(pointer:coarse){.cursor,.cursor-follower{display:none!important;}}
+@media(hover:none),(pointer:coarse){
+  .cursor,.cursor-follower{display:none!important;}
+  /* Les effets :hover (zoom, lever, glow) ne se déclenchent jamais au toucher —
+     on ajoute un retour visuel immédiat à l'appui pour que ça ne semble pas figé. */
+  .btn:active{transform:scale(0.96);}
+  .btn-primary:active{background:rgba(255,45,45,0.9);}
+  .btn-glass:active,.btn-ghost:active{background:rgba(240,237,230,0.13);}
+  .video-card:active{background:rgba(240,237,230,0.04);transform:scale(0.98);}
+  .video-card:active .thumb-bg{transform:scale(1.04);}
+  .network-item:active{background:rgba(240,237,230,0.08);}
+  .stat-card-link:active{background:rgba(240,237,230,0.07);border-color:rgba(255,45,45,0.3);transform:scale(0.98);}
+}
 
 /* NAV */
 nav{
@@ -703,7 +714,7 @@ footer{
 @media(max-width:768px){.nav-burger{display:flex;}}
 </style>
 </head>
-<body>
+<body ontouchstart="">
 <div class="cursor" id="cursor"></div>
 <div class="cursor-follower" id="follower"></div>
 <nav>
@@ -766,14 +777,14 @@ footer{
 
 <div class="marquee-wrap">
   <div class="marquee-track">
-    <span class="marquee-item accent">✦</span>
-    <span class="marquee-item accent">✦</span>
-    <span class="marquee-item accent">✦</span>
-    <span class="marquee-item accent">✦</span>
-    <span class="marquee-item accent">✦</span>
-    <span class="marquee-item accent">✦</span>
-    <span class="marquee-item accent">✦</span>
-    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
+    <span class="marquee-item">STREAMER</span><span class="marquee-item accent">✦</span>
+    <span class="marquee-item">WARZONE</span><span class="marquee-item accent">✦</span>
+    <span class="marquee-item">VIDÉASTE</span><span class="marquee-item accent">✦</span>
+    <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
+    <span class="marquee-item">STREAMER</span><span class="marquee-item accent">✦</span>
+    <span class="marquee-item">WARZONE</span><span class="marquee-item accent">✦</span>
+    <span class="marquee-item">VIDÉASTE</span><span class="marquee-item accent">✦</span>
   </div>
 </div>
 
