@@ -559,8 +559,9 @@ footer{
 
   /* CALENDRIER */
   .calendar-wrap{border-radius:20px;}
-  .cal-head{padding:1.1rem 1.25rem;}
+  .cal-head{padding:1.1rem 1.25rem;flex-direction:column;align-items:flex-start;gap:6px;}
   .cal-head strong{font-size:0.8rem;}
+  #cal-month-label{font-size:0.85rem!important;}
   .cal-body{padding:1.1rem 1.25rem;gap:10px;}
   .cal-title{font-size:0.8rem;}
   .cal-time{font-size:0.62rem;}
@@ -629,7 +630,7 @@ footer{
 .nav-mobile-menu.open{opacity:1;pointer-events:auto;visibility:visible;}
 .nav-mobile-menu a{
   font-family:"transducer-extended",sans-serif;font-style:italic;font-weight:600;
-  font-size:2.2rem;letter-spacing:4px;text-transform:uppercase;
+  font-size:2.2rem;letter-spacing:4px;text-transform:uppercase;text-align:center;
   color:rgba(240,237,230,0.25);text-decoration:none;
   padding:0.75rem 2rem;
   transition:color 0.2s,transform 0.2s;
