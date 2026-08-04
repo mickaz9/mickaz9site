@@ -391,7 +391,7 @@ section{padding:6rem 3rem;max-width:1100px;margin:0 auto}
 .vt-long{background:rgba(255,45,45,0.15);color:#ff7070;border:1px solid rgba(255,45,45,0.2)}
 .vt-short{background:rgba(255,45,45,0.1);color:var(--accent);border:1px solid rgba(255,45,45,0.15)}
 .vt-clip{background:rgba(145,70,255,0.15);color:#c9a9ff;border:1px solid rgba(145,70,255,0.25);display:flex;align-items:center;gap:5px}
-.video-thumb.thumb-portrait{aspect-ratio:9/16;max-width:220px;margin:0 auto;border-radius:12px;}
+.video-thumb.thumb-portrait{aspect-ratio:9/16;width:100%;max-width:220px;margin:0 auto;border-radius:12px;flex-shrink:0;}
 .video-info{padding:1.25rem 1.5rem}
 .video-info strong{font-size:0.9rem;font-weight:600;display:block;margin-bottom:6px;line-height:1.4}
 .video-info span{font-size:0.7rem;color:rgba(240,237,230,0.3);font-family:'DM Mono',monospace}
@@ -549,7 +549,7 @@ footer{
 
   /* GRILLES */
   .videos-grid{grid-template-columns:1fr}
-  .video-thumb.thumb-portrait{max-width:300px;margin:0 auto;}
+  .video-thumb.thumb-portrait{max-width:300px;}
 
   /* ACCORDION */
   .accordion-header{padding-bottom:0.75rem;margin-bottom:1.2rem;}
