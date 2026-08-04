@@ -815,8 +815,8 @@ footer{
         <div class="stat-label">Abonnés YouTube</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" style="font-size:1.5rem;">Warzone</div>
-        <div class="stat-label">Spécialité gaming</div>
+        <div class="stat-value" id="total-subs">—</div>
+        <div class="stat-label">Abonnés cumulés</div>
       </div>
     </div>
   </div>
@@ -966,6 +966,17 @@ document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 })();
 
 
+// Total abonnés cumulés (Twitch + YouTube en direct, + Twitter/X, TikTok, Instagram
+// fixes cf. reseaux.html CONFIG — pas d'API dispo pour ceux-là). Discord exclu.
+let twitchFollowersRaw = 0;
+let ytSubsRaw = 0;
+function updateTotalStat(){
+  const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return Math.round(n/1000)+'K';return n;};
+  const MANUAL_FOLLOWERS = 100 + 2000 + 500; // Twitter/X + TikTok + Instagram
+  const el=document.getElementById('total-subs');
+  if(el) el.textContent=fmtN(twitchFollowersRaw+ytSubsRaw+MANUAL_FOLLOWERS);
+}
+
 // Twitch live check
 async function checkTwitch(){
   try{
@@ -985,6 +996,8 @@ async function checkTwitch(){
     if(d.followers!=null){
       const el=document.getElementById('twitch-subs');
       if(el)el.textContent=fmtN(d.followers);
+      twitchFollowersRaw=d.followers;
+      updateTotalStat();
     }
     if(d.lastClip){
       const c=d.lastClip;
@@ -1025,6 +1038,7 @@ async function loadYT(){
       const ch=chanD.items[0];
       const n=parseInt(ch.statistics?.subscriberCount||0);
       data.subs=fmtN(n);
+      data.subsRaw=n;
       // Détecter live via snippet.liveBroadcastContent
       if(ch.snippet?.liveBroadcastContent==='live') data.live=ch.snippet?.title||'En live';
     }
@@ -1098,6 +1112,7 @@ function applyYTData(data){
     }
   }
   if(data.subs){const el=document.getElementById('yt-subs');if(el)el.textContent=data.subs;}
+  if(data.subsRaw!=null){ytSubsRaw=data.subsRaw;updateTotalStat();}
   if(data.live){
     const badge=document.getElementById('yt-status-badge');
     if(badge){badge.textContent='En stream';badge.className='status-badge status-live';}
