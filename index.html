@@ -709,7 +709,7 @@ footer{
   <ul class="nav-links">
     <li><a href="videos.html">Vidéos</a></li>
     <li><a href="setup.html">Setup</a></li>
-    <li><a href="warzone.html">Warzone</a></li>
+    <li><a href="warzone.html">Classes Warzone</a></li>
     <li><a href="reseaux.html">Réseaux</a></li>
   </ul>
 </nav>
@@ -719,7 +719,7 @@ footer{
   <div class="nav-mobile-divider"></div>
   <a href="videos.html">Vidéos</a>
   <a href="setup.html">Setup</a>
-  <a href="warzone.html">Warzone</a>
+  <a href="warzone.html">Classes Warzone</a>
   <a href="reseaux.html">Réseaux</a>
 </div>
 <section class="hero" style="padding:0;max-width:100%">
@@ -975,11 +975,26 @@ document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 // fixes cf. reseaux.html CONFIG — pas d'API dispo pour ceux-là). Discord exclu.
 let twitchFollowersRaw = 0;
 let ytSubsRaw = 0;
+let twitchReady = false;
+let ytReady = false;
+let totalStatAnimated = false;
 function updateTotalStat(){
+  if(!twitchReady || !ytReady) return; // on attend d'avoir les deux avant d'afficher quoi que ce soit
   const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1).replace('.',',')+'M';if(n>=1000)return(n/1000).toFixed(1).replace('.',',')+'k';return n;};
   const MANUAL_FOLLOWERS = 100 + 2000 + 500; // Twitter/X + TikTok + Instagram
+  const total = twitchFollowersRaw+ytSubsRaw+MANUAL_FOLLOWERS;
   const el=document.getElementById('total-subs');
-  if(el) el.textContent=fmtN(twitchFollowersRaw+ytSubsRaw+MANUAL_FOLLOWERS);
+  if(!el) return;
+  if(totalStatAnimated){ el.textContent=fmtN(total); return; } // rafraîchissements suivants : pas de re-comptage
+  totalStatAnimated=true;
+  const duration=1400;
+  const start=performance.now();
+  (function tick(now){
+    const p=Math.min((now-start)/duration,1);
+    const eased=1-Math.pow(1-p,3);
+    el.textContent=fmtN(Math.round(total*eased));
+    if(p<1) requestAnimationFrame(tick);
+  })(start);
 }
 
 // Twitch live check
@@ -1002,6 +1017,7 @@ async function checkTwitch(){
       const el=document.getElementById('twitch-subs');
       if(el)el.textContent=fmtN(d.followers);
       twitchFollowersRaw=d.followers;
+      twitchReady=true;
       updateTotalStat();
     }
     if(d.lastClip){
@@ -1117,7 +1133,7 @@ function applyYTData(data){
     }
   }
   if(data.subs){const el=document.getElementById('yt-subs');if(el)el.textContent=data.subs;}
-  if(data.subsRaw!=null){ytSubsRaw=data.subsRaw;updateTotalStat();}
+  if(data.subsRaw!=null){ytSubsRaw=data.subsRaw;ytReady=true;updateTotalStat();}
   if(data.live){
     const badge=document.getElementById('yt-status-badge');
     if(badge){badge.textContent='En stream';badge.className='status-badge status-live';}
