@@ -741,6 +741,7 @@ const CONFIG = {
   // Ajoute autant de produits que tu veux dans ce tableau
   // image: URL de l'image produit (Amazon ou autre)
   // url: lien affilié Amazon
+  // shop: (optionnel) nom de la boutique affiché sur la carte, 'Amazon' par défaut
   // category: 'PC' | 'Périphériques' | 'Audio' | 'Streaming' | autre
   SETUP: [
 
@@ -816,10 +817,11 @@ const CONFIG = {
       url:      'https://www.amazon.fr/Logitech-SUPERLIGHT-Pro-Grade-programmables-recharge/dp/B07W6JCF7Y',
     },
     {
-      name:     'ASUS ROG Moonstone Ace L',
+      name:     'Artisan FX KEY-83 Soft XL',
       category: 'Périphériques',
-      image:    'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQwi_EsxkR1_nTf89i6RCuOVFqaZhs-dBJjFCw607oqNggbTvgSsCg8IJoQ5KLCbLTxb0ADgliJsnsakmvrlS252lTKOoQyK5LVaN5D8_WZUKYEaAhqCz5XTmzo1pOtkuW-HJvBjQ&usqp=CAc',
-      url:      'https://www.amazon.fr/ROG-Moonstone-Ace-L-White/dp/B07MRJ975T',
+      image:    'https://maxesport.gg/cdn/shop/files/Artisan-FX-Key-83-Black-2_8b78fa0e-8358-459a-91c6-70a727b37795.webp?v=1783094062&width=1000',
+      url:      'https://maxesport.gg/fr/products/artisan-fx-key-83-soft-xl-noir',
+      shop:     'Maxesport',
     },
     {
       name:     'Hyper X Pulsefire Haste 2 Pro 4K',
@@ -1010,7 +1012,7 @@ const CONFIG = {
                     <div style="font-size:0.78rem;font-weight:600;line-height:1.3;">${item.name}</div>
                     <div style="margin-top:auto;display:inline-flex;align-items:center;gap:5px;font-size:0.58rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-family:'DM Mono',monospace;font-weight:600;">
                       <svg viewBox="0 0 24 24" fill="currentColor" width="9" height="9"><path d="M20.47 2H3.53a1.45 1.45 0 0 0-1.45 1.45v17.1A1.45 1.45 0 0 0 3.53 22h16.94a1.45 1.45 0 0 0 1.45-1.45V3.45A1.45 1.45 0 0 0 20.47 2zm-8.5 16.5H7.72v-1.5h4.25v1.5zm4.25-3H7.72V14h8.5v1.5zm0-3H7.72V11h8.5v1.5zm0-3H7.72V8h8.5v1.5z"/></svg>
-                      Amazon →
+                      ${item.shop || 'Amazon'} →
                     </div>
                   </div>
                 </a>

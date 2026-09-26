@@ -271,10 +271,13 @@ h1 .accent{color:var(--accent)}
   padding:1rem 0;background:rgba(240,237,230,0.015);
 }
 .marquee-track{
-  display:flex;gap:3rem;white-space:nowrap;
+  display:flex;width:max-content;white-space:nowrap;
   animation:marquee 18s linear infinite;
+  animation-play-state:running!important;
+  will-change:transform;
 }
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-group{display:flex;flex-shrink:0;gap:3rem;padding-right:3rem}
+@keyframes marquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
 .marquee-item{
   font-family:"transducer-extended",sans-serif;font-style:italic;font-weight:600;font-size:1.1rem;letter-spacing:4px;
   color:rgba(240,237,230,0.12);text-transform:uppercase;
@@ -778,14 +781,16 @@ footer{
 
 <div class="marquee-wrap">
   <div class="marquee-track">
-    <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
-    <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
-    <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
-    <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
-    <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
-    <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
-    <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
-    <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
+    <div class="marquee-group">
+      <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">MICKAZ9</span><span class="marquee-item accent">✦</span>
+    </div>
   </div>
 </div>
 
@@ -969,6 +974,27 @@ if(!isTouch){
   (function animFollower(){fx+=(mx-fx)*0.12;fy+=(my-fy)*0.12;if(follower){follower.style.left=(fx-18)+'px';follower.style.top=(fy-18)+'px';}requestAnimationFrame(animFollower);})();
   document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{if(follower){follower.style.width='52px';follower.style.height='52px';}});el.addEventListener('mouseleave',()=>{if(follower){follower.style.width='36px';follower.style.height='36px';}});});
 }
+// Bandeau MICKAZ9 : on remplit un groupe jusqu'à dépasser la largeur de l'écran,
+// puis on le duplique -> la translation de -50% boucle sans raccord, quelle que soit la taille d'écran.
+(function(){
+  const track=document.querySelector('.marquee-track');
+  if(!track) return;
+  const base=track.querySelector('.marquee-group');
+  const unit=base.innerHTML;
+  function build(){
+    track.querySelectorAll('.marquee-group:not(:first-child)').forEach(g=>g.remove());
+    base.innerHTML=unit;
+    while(base.offsetWidth<window.innerWidth+200) base.insertAdjacentHTML('beforeend',unit);
+    const clone=base.cloneNode(true);
+    clone.setAttribute('aria-hidden','true');
+    track.appendChild(clone);
+    track.style.animationDuration=(base.offsetWidth/55)+'s'; // ~55px/s
+  }
+  build();
+  let w=window.innerWidth;
+  window.addEventListener('resize',()=>{if(window.innerWidth!==w){w=window.innerWidth;build();}});
+  if(document.fonts) document.fonts.ready.then(build);
+})();
 const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});},{threshold:0.1});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 (function(){
