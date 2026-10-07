@@ -1025,7 +1025,7 @@ let totalStatAnimated = false;
 function updateTotalStat(){
   if(!twitchReady || !ytReady) return; // on attend d'avoir les deux avant d'afficher quoi que ce soit
   const fmtN=n=>{if(n>=1000000)return(n/1000000).toFixed(1).replace('.',',')+'M';if(n>=1000)return(n/1000).toFixed(1).replace('.',',')+'k';return n;};
-  const MANUAL_FOLLOWERS = 100 + 2000 + 500; // Twitter/X + TikTok + Instagram
+  const MANUAL_FOLLOWERS = 100 + 2000 + 540 + 50; // Twitter/X + TikTok + Instagram + Instagram Gaming
   const total = twitchFollowersRaw+ytSubsRaw+MANUAL_FOLLOWERS;
   const el=document.getElementById('total-subs');
   if(!el) return;
